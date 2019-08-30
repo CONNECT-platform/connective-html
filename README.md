@@ -14,3 +14,9 @@ resulting in frontend code that is
 - really performant: since there is no magical layer between your code and the actual DOM, there is no performance overhead
 - highly controllable: since you do not need to wrestle with layers underneath your logic
 - highly portable: since you can easily embed the resulting components anywhere with minimal bundle-size overhead
+
+
+# DISCLAIMER:
+
+This project is in super-early development. IT IS NOT TO BE USED on any production environment. All APIs are subject to
+extensive change or out-right deprecation without any notice.
