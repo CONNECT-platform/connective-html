@@ -1,0 +1,33 @@
+{
+  "name": "@connectv/html",
+  "version": "0.1.0",
+  "description": "fast and explicit reactive frontends",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack --config ./conf/webpack/dev.conf.ts --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CONNECT-platform/connective-html.git"
+  },
+  "author": "Eugene Ghanizadeh Khoub <ghanizadeh.eugene@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CONNECT-platform/connective-html/issues"
+  },
+  "homepage": "https://github.com/CONNECT-platform/connective-html#readme",
+  "devDependencies": {
+    "@types/node": "^12.7.4",
+    "@types/webpack": "^4.39.1",
+    "ts-loader": "^6.0.4",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.6.2",
+    "webpack": "^4.39.3",
+    "webpack-cli": "^3.3.7",
+    "webpack-merge": "^4.2.2"
+  },
+  "dependencies": {
+    "@connectv/core": "^0.1.16"
+  }
+}
