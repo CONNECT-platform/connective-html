@@ -3,7 +3,7 @@ import config from './base.conf';
 const merge = require('webpack-merge');
 
 export default merge(config, {
-  entry: path.resolve(__dirname, '../../samples/index.ts'),
+  entry: path.resolve(__dirname, '../../samples/index.tsx'),
   mode: 'development',
   output: {
     filename: 'test.bundle.js',
