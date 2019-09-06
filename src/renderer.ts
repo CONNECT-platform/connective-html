@@ -1,3 +1,9 @@
+import { isPinLike, sink, wrap } from '@connectv/core';
+import { Observable } from 'rxjs';
+
+import { LifeCycle } from './life-cycle';
+
+
 export type PropsType = {[prop: string]: any};
 export type CompType = (props?: PropsType) => HTMLElement;
 
@@ -14,6 +20,8 @@ class Renderer {
 
     if (typeof tagOrComp === 'string') {
       el = document.createElement(tagOrComp);
+      (el as any).lifecycle = new LifeCycle(el);
+      (fragment as any).lifecycle = (el as any).lifecycle;
       if (props)
         Object.keys(props).forEach(prop => 
           el.setAttribute(prop, props[prop].toString())
@@ -30,6 +38,16 @@ class Renderer {
   public append(target: any | Node | any[], host: Node) {
     if (target instanceof Node)
       host.appendChild(target);
+    else if (isPinLike(target) && (host as any).lifecycle) {
+      let lifecycle = (host as any).lifecycle;
+      let textNode = document.createTextNode('');
+      let pin = target.to(sink(v => textNode.textContent = v));
+      lifecycle.toBind(pin).toClear(pin);
+      host.appendChild(textNode);
+    }
+    else if (target instanceof Observable) {
+      this.append(wrap(target), host);
+    }
     else if (Array.isArray(target))
       target.forEach(_ => this.append(_, host));
     else
@@ -44,6 +62,11 @@ class Renderer {
         target: compOrEl,
         on(host: Node) {
           host.appendChild(compOrEl);
+          if ((compOrEl as any).lifecycle) {
+            if (document.contains(compOrEl))
+              (compOrEl as any).lifecycle.bind();
+          }
+
           return host;
         }
       };

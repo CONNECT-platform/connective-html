@@ -1,10 +1,11 @@
-import renderer, {PropsType} from '../src/renderer';
+import renderer from '../src/renderer';
+import { interval } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 
-let F = (props: PropsType) => <h1>{props.title}</h1>;
-let x = <div>
-  <span>{2}</span>
-  {['hellow', 'world'].map(_ => <F title={_}/>)}
-</div>;
+let x = <h1>{interval(1000).pipe(tap(console.log))}</h1>;
+let y: HTMLElement = <div>Counter: {x}</div>;
 
-renderer.render(x).on(document.body);
+renderer.render(y).on(document.body);
+
+setTimeout(() => y.remove(), 3000);
