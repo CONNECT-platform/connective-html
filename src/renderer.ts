@@ -1,78 +1,65 @@
-import { isPinLike, sink, wrap } from '@connectv/core';
-import { Observable } from 'rxjs';
+import { PropsType, RawValue, isRawValue } from './types';
 
-import { LifeCycle } from './life-cycle';
+import * as lifcycle from './life-cycle';
 
 
-export type PropsType = {[prop: string]: any};
-export type CompType = (props?: PropsType) => HTMLElement;
-
-export interface Renderable {
+export interface ToBeRendered {
   on(host: Node): Node;
-  target: HTMLElement;
+  target: Node;
 }
 
 
-class Renderer {
-  public create(tagOrComp: string | CompType, props: PropsType | undefined, ...children: (any | Node)[]): HTMLElement {
-    let el: HTMLElement;
-    let fragment = document.createDocumentFragment();
-
-    if (typeof tagOrComp === 'string') {
-      el = document.createElement(tagOrComp);
-      (el as any).lifecycle = new LifeCycle(el);
-      (fragment as any).lifecycle = (el as any).lifecycle;
-      if (props)
-        Object.keys(props).forEach(prop => 
-          el.setAttribute(prop, props[prop].toString())
-        );
+export class Renderer<Renderable=RawValue> {
+  public create(
+    tag: string, 
+    props: PropsType<Renderable | RawValue> | undefined, 
+    ...children: (Renderable | RawValue | Node)[]
+  ): Node {
+    if (tag == '') {
+      return document.createTextNode((children || []).join(''));
     }
-    else el = tagOrComp(props);
-    
-    children.forEach(child => this.append(child, fragment));
-    el.appendChild(fragment);
-
-    return el;
+    else {
+      let el = document.createElement(tag);
+      if (props)
+        Object.entries(props).forEach(([prop, target]) => this.setprop(prop, target, el));
+      
+      children.forEach(child => this.append(child, el));
+      return el;
+    }
   }
 
-  public append(target: any | Node | any[], host: Node) {
+  public setprop(prop: string, target: RawValue | Renderable, host: HTMLElement) {
+    if (isRawValue(target))
+      host.setAttribute(prop, target.toString());
+    else {
+      //TODO: throw error
+    }
+  }
+
+  public append(target: RawValue | Renderable | Node | (RawValue | Renderable | Node)[], host: Node) {
     if (target instanceof Node)
       host.appendChild(target);
-    else if (isPinLike(target) && (host as any).lifecycle) {
-      let lifecycle = (host as any).lifecycle;
-      let textNode = document.createTextNode('');
-      let pin = target.to(sink(v => textNode.textContent = v));
-      lifecycle.toBind(pin).toClear(pin);
-      host.appendChild(textNode);
-    }
-    else if (target instanceof Observable) {
-      this.append(wrap(target), host);
-    }
     else if (Array.isArray(target))
       target.forEach(_ => this.append(_, host));
-    else
-      host.appendChild(document.createTextNode(target));
+    else if (isRawValue(target))
+      host.appendChild(document.createTextNode(target.toString()));
+    else {
+      //TODO: throw error
+    }
   }
 
-  public render(el: HTMLElement): Renderable;
-  public render(tagOrComp: string | CompType, props?: PropsType | null, ...children: (any | Node)[]): Renderable;
-  public render(compOrEl: string | CompType | HTMLElement, props?: PropsType, ...children: (any | Node)[]): Renderable {
-    if (compOrEl instanceof HTMLElement) {
-      return <Renderable>{
-        target: compOrEl,
-        on(host: Node) {
-          host.appendChild(compOrEl);
-          if ((compOrEl as any).lifecycle) {
-            if (document.contains(compOrEl))
-              (compOrEl as any).lifecycle.bind();
-          }
+  public render(node: Node): ToBeRendered {
+    return {
+      target: node,
+      on(host: Node) {
+        host.appendChild(node);
+        if (document.contains(node))
+          lifcycle.bind(node);
 
-          return host;
-        }
-      };
-    }
-    else return this.render(this.create(compOrEl, props, ...children));
+        return host;
+      }
+    };
   }
 }
 
-export default new Renderer();
+export default Renderer;

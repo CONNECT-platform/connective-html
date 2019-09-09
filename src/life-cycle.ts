@@ -1,86 +1,71 @@
-import { Bindable, Clearable } from '@connectv/core';
+import { Bindable, Clearable, isBindable, isClearable } from '@connectv/core';
 
 
-export class LifeCycle implements Bindable, Clearable {
-  private bindables: Bindable[];
-  private clearables: Clearable[];
+export interface LifeCycleInfo {
+  bindables?: Bindable[];
+  clearables?: Clearable[];
+}
 
-  constructor(readonly elem?: Node) {}
 
-  toBind(bindable: Bindable): this {
-    if (!this.bindables)
-      this.bindables = [];
-    
-    this.bindables.push(bindable);
-    return this;
+export function lifeCycleInfo(node: Node): LifeCycleInfo | undefined;
+export function lifeCycleInfo(node: Node, createIfNonExistent: boolean): LifeCycleInfo;
+export function lifeCycleInfo(node: Node, createIfNonExistent: boolean = false): LifeCycleInfo | undefined {
+  let _node = node as any;
+
+  if (_node.lifecycle) return _node.lifecycle as LifeCycleInfo;
+  else if (createIfNonExistent) {
+    _node.lifecycle = <LifeCycleInfo>{};
+    return _node.lifecycle;
   }
+}
 
-  dontBind(bindable: Bindable): this {
-    if (this.bindables)
-      this.bindables = this.bindables.filter(b => b !== bindable);
 
-    return this;
-  }
+export function bind(node: Node) {
+  let lifecycle = lifeCycleInfo(node);
+  if (lifecycle && lifecycle.bindables) lifecycle.bindables.forEach(b => b.bind());
 
-  toClear(clearable: Clearable) {
-    if (!this.clearables)
-      this.clearables = [];
-    
-    this.clearables.push(clearable);
-    return this;
-  }
+  node.childNodes.forEach(bind);
 
-  dontClear(clearable: Clearable) {
-    if (this.clearables)
-      this.clearables = this.clearables.filter(c => c !== clearable);
-    
-    return this;
-  }
-
-  bind() {
-    if (this.elem) {
-      this.elem.childNodes.forEach(node => {
-        if ((node as any).lifecycle)
-          (node as any).lifecycle.bind();
-      });
-
-      let obesrver = new MutationObserver(changes => {
+  if (node.parentNode) {
+    let observer = new MutationObserver(changes => {
+      setImmediate(() => {
         if (changes.some(change => {
           if (!change.removedNodes) return false;
-          let me = false;
-          change.removedNodes.forEach(node => {
-            if (node === this.elem)
-              me = true;
-          });
+          for (let i = 0; i < change.removedNodes.length; i++) {
+            if (change.removedNodes.item(i) === node) return true;
+          }
 
-          return me;
+          return false;
         })) {
-          this.clear();
-          obesrver.disconnect();
+          clear(node);
+          observer.disconnect();
         }
       });
+    });
 
-      if (this.elem.parentNode)
-        obesrver.observe(this.elem.parentNode, { childList: true });
-    }
-
-    if (this.bindables)
-      this.bindables.forEach(b => b.bind());
-
-    return this;
+    observer.observe(node.parentNode, { childList: true });
   }
+}
 
-  clear() {
-    if (this.elem) {
-      this.elem.childNodes.forEach(node => {
-        if ((node as any).lifecycle)
-          (node as any).lifecycle.clear();
-      })
-    }
 
-    if (this.clearables)
-      this.clearables.forEach(c => c.clear());
+export function clear(node: Node) {
+  let lifecycle = lifeCycleInfo(node);
+  if (lifecycle && lifecycle.clearables) lifecycle.clearables.forEach(c => c.clear());
 
-    return this;
+  node.childNodes.forEach(clear);
+}
+
+export function attach(thing: Bindable | Clearable, node: Node) {
+  let lifecycle = lifeCycleInfo(node, true);
+  if (isBindable(thing)) (lifecycle.bindables || (lifecycle.bindables = [])).push(thing);
+  if (isClearable(thing)) (lifecycle.clearables || (lifecycle.clearables = [])).push(thing);
+}
+
+
+export function detach(thing: Bindable | Clearable, node: Node) {
+  let lifecycle = lifeCycleInfo(node);
+  if (lifecycle) {
+    if (lifecycle.bindables) lifecycle.bindables = lifecycle.bindables.filter(b => b !== thing);
+    if (lifecycle.clearables) lifecycle.clearables = lifecycle.clearables.filter(b => b !== thing);
   }
 }
