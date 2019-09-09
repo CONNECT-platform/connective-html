@@ -1,6 +1,8 @@
-import { PropsType, RawValue, isRawValue } from './types';
+import { PropsType, RawValue, isRawValue } from '../shared/types';
 
-import * as lifcycle from './life-cycle';
+import { UnsupportedTagTypeError } from './error/unsupported-tag.error';
+import { UnsupportedPropError } from './error/unsupported-prop.error';
+import { UnsupportedChildError } from './error/unsupported-child.error';
 
 
 export interface ToBeRendered {
@@ -9,16 +11,13 @@ export interface ToBeRendered {
 }
 
 
-export class Renderer<Renderable=RawValue> {
+export class Renderer<Renderable=RawValue, Tag=string> {
   public create(
-    tag: string, 
+    tag: string | Tag, 
     props: PropsType<Renderable | RawValue> | undefined, 
     ...children: (Renderable | RawValue | Node)[]
   ): Node {
-    if (tag == '') {
-      return document.createTextNode((children || []).join(''));
-    }
-    else {
+    if (typeof tag == 'string') {
       let el = document.createElement(tag);
       if (props)
         Object.entries(props).forEach(([prop, target]) => this.setprop(prop, target, el));
@@ -26,13 +25,16 @@ export class Renderer<Renderable=RawValue> {
       children.forEach(child => this.append(child, el));
       return el;
     }
+    else {
+      throw new UnsupportedTagTypeError(tag, this);
+    }
   }
 
   public setprop(prop: string, target: RawValue | Renderable, host: HTMLElement) {
     if (isRawValue(target))
       host.setAttribute(prop, target.toString());
     else {
-      //TODO: throw error
+      throw new UnsupportedPropError(target, this);
     }
   }
 
@@ -44,7 +46,7 @@ export class Renderer<Renderable=RawValue> {
     else if (isRawValue(target))
       host.appendChild(document.createTextNode(target.toString()));
     else {
-      //TODO: throw error
+      throw new UnsupportedChildError(target, this);
     }
   }
 
@@ -53,9 +55,6 @@ export class Renderer<Renderable=RawValue> {
       target: node,
       on(host: Node) {
         host.appendChild(node);
-        if (document.contains(node))
-          lifcycle.bind(node);
-
         return host;
       }
     };

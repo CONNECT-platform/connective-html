@@ -1,10 +1,10 @@
 import { isPinLike, PinLike, sink, wrap } from '@connectv/core';
 import { Observable } from 'rxjs';
 
-import * as lifcycle from './life-cycle';
+import * as lifcycle from './shared/life-cycle';
 
-import { RawValue } from './types';
-import { Renderer } from './renderer';
+import { RawValue } from './shared/types';
+import { Renderer } from './renderer/renderer';
 
 
 export type Renderable = PinLike | Observable<RawValue> | RawValue;
