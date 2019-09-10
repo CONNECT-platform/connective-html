@@ -10,6 +10,7 @@ import { Plugin,
 
 
 export class ExtensibleRenderer<Renderable=RawValue, Tag=string> extends Renderer<Renderable, Tag> {
+  readonly plugins: Plugin<Renderable, Tag>[];
   private _create: CreatePlugin<Renderable, Tag>[];
   private _postCreate: PostCreatePlugin[];
   private _property: PropertyPlugin<Renderable>[];
@@ -26,7 +27,8 @@ export class ExtensibleRenderer<Renderable=RawValue, Tag=string> extends Rendere
     return list;
   }
 
-  public plug(...plugins: Plugin<Renderable, Tag>[]): this {
+  constructor(...plugins: Plugin<Renderable, Tag>[]) {
+    super();
     plugins.forEach(plugin => {
       if (isCreatePlugin(plugin)) this._create = this._plug(plugin, this._create);
       if (isPostCreatePlugin(plugin)) this._postCreate = this._plug(plugin, this._postCreate);
@@ -35,7 +37,11 @@ export class ExtensibleRenderer<Renderable=RawValue, Tag=string> extends Rendere
       if (isPostRenderPlugin(plugin)) this._postRender = this._plug(plugin, this._postRender);
     });
 
-    return this;
+    this.plugins = plugins;
+  }
+
+  public plug(...plugins: Plugin<Renderable, Tag>[]) {
+    return new ExtensibleRenderer<Renderable, Tag>(...(<Plugin<Renderable, Tag>[]>[]).concat(this.plugins, plugins));
   }
 
   public create(

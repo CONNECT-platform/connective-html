@@ -7,7 +7,7 @@ import * as L from '../../shared/life-cycle';
 import { PropertyPlugin, AppendPlugin, PluginPriority } from './plugin';
 
 
-export class ObservablePlugin<R=null, T=string> 
+export class ObservablePlugin<R=never, T=string> 
   implements PropertyPlugin<R | Observable<RawValue>, T>, 
             AppendPlugin<R | Observable<RawValue>, T> {
 

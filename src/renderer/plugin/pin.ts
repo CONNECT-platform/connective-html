@@ -6,7 +6,7 @@ import * as L from '../../shared/life-cycle';
 import { PropertyPlugin, AppendPlugin, PluginPriority } from './plugin';
 
 
-export class PinPlugin<R=null, T=string> 
+export class PinPlugin<R=never, T=string> 
   implements PropertyPlugin<R | PinLike, T>, 
               AppendPlugin<R | PinLike, T> {
 
