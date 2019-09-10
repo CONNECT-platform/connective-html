@@ -9,7 +9,7 @@ import { tap } from 'rxjs/operators';
 import { PinLike, wrap, map } from '@connectv/core';
 
 
-let renderer = new ExtensibleRenderer<PinLike, Observable<RawValue>>().plug(
+let renderer = new ExtensibleRenderer<PinLike | Observable<RawValue>>().plug(
     new LifeCyclePlugin(),
     new ObservablePlugin(),
     new PinPlugin(),
