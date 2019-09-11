@@ -28,6 +28,6 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
-    "@connectv/core": "^0.1.16"
+    "@connectv/core": "^0.1.17"
   }
 }
