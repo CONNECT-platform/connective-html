@@ -8,7 +8,7 @@ import { RawValue } from '../../shared/types';
 export class EventHandlerPlugin<R, T> implements PropertyPlugin<HTML.EventHandler | R, T> {
   setprop(prop: string, target: R | RawValue | HTML.EventHandler, host: HTMLElement): boolean {
     if (prop.startsWith('on')) {
-      const event = prop.substr(2);
+      const event = prop.substr(2).toLowerCase();
 
       if (target instanceof Subject) {
         host.addEventListener(event, (ev) => target.next(ev));

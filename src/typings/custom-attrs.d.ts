@@ -1,5 +1,9 @@
 declare module HTML {
-  interface Attributes {
-    _ref?: import('@connectv/core').Proxy;
+  interface InputAttributes {
+    _state?: import('@connectv/core').State;
+  }
+
+  interface TextAreaAttributes {
+    _state?: import('@connectv/core').State;
   }
 }

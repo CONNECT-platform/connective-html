@@ -192,7 +192,7 @@ declare module HTML {
     /**Specifies the legal number intervals for an input field */
     step?: Renderable;
     /**Specifies the type of element */
-    type?: Renderable;
+    type: Renderable;
     /**Specifies the value of the element */
     value?: Renderable;
     /**Specifies the width of the element */
