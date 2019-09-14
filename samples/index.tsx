@@ -1,6 +1,6 @@
-import { state, pipe } from '@connectv/core';
+import { state, pipe, map } from '@connectv/core';
 import { interval } from 'rxjs';
-import { startWith, map, debounceTime } from 'rxjs/operators';
+import { startWith, map as _map, debounceTime } from 'rxjs/operators';
 
 import Renderer from '../src/renderer';
 
@@ -15,10 +15,12 @@ renderer.render(
 
     <br/><br/>
 
-    typed values: {s.to(pipe(debounceTime(200)))}
+    typed values with a delay: {s.to(pipe(debounceTime(200)))}
+    <br/>
+    <button onclick={s.from(map(() => ''))}>CLEAR!</button>
 
-    <br/><br/>
+    <hr/>
 
-    time on site: {interval(1000).pipe(map(x => x + 1), startWith(0))} seconds
+    time on site: {interval(1000).pipe(_map(x => x + 1), startWith(0))} seconds
   </div>
 ).on(document.body);
