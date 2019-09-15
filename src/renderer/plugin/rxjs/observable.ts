@@ -1,10 +1,10 @@
 import { Observable, Subscription } from 'rxjs';
 import { Bindable, Clearable } from '@connectv/core';
 
-import { RawValue } from '../../shared/types';
-import * as L from '../../shared/life-cycle';
+import { RawValue } from '../../../shared/types';
+import * as L from '../../../shared/life-cycle';
 
-import { PropertyPlugin, AppendPlugin, PluginPriority } from './plugin';
+import { PropertyPlugin, AppendPlugin, PluginPriority } from '../plugin';
 
 
 export class ObservablePlugin<R=never, T=string> 

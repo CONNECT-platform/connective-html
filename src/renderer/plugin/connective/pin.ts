@@ -1,9 +1,9 @@
 import { sink, PinLike, isPinLike } from '@connectv/core';
 
-import { RawValue } from '../../shared/types';
-import * as L from '../../shared/life-cycle';
+import { RawValue } from '../../../shared/types';
+import * as L from '../../../shared/life-cycle';
 
-import { PropertyPlugin, AppendPlugin, PluginPriority } from './plugin';
+import { PropertyPlugin, AppendPlugin, PluginPriority } from '../plugin';
 
 
 export class PinPlugin<R=never, T=string> 

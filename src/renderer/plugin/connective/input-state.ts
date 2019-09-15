@@ -1,10 +1,10 @@
 import { State, sink, wrap, map } from '@connectv/core';
 import { fromEvent } from 'rxjs';
 
-import { RawValue } from '../../shared/types';
-import * as L from '../../shared/life-cycle';
+import { RawValue } from '../../../shared/types';
+import * as L from '../../../shared/life-cycle';
 
-import { PropertyPlugin, PluginPriority } from './plugin';
+import { PropertyPlugin, PluginPriority } from '../plugin';
 import { InputStateTypeError } from './errors/input-state-type.error';
 
 

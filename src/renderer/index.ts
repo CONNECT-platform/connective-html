@@ -1,9 +1,10 @@
 import { ExtensibleRenderer } from './extensible-renderer';
-import { ObservablePlugin } from './plugin/observable';
-import { PinPlugin } from './plugin/pin';
 import { LifeCyclePlugin } from './plugin/life-cycle';
 import { EventHandlerPlugin } from './plugin/event-handler';
-import { InputStatePlugin } from './plugin/input-state';
+
+import { rxjsPlugins } from './plugin/rxjs';
+import { connectivePlugins } from './plugin/connective';
+
 import { RawValue } from '../shared/types';
 
 import { Observable } from 'rxjs';
@@ -15,10 +16,9 @@ export class ConnectiveRenderer<R = PinLike | Observable<RawValue>, T = string>
   constructor() {
     super(
       new LifeCyclePlugin(),
-      new ObservablePlugin(),
-      new PinPlugin(),
       new EventHandlerPlugin(),
-      new InputStatePlugin(),
+      ...rxjsPlugins<R, T>(),
+      ...connectivePlugins<R, T>(),
     );
   }
 }
