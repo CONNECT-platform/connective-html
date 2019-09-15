@@ -20,7 +20,7 @@ let renderer = new Renderer();
 renderer.render(<div>You have been here for {interval(1000)} seconds.</div>).on(document.body);
 ```
 
-The goals of this project are:
+The project aims to be:
 
 - surgical: render once, only update what needs to be updated when it needs to be updated, without it requiring anything else to be checked even.
 - explicit: no hidden layer between the code and the actual thing that gets run by the browser (except typescript transpiler). when you create a DOM element and render it, that IS the element that goes on the document, etc.
