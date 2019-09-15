@@ -32,11 +32,9 @@ renderer.render(
   <fragment>
     <input type='text' _state={name}/> 
     <br/>
-    <p>{
-      name
-      .to(filter((x: string) => x != 'Donald'))
-      .to(map((x: string) => 'Hellow ' + x))
-    }</p>
+    <p>{name
+      .to(filter(x => x != 'Donald'))
+      .to(map(x => 'Hellow ' + x))}</p>
   </fragment>
 ).on(document.body);
 ```
