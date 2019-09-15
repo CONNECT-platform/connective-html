@@ -11,7 +11,7 @@ npm i @connectv/html
 and [**RxJS**](https://rxjs-dev.firebaseapp.com/), enabling building modern reactive UIs with extreme explicitness
 and simplicity:
 
-```typescript
+```tsx
 import Renderer from '@connectv/html';
 import { interval } from 'rxjs';
 
