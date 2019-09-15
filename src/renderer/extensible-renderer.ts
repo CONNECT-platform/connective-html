@@ -1,11 +1,7 @@
 import { RawValue, PropsType } from '../shared/types';
 import { Renderer } from './renderer';
-import { Plugin,
-  CreatePlugin, isCreatePlugin, 
-  PostCreatePlugin, isPostCreatePlugin,
-  PropertyPlugin, isPropertyPlugin,
-  AppendPlugin, isAppendPlugin,
-  PostRenderPlugin, isPostRenderPlugin,
+import { Plugin, CreatePlugin, isCreatePlugin, PostCreatePlugin, isPostCreatePlugin, PropertyPlugin, isPropertyPlugin,
+  AppendPlugin, isAppendPlugin,PostRenderPlugin, isPostRenderPlugin,
 } from './plugin/plugin';
 
 
@@ -85,8 +81,15 @@ export class ExtensibleRenderer<Renderable=RawValue, Tag=string> extends Rendere
       return {
         target: _res.target,
         on(host: Node) {
+          let children;
+          if (node instanceof DocumentFragment) children = Array.from(node.childNodes);
+
           _res.on(host);
-          _this._postRender.forEach(plugin => plugin.postRender(node));
+
+          if (children)
+            children.forEach(child => _this._postRender.forEach(plugin => plugin.postRender(child)));
+          else
+            _this._postRender.forEach(plugin => plugin.postRender(node));
           return host;
         }
       }
