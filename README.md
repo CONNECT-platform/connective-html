@@ -8,7 +8,7 @@ npm i @connectv/html
 <br>
 
 **CONNECTIVE HTML** is a JSX-compliant pure DOM renderer that is highly integrated with [**CONNECTIVE**](https://connective.dev)
-and [**RxJS**](https://rxjs-dev.firebaseapp.com/), enabling building of modern reactive UIs with extreme explicitness
+and [**RxJS**](https://rxjs-dev.firebaseapp.com/), enabling building modern reactive UIs with extreme explicitness
 and simplicity:
 
 ```typescript
