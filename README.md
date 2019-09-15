@@ -30,7 +30,7 @@ This essentially means:
 
 - Directly working with DOM API
 - Fixing templating (and componenting) hassle with JSX
-- Fixing reactivity (state management) with **CONNECTIVE**/**RxJS**
+- Fixing reactivity (state management) hassle with **CONNECTIVE**/**RxJS**
 
 Which means you will get about as performant as it gets (benchmarks needed), while also being a modern, intuitive framework. Naturally you would need to know a bit about either one of **CONNECTIVE** or **RxJS** (or both), and generally be able to think reactively.
 
