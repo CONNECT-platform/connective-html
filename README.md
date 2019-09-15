@@ -34,8 +34,8 @@ renderer.render(
     <br/>
     <p>{
       name
-      .to(filter((x: string) => x != 'Donald'))
-      .to(map((x: string) => 'Hellow ' + x))
+      .to(filter(x => x != 'Donald'))
+      .to(map(x => 'Hellow ' + x))
     }</p>
   </fragment>
 ).on(document.body);
