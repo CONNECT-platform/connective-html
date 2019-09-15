@@ -1,5 +1,7 @@
 declare module JSX {
   interface IntrinsicElements {
+    /**HTML Fragments */
+    fragment: {};
     /**Defines a hyperlink */
     a: HTML.AAttributes;
     /**Defines an abbreviation or an acronym */

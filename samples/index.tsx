@@ -11,9 +11,11 @@ let s = state('hellow!');
 renderer.render(
   <div>
     <input type='text' _state={s}></input>
-    <textarea _state={s}></textarea>
+    <fragment>
+      <textarea _state={s}></textarea>
 
-    <br/><br/>
+      <br/><br/>
+    </fragment>
 
     typed values with a delay: {s.to(pipe(debounceTime(200)))}
     <br/>

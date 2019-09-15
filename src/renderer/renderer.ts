@@ -18,9 +18,13 @@ export class Renderer<Renderable=RawValue, Tag=string> {
     ...children: (Renderable | RawValue | Node)[]
   ): Node {
     if (typeof tag == 'string') {
-      let el = document.createElement(tag);
-      if (props)
-        Object.entries(props).forEach(([prop, target]) => this.setprop(prop, target, el));
+      let el: Node;
+      if (tag === 'fragment') el = document.createDocumentFragment();
+      else {
+        el = document.createElement(tag);
+        if (props)
+          Object.entries(props).forEach(([prop, target]) => this.setprop(prop, target, el as HTMLElement));
+      }
       
       children.forEach(child => this.append(child, el));
       return el;
