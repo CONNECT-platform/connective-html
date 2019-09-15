@@ -20,6 +20,27 @@ let renderer = new Renderer();
 renderer.render(<div>You have been here for {interval(1000)} seconds.</div>).on(document.body);
 ```
 
+```tsx
+import { state, filter, map } from '@connectv/core';
+import Renderer from '@connectv/html';
+
+let renderer = new Renderer();
+
+let name = state();
+
+renderer.render(
+  <fragment>
+    <input type='text' _state={name}/> 
+    <br/>
+    <p>{
+      name
+      .to(filter((x: string) => x != 'Donald'))
+      .to(map((x: string) => 'Hellow ' + x))
+    }</p>
+  </fragment>
+).on(document.body);
+```
+
 The project aims to be:
 
 - surgical: render once, only update what needs to be updated when it needs to be updated, without it requiring anything else to be checked even.

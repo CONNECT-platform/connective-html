@@ -55,13 +55,25 @@ export class Renderer<Renderable=RawValue, Tag=string> {
   }
 
   public render(node: Node): ToBeRendered {
-    return {
-      target: node,
-      on(host: Node) {
-        host.appendChild(node);
-        return host;
-      }
-    };
+    if (node instanceof DocumentFragment) {
+      let _this = this;
+      return {
+        target: node,
+        on(host: Node) {
+          node.childNodes.forEach(child => _this.render(child).on(host));
+          return host;
+        }
+      };
+    }
+    else {
+      return {
+        target: node,
+        on(host: Node) {
+          host.appendChild(node);
+          return host;
+        }
+      };
+    }
   }
 }
 
