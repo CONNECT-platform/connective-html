@@ -1,10 +1,12 @@
 import { state, filter, map, value } from '@connectv/core';
 
+import ref from '../src/renderer/ref';
 import Renderer from '../src/renderer';
 let renderer = new Renderer();
 
 
 let name = state();
+let btn = ref();
 
 renderer.render(
   <fragment>
@@ -15,6 +17,8 @@ renderer.render(
       .to(filter((x: string) => x.toLowerCase() != 'donald'))
       .to(map((x: string) => x ? 'Hellow ' + x + '!' : ''))
     }</p>
-    <button onclick={name.from(value('Welt'))}>World!</button>
+    <button _ref={btn} onclick={name.from(value('Welt'))}>World!</button>
   </fragment>
 ).on(document.body);
+
+console.log(btn);

@@ -3,6 +3,10 @@ declare module HTML {
     | import('rxjs').BehaviorSubject<import('../shared/types').RawValue> 
     | import('rxjs').BehaviorSubject<string>;
 
+  interface Attributes {
+    _ref?: import('../renderer/ref').Ref;
+  }
+
   interface InputAttributes {
     _state?: StateType;
   }

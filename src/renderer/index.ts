@@ -1,6 +1,7 @@
 import { ExtensibleRenderer } from './extensible-renderer';
 import { LifeCyclePlugin } from './plugin/life-cycle';
 import { EventHandlerPlugin } from './plugin/event-handler';
+import { RefPlugin } from './plugin/ref';
 
 import { rxjsPlugins } from './plugin/rxjs';
 import { connectivePlugins } from './plugin/connective';
@@ -15,8 +16,9 @@ export class ConnectiveRenderer<R = PinLike | Observable<RawValue>, T = string>
   extends ExtensibleRenderer<R, T> {
   constructor() {
     super(
-      new LifeCyclePlugin(),
-      new EventHandlerPlugin(),
+      new LifeCyclePlugin<R, T>(),
+      new EventHandlerPlugin<R, T>(),
+      new RefPlugin<R, T>(),
       ...rxjsPlugins<R, T>(),
       ...connectivePlugins<R, T>(),
     );
