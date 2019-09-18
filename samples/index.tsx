@@ -5,14 +5,20 @@ let renderer = new Renderer();
 
 
 let a = state();
+let m = state(true);
+let h = state(false);
 
 renderer.render(
 <fragment>
-  <select _state={a}>
-    <option>--</option>
+  <select _state={a} multiple={m} hidden={h}>
     <option _value={{msg: 'hellow'}}>Hellow!</option>
     <option _value={{msg: 'world'}}>World!</option>
   </select>
-  {a.to(map((x: any) => (x&&x.msg)?x.msg:''))}
+  <br/>
+  <input type="checkbox" _state={m}/>Multi?
+  <br/>
+  <input type="checkbox" _state={h}/>Hidden?
 </fragment>
 ).on(document.body);
+
+a.subscribe(console.log);

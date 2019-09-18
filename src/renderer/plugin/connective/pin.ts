@@ -14,7 +14,14 @@ export class PinPlugin<R=never, T=string>
 
   setprop(prop: string, target: RawValue | R | PinLike, host: HTMLElement): boolean {
     if (isPinLike(target)) {
-      L.attach(target.to(sink(v => host.setAttribute(prop, v.toString()))), host);
+      L.attach(target.to(sink(v => {
+        if (typeof v === 'boolean') {
+          if (v) host.setAttribute(prop, '');
+          else host.removeAttribute(prop);
+        }
+        else
+          host.setAttribute(prop, v.toString())
+      })), host);
       return true;
     }
     else return false;

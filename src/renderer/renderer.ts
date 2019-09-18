@@ -35,8 +35,12 @@ export class Renderer<Renderable=RawValue, Tag=string> {
   }
 
   public setprop(prop: string, target: RawValue | Renderable, host: HTMLElement) {
-    if (isRawValue(target))
-      host.setAttribute(prop, target.toString());
+    if (isRawValue(target)) {
+      if (typeof target === 'boolean' && target)
+        host.setAttribute(prop, '');
+      else
+        host.setAttribute(prop, target.toString());
+    }
     else {
       throw new UnsupportedPropError(target, this);
     }
