@@ -8,6 +8,8 @@ let a = state();
 let m = state(true);
 let h = state(false);
 
+let marker = renderer.render(<div>*********************</div>).on(document.body);
+
 renderer.render(
 <fragment>
   <select _state={a} multiple={m} hidden={h}>
@@ -19,6 +21,6 @@ renderer.render(
   <br/>
   <input type="checkbox" _state={h}/>Hidden?
 </fragment>
-).on(document.body);
+).before(marker);
 
 a.subscribe(console.log);

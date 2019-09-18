@@ -7,6 +7,8 @@ import { UnsupportedChildError } from './error/unsupported-child.error';
 
 export interface ToBeRendered {
   on(host: Node): Node;
+  after(ref: Node): Node;
+  before(ref: Node): Node;
   target: Node;
 }
 
@@ -64,6 +66,16 @@ export class Renderer<Renderable=RawValue, Tag=string> {
       on(host: Node) {
         host.appendChild(node);
         return host;
+      },
+      before(ref: Node) {
+        if (ref.parentNode)
+          ref.parentNode.insertBefore(node, ref);
+        return ref;
+      },
+      after(ref: Node) {
+        if (ref.parentNode)
+          ref.parentNode.insertBefore(node, ref.nextSibling);
+        return node;
       }
     };
   }

@@ -5,6 +5,9 @@ import { Plugin, CreatePlugin, isCreatePlugin, PostCreatePlugin, isPostCreatePlu
 } from './plugin/plugin';
 
 
+//
+// TODO: simplify the code
+//
 export class ExtensibleRenderer<Renderable=RawValue, Tag=string> extends Renderer<Renderable, Tag> {
   readonly plugins: Plugin<Renderable, Tag>[];
   private _create: CreatePlugin<Renderable, Tag>[];
@@ -78,20 +81,25 @@ export class ExtensibleRenderer<Renderable=RawValue, Tag=string> extends Rendere
     let _res = super.render(node);
     if (this._postRender) {
       let _this = this;
+
+      let _do = (_fn: () => Node) => {
+        let children;
+        if (node instanceof DocumentFragment) children = Array.from(node.childNodes);
+
+        let _R = _fn();
+
+        if (children)
+          children.forEach(child => _this._postRender.forEach(plugin => plugin.postRender(child)));
+        else
+          _this._postRender.forEach(plugin => plugin.postRender(node));
+        return _R;
+      };
+
       return {
         target: _res.target,
-        on(host: Node) {
-          let children;
-          if (node instanceof DocumentFragment) children = Array.from(node.childNodes);
-
-          _res.on(host);
-
-          if (children)
-            children.forEach(child => _this._postRender.forEach(plugin => plugin.postRender(child)));
-          else
-            _this._postRender.forEach(plugin => plugin.postRender(node));
-          return host;
-        }
+        on(host: Node) { return _do(() => _res.on(host)); },
+        before(ref: Node) { return _do(() => _res.before(ref)); },
+        after(ref: Node) { return _do(() => _res.after(ref)); }
       }
     }
     else
