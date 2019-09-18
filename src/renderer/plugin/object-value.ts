@@ -3,7 +3,7 @@ import { RawValue } from '../../shared/types';
 
 
 export class ObjectValuePlugin<R, T> implements PropertyPlugin<any | R, T> {
-  priority = PluginPriority.High;
+  priority = PluginPriority.Fallback;
 
   setprop(prop: string, target: any | R | RawValue, host: HTMLElement): boolean {
     if (prop === '_value' && (host instanceof HTMLOptionElement || host instanceof HTMLInputElement)) {
