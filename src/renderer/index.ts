@@ -2,7 +2,7 @@ import { ExtensibleRenderer } from './extensible-renderer';
 import { LifeCyclePlugin } from './plugin/life-cycle';
 import { EventHandlerPlugin } from './plugin/event-handler';
 import { RefPlugin } from './plugin/ref';
-import { OptionValuePlugin } from './plugin/option-value';
+import { ObjectValuePlugin } from './plugin/object-value';
 
 import { rxjsPlugins } from './plugin/rxjs';
 import { connectivePlugins } from './plugin/connective';
@@ -20,7 +20,7 @@ export class ConnectiveRenderer<R = PinLike | Observable<RawValue>, T = string>
       new LifeCyclePlugin<R, T>(),
       new EventHandlerPlugin<R, T>(),
       new RefPlugin<R, T>(),
-      new OptionValuePlugin<R, T>(),
+      new ObjectValuePlugin<R, T>(),
       ...rxjsPlugins<R, T>(),
       ...connectivePlugins<R, T>(),
     );

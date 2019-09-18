@@ -8,10 +8,11 @@ let a = state();
 
 renderer.render(
 <fragment>
-  <select _state={a} multiple>
-    <option _value={{msg: 'hellow'}}>Hellow</option>
-    <option _value={{msg: 'world'}}>World</option>
+  <select _state={a}>
+    <option>--</option>
+    <option _value={{msg: 'hellow'}}>Hellow!</option>
+    <option _value={{msg: 'world'}}>World!</option>
   </select>
-  {a.to(map((l: any[]) => l.map(x => x.msg)))}
+  {a.to(map((x: any) => (x&&x.msg)?x.msg:''))}
 </fragment>
 ).on(document.body);

@@ -9,6 +9,7 @@ declare module HTML {
 
   interface InputAttributes {
     _state?: StateType;
+    _value?: any;
   }
 
   interface TextAreaAttributes {
