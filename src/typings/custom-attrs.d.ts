@@ -1,6 +1,6 @@
 declare module HTML {
   type StateType = import('@connectv/core').State 
-    | import('rxjs').BehaviorSubject<import('../shared/types').RawValue> 
+    | import('rxjs').BehaviorSubject<any> 
     | import('rxjs').BehaviorSubject<string>;
 
   interface Attributes {
@@ -13,5 +13,13 @@ declare module HTML {
 
   interface TextAreaAttributes {
     _state?: StateType;
+  }
+
+  interface SelectAttributes {
+    _state?: StateType;
+  }
+
+  interface OptionAttributes {
+    _value?: any;
   }
 }

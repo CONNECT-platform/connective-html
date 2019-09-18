@@ -6,10 +6,11 @@ import { RawValue } from '../../../shared/types';
 import * as L from '../../../shared/life-cycle';
 
 import { PropertyPlugin, PluginPriority } from '../plugin';
+import { setInputValue, getInputValue } from '../util/input-value';
 
 
-export class InputSubjectPlugin<R, T> implements PropertyPlugin<BehaviorSubject<RawValue> | R, T> {
-  setprop(prop: string, target: RawValue | R | BehaviorSubject<RawValue>, host: HTMLElement): boolean {
+export class InputSubjectPlugin<R, T> implements PropertyPlugin<BehaviorSubject<any> | R, T> {
+  setprop(prop: string, target: RawValue | R | BehaviorSubject<any>, host: HTMLElement): boolean {
     if (prop === '_state' && (
           host instanceof HTMLInputElement ||
           host instanceof HTMLTextAreaElement
@@ -19,8 +20,9 @@ export class InputSubjectPlugin<R, T> implements PropertyPlugin<BehaviorSubject<
 
       L.attach(<Bindable & Clearable>{
         bind() { 
-          sub.add(fromEvent(host, 'input').pipe(map(() => host.value)).subscribe(target));
-          sub.add(target.subscribe(v => host.value = v.toString()));
+          sub.add(fromEvent(host, 'input')
+            .pipe(map(() => getInputValue(host))).subscribe(target));
+          sub.add(target.subscribe(v => setInputValue(host, v)));
         },
         clear() { sub.unsubscribe(); },
       }, host);
