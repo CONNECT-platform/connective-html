@@ -21,7 +21,11 @@ renderer.render(
   <input type="checkbox" _state={m}/>Multi?
   <br/>
   <input type="checkbox" _state={h}/>Hidden?
-  {<button onclick={() => {v.value = [{msg: 'X'}, {msg: 'Y'}]}}>Change Values</button>}
+  <button onclick={() => {v.value = [{msg: 'X'}, {msg: 'Y'}]}}>Change Values</button>
+  <select _state={a}>
+    <option _value={v.to(map((l: any[]) => l[0]))}>{v.to(map((l: any[]) => l[0].msg))}</option>
+    <option _value={v.to(map((l: any[]) => l[1]))}>{v.to(map((l: any[]) => l[1].msg))}</option>
+  </select>
 </fragment>
 ).before(marker);
 
