@@ -1,24 +1,33 @@
 import { RawValue, PropsType } from '../shared/types';
 import { Renderer } from './renderer';
-import { Plugin, CreatePlugin, isCreatePlugin, PostCreatePlugin, isPostCreatePlugin, PropertyPlugin, isPropertyPlugin,
-  AppendPlugin, isAppendPlugin,PostRenderPlugin, isPostRenderPlugin,
-} from './plugin/plugin';
+import { Plugin, PluginHost, isCreatePlugin, isPostCreatePlugin, isPropertyPlugin, isAppendPlugin, isPostRenderPlugin } 
+  from './plugin/plugin';
 
 
-export class ExtensibleRenderer<Renderable=RawValue, Tag=string> extends Renderer<Renderable, Tag> {
+export class ExtensibleRenderer<Renderable=RawValue, Tag=string> 
+  extends Renderer<Renderable, Tag>
+  implements PluginHost<Renderable, Tag> {
   readonly plugins: Plugin<Renderable, Tag>[];
-
-  private _plug<T extends Plugin<Renderable, Tag>>(plugin: T) {
-    if (!this.plugins.includes(plugin)) {
-      this.plugins.push(plugin);
-      this.plugins.sort((a, b) => a.priority - b.priority);
-    }
-  }
 
   constructor(...plugins: Plugin<Renderable, Tag>[]) {
     super();
     this.plugins = [];
-    plugins.forEach(plugin => this._plug(plugin));
+
+    for (let i = 0; i < plugins.length; i++) {
+      const plugin = plugins[i];
+
+      if (!this.plugins.includes(plugin)) {
+        if (plugin.unique !== undefined) {
+          let filter = plugin.unique;
+          this.plugins = this.plugins.filter(p => !filter(p));
+        }
+  
+        this.plugins.push(plugin);
+        if (plugin.plugged) plugin.plugged(this);
+      }
+    }
+
+    this.plugins.sort((a, b) => a.priority - b.priority);
   }
 
   public plug(...plugins: Plugin<Renderable, Tag>[]) {
@@ -31,7 +40,7 @@ export class ExtensibleRenderer<Renderable=RawValue, Tag=string> extends Rendere
       ...children: (RawValue | Renderable | Node)[]
   ): Node {
     let _node: Node | undefined = undefined;
-    this.plugins.filter(isCreatePlugin).some(plugin => !!(_node = plugin.create(tag, props, ...children)));
+    this.plugins.some(plugin => isCreatePlugin(plugin) && !!(_node = plugin.create(tag, props, ...children)));
     if (_node) return _node;
 
     _node = super.create(tag, props, ...children);

@@ -1,19 +1,13 @@
 import { PropsType, RawValue, isRawValue } from '../shared/types';
 
+import { ToBeRendered, RendererLike } from './renderer-like';
+
 import { UnsupportedTagTypeError } from './error/unsupported-tag.error';
 import { UnsupportedPropError } from './error/unsupported-prop.error';
 import { UnsupportedChildError } from './error/unsupported-child.error';
 
 
-export interface ToBeRendered {
-  on(host: Node): Node;
-  after(ref: Node): Node;
-  before(ref: Node): Node;
-  target: Node;
-}
-
-
-export class Renderer<Renderable=RawValue, Tag=string> {
+export class Renderer<Renderable=RawValue, Tag=string> implements RendererLike<Renderable, Tag> {
   public create(
     tag: string | Tag, 
     props: PropsType<Renderable | RawValue> | undefined, 
@@ -80,5 +74,6 @@ export class Renderer<Renderable=RawValue, Tag=string> {
     };
   }
 }
+
 
 export default Renderer;

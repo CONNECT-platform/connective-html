@@ -1,4 +1,5 @@
 import { RawValue, PropsType } from '../../shared/types';
+import { RendererLike } from '../renderer-like';
 
 
 export enum PluginPriority {
@@ -7,14 +8,21 @@ export enum PluginPriority {
 }
 
 
+export interface PluginHost<Renderable, Tag> extends RendererLike<Renderable, Tag> {
+  readonly plugins: Plugin<Renderable, Tag>[];
+}
+
+
 export interface Plugin<Renderable=RawValue, Tag=string> {
   priority: PluginPriority;
+  plugged?(host: PluginHost<Renderable, Tag>): void;
+  unique?(plugin: Plugin<Renderable, Tag>): boolean;
 }
 
 
 export interface CreatePlugin<Renderable=RawValue, Tag=string> extends Plugin<Renderable, Tag> {
   create(tag: string | Tag, props: PropsType<RawValue | Renderable> | undefined, 
-    ...children: (Renderable | RawValue | Node)[]): Node;
+    ...children: (Renderable | RawValue | Node)[]): Node | undefined;
 }
 
 
