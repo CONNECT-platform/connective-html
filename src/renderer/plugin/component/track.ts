@@ -5,6 +5,7 @@ import * as L from '../../../shared/life-cycle';
 
 import { PluginPriority } from '../plugin';
 import { CompProcessPlugin, CompFunc } from './basic-plugins';
+import { FragmentTrackingError } from './errors/fragment-tracking.error';
 
 
 export type TrackFunction = (whatever: Bindable | Clearable) => void;
@@ -22,7 +23,11 @@ export class TrackPlugin<Renderable=RawValue, Tag=CompFunc<Renderable | string> 
     let tracked = <(Bindable | Clearable)[]>[];
     extras.track = <TrackFunction>((whatever: Bindable | Clearable) => tracked.push(whatever));
 
-    return (node: Node) => tracked.forEach(thing => L.attach(thing, node));
+    return (node: Node) => {
+      if (node instanceof DocumentFragment)
+        throw new FragmentTrackingError(_);
+      tracked.forEach(thing => L.attach(thing, node));
+    }
   }
 
   priority = PluginPriority.High;
