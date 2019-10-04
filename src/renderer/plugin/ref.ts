@@ -1,6 +1,8 @@
-import { PropertyPlugin, PluginPriority } from './plugin';
 import { Ref } from '../ref';
 import { RawValue } from '../../shared/types';
+
+import { PluginPriority } from './plugin';
+import { PropertyPlugin } from './basic-plugins';
 
 
 export class RefPlugin<R, T> implements PropertyPlugin<Ref | R, T> {

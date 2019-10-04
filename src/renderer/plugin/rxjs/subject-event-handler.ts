@@ -1,7 +1,9 @@
 import { Subject, fromEvent } from 'rxjs';
 
-import { PropertyPlugin, PluginPriority } from '../plugin';
 import { RawValue } from '../../../shared/types';
+
+import { PluginPriority } from '../plugin';
+import { PropertyPlugin } from '../basic-plugins';
 
 
 export class SubjectEventHandlerPlugin<R, T> implements PropertyPlugin<HTML.EventHandler | R, T> {

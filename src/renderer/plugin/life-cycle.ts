@@ -1,7 +1,8 @@
 import { RawValue } from '../../shared/types';
 import * as L from '../../shared/life-cycle';
 
-import { PostRenderPlugin, PluginPriority } from './plugin';
+import { PluginPriority } from './plugin';
+import { PostRenderPlugin } from './basic-plugins';
 
 
 export class LifeCyclePlugin<R=RawValue, T=String> implements PostRenderPlugin<R, T> {

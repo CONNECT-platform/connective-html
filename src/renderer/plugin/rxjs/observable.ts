@@ -4,7 +4,8 @@ import { Bindable, Clearable } from '@connectv/core';
 import { RawValue } from '../../../shared/types';
 import * as L from '../../../shared/life-cycle';
 
-import { PropertyPlugin, AppendPlugin, PluginPriority } from '../plugin';
+import { PluginPriority } from '../plugin';
+import { PropertyPlugin, AppendPlugin } from '../basic-plugins';
 
 
 export class ObservablePlugin<R=never, T=string> 

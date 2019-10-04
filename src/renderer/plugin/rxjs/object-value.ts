@@ -4,7 +4,8 @@ import { Observable, Subscription } from 'rxjs';
 import { RawValue } from '../../../shared/types';
 import * as L from '../../../shared/life-cycle';
 
-import { PropertyPlugin, PluginPriority } from '../plugin';
+import { PluginPriority } from '../plugin';
+import { PropertyPlugin } from '../basic-plugins';
 
 
 export class ObservableObjectValuePlugin<R, T> implements PropertyPlugin<Observable<any> | R, T> {

@@ -1,5 +1,7 @@
-import { PropertyPlugin, PluginPriority } from './plugin';
 import { RawValue } from '../../shared/types';
+
+import { PluginPriority } from './plugin';
+import { PropertyPlugin } from './basic-plugins';
 
 
 export class EventHandlerPlugin<R, T> implements PropertyPlugin<HTML.EventHandler | R, T> {

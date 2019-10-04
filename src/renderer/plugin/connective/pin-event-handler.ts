@@ -1,8 +1,10 @@
 import { isPinLike, wrap } from '@connectv/core';
 import { fromEvent } from 'rxjs';
 
-import { PropertyPlugin, PluginPriority } from '../plugin';
 import { RawValue } from '../../../shared/types';
+
+import { PluginPriority } from '../plugin';
+import { PropertyPlugin } from '../basic-plugins';
 
 
 export class PinEventHandlerPlugin<R, T> implements PropertyPlugin<HTML.EventHandler | R, T> {

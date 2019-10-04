@@ -3,7 +3,8 @@ import { sink, PinLike, isPinLike } from '@connectv/core';
 import { RawValue } from '../../../shared/types';
 import * as L from '../../../shared/life-cycle';
 
-import { PropertyPlugin, AppendPlugin, PluginPriority } from '../plugin';
+import { PluginPriority } from '../plugin';
+import { PropertyPlugin, AppendPlugin } from '../basic-plugins';
 
 
 export class PinPlugin<R=never, T=string> 

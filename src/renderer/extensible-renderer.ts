@@ -1,7 +1,9 @@
 import { RawValue, PropsType } from '../shared/types';
+
 import { Renderer } from './renderer';
-import { Plugin, PluginHost, isCreatePlugin, isPostCreatePlugin, isPropertyPlugin, isAppendPlugin, isPostRenderPlugin } 
-  from './plugin/plugin';
+import { Plugin, PluginHost } from './plugin/plugin';
+import { isCreatePlugin, isPostCreatePlugin, isPropertyPlugin, isAppendPlugin, isPostRenderPlugin } 
+  from './plugin/basic-plugins';
 
 
 export class ExtensibleRenderer<Renderable=RawValue, Tag=string> 
