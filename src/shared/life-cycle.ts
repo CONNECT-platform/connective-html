@@ -26,24 +26,19 @@ export function bind(node: Node) {
 
   node.childNodes.forEach(bind);
 
-  if (node.parentNode) {
+  if (node.parentNode && !(node.parentNode as any).childObserver) {
     let observer = new MutationObserver(changes => {
-      setImmediate(() => {
-        if (changes.some(change => {
-          if (!change.removedNodes) return false;
-          for (let i = 0; i < change.removedNodes.length; i++) {
-            if (change.removedNodes.item(i) === node) return true;
-          }
-
-          return false;
-        })) {
-          clear(node);
-          observer.disconnect();
-        }
+      changes.forEach(change => {
+        if (change.removedNodes)
+          change.removedNodes.forEach(clear);
       });
     });
 
     observer.observe(node.parentNode, { childList: true });
+    (node.parentNode as any).childObserver = observer;
+    attach(<Clearable>{
+      clear() { observer.disconnect(); }
+    }, node.parentNode);
   }
 }
 
