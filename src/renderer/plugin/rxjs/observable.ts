@@ -19,7 +19,16 @@ export class ObservablePlugin<R=never, T=string>
       let sub: Subscription;
 
       L.attach(<Bindable & Clearable>{
-        bind() { sub = target.subscribe(v => host.setAttribute(prop, v.toString())) },
+        bind() { 
+          sub = target.subscribe(v => {
+            if (typeof v === 'boolean') {
+              if (v) host.setAttribute(prop, '');
+              else host.removeAttribute(prop);
+            }
+            else
+              host.setAttribute(prop, v.toString())
+          }); 
+        },
         clear() { sub.unsubscribe(); },
       }, host);
 
