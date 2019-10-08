@@ -3,11 +3,16 @@ import { interval } from 'rxjs';
 
 import { ComponentThis } from '../src/renderer/plugin/component/types';
 import Renderer from '../src/renderer';
+import input from '../src/renderer/plugin/connective/comp-input';
 
 
-function MyComp(this: ComponentThis, {msg}: {msg: string}, renderer: Renderer) {
-  this.track(wrap(interval(1000)).to(sink(console.log)));
-  return <div>{msg}</div>;
+function MyComp(this: ComponentThis, props: {msg: string, i?: any}, renderer: Renderer) {
+  let i = input({required: true});
+  this.track(i.to(sink(console.log)));
+
+  i.name('i').read(props);
+
+  return <div>{props.msg}</div>;
 }
 
 
