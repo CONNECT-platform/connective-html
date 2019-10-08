@@ -14,6 +14,7 @@ import { RawValue } from '../shared/types';
 import { Observable } from 'rxjs';
 import { PinLike } from '@connectv/core';
 import { TrackPlugin } from './plugin/component/track';
+import { InnerHTMLPlugin } from './plugin/inner-html';
 
 
 export class ConnectiveRenderer<R = PinLike | Observable<RawValue>, T = string | CompFunc<R, string>> 
@@ -24,6 +25,7 @@ export class ConnectiveRenderer<R = PinLike | Observable<RawValue>, T = string |
       new EventHandlerPlugin<R | PinLike | Observable<RawValue>, T | CompFunc<R, string>>(),
       new RefPlugin<R | PinLike | Observable<RawValue>, T | CompFunc<R, string>>(),
       new ObjectValuePlugin<R | PinLike | Observable<RawValue>, T | CompFunc<R, string>>(),
+      new InnerHTMLPlugin<R | PinLike | Observable<RawValue>, T | CompFunc<R, string>>(),
       new ComponentPlugin<R | PinLike | Observable<RawValue>, T | CompFunc<R, string>>(),
       new TrackPlugin<R | PinLike | Observable<RawValue>, T | CompFunc<R, string>>(),
       ...rxjsPlugins<R | PinLike | Observable<RawValue>, T | CompFunc<R, string>>(),

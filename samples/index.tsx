@@ -15,4 +15,8 @@ let renderer = new Renderer();
 let x = <MyComp msg='hellow'/>;
 renderer.render(x).on(document.body);
 
-setTimeout(() => x.remove(), 5000);
+x.addEventListener('click', () => x.remove());
+
+renderer.render(
+  <div _innerHTML={wrap(interval(500)).to(map((x: number) => `<h1>${x}</h1>`))}></div>
+).before(x);

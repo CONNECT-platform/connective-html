@@ -1,4 +1,6 @@
 declare module JSX {
+  type Element = HTMLElement; // --> components should return plain html elements
+
   interface IntrinsicElements {
     /**HTML Fragments */
     fragment: {};

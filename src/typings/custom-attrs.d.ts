@@ -5,6 +5,7 @@ declare module HTML {
 
   interface Attributes {
     _ref?: import('../renderer/ref').Ref;
+    _innerHTML?: HTML.Renderable;
   }
 
   interface InputAttributes {
