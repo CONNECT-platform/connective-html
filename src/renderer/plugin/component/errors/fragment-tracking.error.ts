@@ -1,4 +1,5 @@
-import { CompFunc } from "../basic-plugins";
+import { CompFunc } from "../types";
+
 
 
 export class FragmentTrackingError extends Error {

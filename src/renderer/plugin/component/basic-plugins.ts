@@ -1,33 +1,7 @@
 import { Plugin } from '../plugin';
 import { RawValue, PropsType } from '../../../shared/types';
 import { RendererLike } from '../../renderer-like';
-
-
-export type CompFunc<Renderable=RawValue, Tag=string> = (
-  props: PropsType<RawValue | Renderable> | undefined,
-  renderer: RendererLike<Renderable | RawValue, Tag | string | CompFunc<Renderable, Tag>>,
-  children?: (RawValue | Renderable | Node)[]) => Node;
-
-
-export interface CompInSignature {
-  in: {[name: string]: any};
-  out?: {[name: string]: any};
-  states?: {[name: string]: any};
-}
-
-export interface CompOutSignature {
-  in?: {[name: string]: any};
-  out: {[name: string]: any};
-  states?: {[name: string]: any};
-}
-
-export interface CompStateSignature {
-  in?: {[name: string]: any};
-  out?: {[name: string]: any};
-  states: {[name: string]: any};
-}
-
-export type ComponentSignature = CompInSignature | CompOutSignature | CompStateSignature;
+import { CompFunc, ComponentSignature } from './types';
 
 
 export interface CompProcessPlugin<Renderable=RawValue, Tag=string>

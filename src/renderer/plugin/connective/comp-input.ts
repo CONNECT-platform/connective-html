@@ -3,31 +3,13 @@ import { PropsType } from "../../../shared/types";
 import { Observable } from "rxjs";
 import { ComponentInputMissingError } from "../component/errors/input-missing.error";
 import { UnnamedComponentInputError } from "../component/errors/unnamed-input.error";
+import { CompInputOptions, CompInputOptionsSpecified } from "../component/types";
 
 
-interface CompInputOptionsRequired {
-  required: true;
-  default?: never;
-}
-
-interface CompInputOptionsNotRequired {
-  required: false;
-  default?: any;
-}
-
-export type CompInputOptionsSpecified = CompInputOptionsNotRequired | CompInputOptionsRequired;
-
-interface CompInputOptionsNotSpecified {
-  default?: any;
-}
-
-export type CompInputOptions = CompInputOptionsSpecified | CompInputOptionsNotSpecified;
-
-
-export class CompInputPin extends Pin {
+export class CompInputPin<T> extends Pin {
   _name: string;
 
-  constructor(readonly options: CompInputOptions = {required: false}) {
+  constructor(readonly options: CompInputOptions<T> = {required: false}) {
     super();
   }
 
@@ -42,7 +24,7 @@ export class CompInputPin extends Pin {
         else value(_target).to(this);
       }
       else {
-        if ((<CompInputOptionsSpecified>this.options).required) {
+        if ((<CompInputOptionsSpecified<any>>this.options).required) {
           throw new ComponentInputMissingError(this._name, props);
         }
         else if (this.options.default) {
@@ -57,7 +39,7 @@ export class CompInputPin extends Pin {
 }
 
 
-export function input(options: CompInputOptions = {required: false}) {
+export function input<T>(options: CompInputOptions<T> = {required: false}) {
   return new CompInputPin(options);
 }
 

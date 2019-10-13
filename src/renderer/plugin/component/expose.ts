@@ -1,15 +1,8 @@
 import { RawValue, PropsType } from '../../../shared/types';
 
 import { PluginPriority, PluginHost } from '../plugin';
-import { CompProcessPlugin, CompFunc, ComponentSignature, isCompIOPlugin } from './basic-plugins';
-
-
-export type ExposeFunction = {
-  (signature: ComponentSignature): void;
-  in: (name: string, input: any) => void;
-  out: (name: string, output: any) => void;
-  state: (name: string, state: any) => void;
-};
+import { CompProcessPlugin, isCompIOPlugin } from './basic-plugins';
+import { CompFunc, ComponentSignature, ExposeFunction } from './types';
 
 
 export class ExposePlugin<Renderable=RawValue, Tag=CompFunc<Renderable | string> | string>

@@ -4,11 +4,9 @@ import { RawValue } from '../../../shared/types';
 import * as L from '../../../shared/life-cycle';
 
 import { PluginPriority } from '../plugin';
-import { CompProcessPlugin, CompFunc } from './basic-plugins';
+import { CompProcessPlugin } from './basic-plugins';
 import { FragmentTrackingError } from './errors/fragment-tracking.error';
-
-
-export type TrackFunction = (whatever: Bindable | Clearable) => void;
+import { CompFunc, TrackFunction } from './types';
 
 
 export class TrackPlugin<Renderable=RawValue, Tag=CompFunc<Renderable | string> | string>

@@ -1,7 +1,8 @@
 import { PluginPriority, PluginHost } from '../plugin';
 import { CreatePlugin } from '../basic-plugins';
 import { RawValue, PropsType } from '../../../shared/types';
-import { CompFunc, isCompProcessPlugin } from './basic-plugins';
+import { isCompProcessPlugin } from './basic-plugins';
+import { CompFunc } from './types';
 
 
 export class ComponentPlugin<Renderable=RawValue, Tag=CompFunc<Renderable, string> | string>

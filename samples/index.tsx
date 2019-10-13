@@ -17,8 +17,8 @@ function MyComp(this: ComponentThis, props: {msg: string, i?: any}, renderer: Re
 
 
 let renderer = new Renderer();
-let x = <MyComp msg='hellow'/>;
-renderer.render(x).on(document.body);
+let x = <MyComp msg='hellow' i={interval(1000)}/>;
+renderer.render(<fragment><fragment>{x}</fragment></fragment>).on(document.body);
 
 x.addEventListener('click', () => x.remove());
 
