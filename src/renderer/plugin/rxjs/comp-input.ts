@@ -26,8 +26,8 @@ implements CompIOPlugin<Renderable, Tag> {
     signature: ComponentSignature, 
     props?: PropsType<RawValue | Renderable> | undefined, 
     ): void {
-    if (signature.in) {
-      Object.entries(signature.in).forEach(([name, input]) => {
+    if (signature.inputs) {
+      Object.entries(signature.inputs).forEach(([name, input]) => {
         if (input instanceof Subject) {
           let options: CompInputOptions<any> = { required: false };
           if (input instanceof CompInputSubject) options = input.options;

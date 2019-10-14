@@ -22,19 +22,19 @@ export class ExposePlugin<Renderable=RawValue, Tag=CompFunc<Renderable | string>
   ): (node: Node) => void {
 
     let _signature = <ComponentSignature>{
-      in: {},
-      out: {},
+      inputs: {},
+      outputs: {},
       states: {}
     };
     
     let expose: ExposeFunction = ((signature: ComponentSignature) => {
-      if (signature.in) Object.assign(_signature.in, signature.in);
-      if (signature.out) Object.assign(_signature.out, signature.out);
+      if (signature.inputs) Object.assign(_signature.inputs, signature.inputs);
+      if (signature.outputs) Object.assign(_signature.outputs, signature.outputs);
       if (signature.states) Object.assign(_signature.states, signature.states);
     }) as any;
 
-    expose.in = (name: string, input: any) => { expose({in: {[name]: input}}); }
-    expose.out = (name: string, output: any) => { expose({out: {[name]: output}}); }
+    expose.in = (name: string, input: any) => { expose({inputs: {[name]: input}}); }
+    expose.out = (name: string, output: any) => { expose({outputs: {[name]: output}}); }
     expose.state = (name: string, state: any) => { expose({states: {[name]: state}}); }
     
     extras.expose = expose;

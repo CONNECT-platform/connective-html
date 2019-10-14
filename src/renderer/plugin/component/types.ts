@@ -11,20 +11,20 @@ export type CompFunc<Renderable=RawValue, Tag=string> = (
 
 
 export interface CompInSignature {
-  in: {[name: string]: any};
-  out?: {[name: string]: any};
+  inputs: {[name: string]: any};
+  outputs?: {[name: string]: any};
   states?: {[name: string]: any};
 }
 
 export interface CompOutSignature {
-  in?: {[name: string]: any};
-  out: {[name: string]: any};
+  inputs?: {[name: string]: any};
+  outputs: {[name: string]: any};
   states?: {[name: string]: any};
 }
 
 export interface CompStateSignature {
-  in?: {[name: string]: any};
-  out?: {[name: string]: any};
+  inputs?: {[name: string]: any};
+  outputs?: {[name: string]: any};
   states: {[name: string]: any};
 }
 
