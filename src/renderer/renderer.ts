@@ -54,17 +54,17 @@ export class Renderer<Renderable=RawValue, Tag=string> implements RendererLike<R
     }
   }
 
-  public render(node: Node): ToBeRendered {
+  public render<T extends Node>(node: T): ToBeRendered<T> {
     return {
       target: node,
       on(host: Node) {
         host.appendChild(node);
-        return host;
+        return node;
       },
       before(ref: Node) {
         if (ref.parentNode)
           ref.parentNode.insertBefore(node, ref);
-        return ref;
+        return node;
       },
       after(ref: Node) {
         if (ref.parentNode)

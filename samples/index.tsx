@@ -18,10 +18,10 @@ function MyComp(this: ComponentThis, props: {msg: string, i?: any}, renderer: Re
 
 let renderer = new Renderer();
 
-let x = <div onclick={() => x.remove()}>
+let x = renderer.render(<div onclick={() => x.remove()}>
           <MyComp msg='hellow' i={interval(1000)}/>
-        </div>;
-renderer.render(x).on(document.body);
+</div>).on(document.body);
+
 
 renderer.render(
   <div _innerHTML={wrap(interval(500)).to(map((x: number) => `<h1>${x}</h1>`))}></div>
