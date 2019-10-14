@@ -1,47 +1,34 @@
-import { Pin, value, isPinLike, wrap } from "@connectv/core/dist/es5/index";
-import { PropsType } from "../../../shared/types";
-import { Observable } from "rxjs";
-import { ComponentInputMissingError } from "../component/errors/input-missing.error";
-import { UnnamedComponentInputError } from "../component/errors/unnamed-input.error";
-import { CompInputOptions, CompInputOptionsSpecified } from "../component/types";
+import { isPinLike } from "@connectv/core";
+
+import { RawValue, PropsType } from "../../../shared/types";
+
+import { PluginPriority } from "../plugin";
+import { CompFunc, ComponentSignature } from "../component/types";
+import { CompIOPlugin } from "../component/basic-plugins";
+
+import { CompInputPin } from "./comp-input-pin";
 
 
-export class CompInputPin<T> extends Pin {
-  _name: string;
+export class CompInputPlugin<Renderable=RawValue, Tag=CompFunc<Renderable | string> | string>
+implements CompIOPlugin<Renderable, Tag> {
+  priority = PluginPriority.High;
 
-  constructor(readonly options: CompInputOptions<T> = {required: false}) {
-    super();
-  }
+  wire(
+    _: Node, 
+    signature: ComponentSignature, 
+    props?: PropsType<RawValue | Renderable> | undefined, 
+    ): void {
+      if (signature.inputs) {
+        Object.entries(signature.inputs).forEach(([name, input]) => {
+          if (isPinLike(input)) {
+            let _input: CompInputPin<any>;
 
-  public name(_n: string) { this._name = _n; return this; }
+            if (input instanceof CompInputPin) _input = input;
+            else _input = input.from(new CompInputPin()) as CompInputPin<any>;
 
-  read(props: PropsType<any>) {
-    if (this._name) {
-      if (this._name in props) {
-        let _target = props[this._name];
-        if (isPinLike(_target)) _target.to(this);
-        else if (_target instanceof Observable) wrap(_target).to(this);
-        else value(_target).to(this);
-      }
-      else {
-        if ((<CompInputOptionsSpecified<any>>this.options).required) {
-          throw new ComponentInputMissingError(this._name, props);
-        }
-        else if (this.options.default) {
-          value(this.options.default).to(this);
-        }
+            _input.name(name).read(props);
+          }
+        });
       }
     }
-    else {
-      throw new UnnamedComponentInputError();
-    }
-  }
 }
-
-
-export function input<T>(options: CompInputOptions<T> = {required: false}) {
-  return new CompInputPin(options);
-}
-
-
-export default input;
