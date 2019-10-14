@@ -17,10 +17,12 @@ function MyComp(this: ComponentThis, props: {msg: string, i?: any}, renderer: Re
 
 
 let renderer = new Renderer();
-
-let x = renderer.render(<div onclick={() => x.remove()}>
-          <MyComp msg='hellow' i={interval(1000)}/>
-</div>).on(document.body);
+let mark = renderer.render(<div>**********</div>).on(document.body);
+let x = renderer.render(
+  <div onclick={() => document.body.insertBefore(x, mark)}>
+    <MyComp msg='hellow' i={interval(1000)}/>
+  </div>
+).on(document.body);
 
 
 renderer.render(

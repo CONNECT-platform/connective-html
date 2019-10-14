@@ -41,7 +41,10 @@ export function bind(node: Node) {
     let observer = new MutationObserver(changes => {
       changes.forEach(change => {
         if (change.removedNodes)
-          change.removedNodes.forEach(clear);
+          change.removedNodes.forEach(node => setImmediate(() => {
+            if (!document.contains(node))
+              clear(node);
+          }));
       });
     });
 
