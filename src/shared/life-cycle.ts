@@ -12,10 +12,21 @@ export function lifeCycleInfo(node: Node, createIfNonExistent: boolean): LifeCyc
 export function lifeCycleInfo(node: Node, createIfNonExistent: boolean = false): LifeCycleInfo | undefined {
   let _node = node as any;
 
-  if (_node.lifecycle) return _node.lifecycle as LifeCycleInfo;
-  else if (createIfNonExistent) {
-    _node.lifecycle = <LifeCycleInfo>{};
-    return _node.lifecycle;
+  if (node instanceof DocumentFragment) {
+    if (_node.lifecycleMarker) return lifeCycleInfo(_node.lifecycleMarker, createIfNonExistent);
+    else if (createIfNonExistent) {
+      _node.lifecycleMarker = document.createElement('i');
+      _node.lifecycleMarker.setAttribute('hidden', '');
+      node.appendChild(_node.lifecycleMarker);
+      return lifeCycleInfo(_node.lifecycleMarker, true);
+    }
+  }
+  else {
+    if (_node.lifecycle) return _node.lifecycle as LifeCycleInfo;
+    else if (createIfNonExistent) {
+      _node.lifecycle = <LifeCycleInfo>{};
+      return _node.lifecycle;
+    }
   }
 }
 

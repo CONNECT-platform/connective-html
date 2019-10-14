@@ -5,7 +5,6 @@ import * as L from '../../../shared/life-cycle';
 
 import { PluginPriority } from '../plugin';
 import { CompProcessPlugin } from './basic-plugins';
-import { FragmentTrackingError } from './errors/fragment-tracking.error';
 import { CompFunc, TrackFunction } from './types';
 
 
@@ -22,8 +21,6 @@ export class TrackPlugin<Renderable=RawValue, Tag=CompFunc<Renderable | string> 
     extras.track = <TrackFunction>((whatever: Bindable | Clearable) => tracked.push(whatever));
 
     return (node: Node) => {
-      if (node instanceof DocumentFragment)
-        throw new FragmentTrackingError(_);
       tracked.forEach(thing => L.attach(thing, node));
     }
   }

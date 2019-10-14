@@ -12,15 +12,16 @@ function MyComp(this: ComponentThis, props: {msg: string, i?: any}, renderer: Re
 
   i.name('i').read(props);
 
-  return <div>{props.msg}</div>;
+  return <fragment>{props.msg}</fragment>;
 }
 
 
 let renderer = new Renderer();
-let x = <MyComp msg='hellow' i={interval(1000)}/>;
-renderer.render(<fragment><fragment>{x}</fragment></fragment>).on(document.body);
 
-x.addEventListener('click', () => x.remove());
+let x = <div onclick={() => x.remove()}>
+          <MyComp msg='hellow' i={interval(1000)}/>
+        </div>;
+renderer.render(x).on(document.body);
 
 renderer.render(
   <div _innerHTML={wrap(interval(500)).to(map((x: number) => `<h1>${x}</h1>`))}></div>
