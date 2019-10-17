@@ -3,8 +3,8 @@ import { ObservableObjectValuePlugin } from './object-value';
 import { SubjectEventHandlerPlugin } from './subject-event-handler';
 import { InputSubjectPlugin } from './input-subject';
 import { ObservableInnerHTMLPlugin } from './inner-html';
-import { CompInputPlugin } from './comp-input';
-import { CompOutputPlugin } from './comp-output';
+import { CompInputSubjectPlugin } from './comp-input-subject';
+import { CompOutputPlugin } from './comp-output-subject';
 
 
 export function rxjsPlugins<R, T>() {
@@ -14,7 +14,7 @@ export function rxjsPlugins<R, T>() {
     new ObservableInnerHTMLPlugin<R, T>(),
     new SubjectEventHandlerPlugin<R, T>(),
     new InputSubjectPlugin<R, T>(),
-    new CompInputPlugin<R, T>(),
+    new CompInputSubjectPlugin<R, T>(),
     new CompOutputPlugin<R, T>(),
   ]
 }

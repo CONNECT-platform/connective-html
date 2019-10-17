@@ -4,15 +4,16 @@ import { map as _map } from 'rxjs/operators';
 
 import { ComponentThis } from '../src/renderer/plugin/component/types';
 import Renderer from '../src/renderer';
-import { CompInputSubject } from '../src/renderer/plugin/rxjs/comp-input';
+import { CompInputSubject } from '../src/renderer/plugin/rxjs/comp-input-subject';
+import { CompInputPin } from '../src/renderer/plugin/connective/comp-input-pin';
 
 
 function MyComp(this: ComponentThis, props: {msg: string, i?: any, o?: any}, renderer: Renderer) {
-  let i = new CompInputSubject<any>();
+  let i = new CompInputPin();
 
   this.expose({
     inputs: {i},
-    outputs: {o: i.pipe(_map(x => `Got ${x}`))}
+    outputs: {o: i.to(map((x: any) => `Got ${x}`))}
   });
 
   return <fragment>{props.msg}</fragment>;

@@ -49,6 +49,16 @@ interface CompInputOptionsNotSpecified<T> {
 
 export type CompInputOptions<T> = CompInputOptionsSpecified<T> | CompInputOptionsNotSpecified<T>;
 
+export interface CompInputWithOptions<T> {
+  inputOptions: CompInputOptions<T>;
+}
+
+
+export function isCompInputWithOptions<T>(whatever: any):
+  whatever is CompInputWithOptions<T> {
+  return whatever && whatever.inputOptions;
+}
+
 
 export type ExposeFunction = {
   (signature: ComponentSignature): void;

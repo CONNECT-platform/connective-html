@@ -1,47 +1,35 @@
-import { Pin, value, isPinLike, wrap } from "@connectv/core/dist/es5/index";
-import { PropsType } from "../../../shared/types";
+import { isPinLike, PinLike, wrap, value } from "@connectv/core";
+import { Pin } from "@connectv/core/dist/es5";
 import { Observable } from "rxjs";
-import { ComponentInputMissingError } from "../component/errors/input-missing.error";
-import { UnnamedComponentInputError } from "../component/errors/unnamed-input.error";
-import { CompInputOptions, CompInputOptionsSpecified } from "../component/types";
+
+import { RawValue } from "../../../shared/types";
+
+import { PluginPriority } from "../plugin";
+import { CompInputWithOptions, CompInputOptions, CompFunc, ComponentSignature } from "../component/types";
+import { CompPropPlugin } from "../component/basic-plugins";
 
 
-export class CompInputPin<T> extends Pin {
-  _name: string;
-
-  constructor(readonly options: CompInputOptions<T> = {required: false}) {
-    super();
-  }
-
-  public name(_n: string) { this._name = _n; return this; }
-
-  read(props: PropsType<any> | undefined) {
-    if (this._name) {
-      if (props && this._name in props) {
-        let _target = props[this._name];
-        if (isPinLike(_target)) _target.to(this);
-        else if (_target instanceof Observable) wrap(_target).to(this);
-        else value(_target).to(this);
-      }
-      else {
-        if ((<CompInputOptionsSpecified<any>>this.options).required) {
-          throw new ComponentInputMissingError(this._name, props);
-        }
-        else if (this.options.default) {
-          value(this.options.default).to(this);
-        }
-      }
-    }
-    else {
-      throw new UnnamedComponentInputError();
-    }
+export class CompInputPin extends Pin implements CompInputWithOptions<any> {
+  constructor(readonly inputOptions: CompInputOptions<any> = {}) { 
+    super(); 
   }
 }
 
 
-export function input<T>(options: CompInputOptions<T> = {required: false}) {
-  return new CompInputPin(options);
+export class CompInputPinPlugin<Renderable=RawValue, Tag=CompFunc<Renderable | string> | string>
+implements CompPropPlugin<Renderable, Tag> {
+  wireProp(name: string, prop: any, _: Node, signature: ComponentSignature) {
+    if (signature.inputs && name in signature.inputs && isPinLike(signature.inputs[name])) {
+      let input = signature.inputs[name] as PinLike;
+      if (isPinLike(prop)) prop.to(input);
+      else if (prop instanceof Observable) wrap(prop).to(input);
+      else value(prop).to(input);
+
+      return true;
+    }
+
+    return false;
+  }
+
+  priority = PluginPriority.High;
 }
-
-
-export default input;

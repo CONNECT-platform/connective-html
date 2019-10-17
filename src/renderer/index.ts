@@ -16,6 +16,7 @@ import { RawValue } from '../shared/types';
 
 import { Observable } from 'rxjs';
 import { PinLike } from '@connectv/core';
+import { CheckCompInputsPlugin } from './plugin/component/check-inputs';
 
 
 export class ConnectiveRenderer<R = PinLike | Observable<RawValue>, T = string | CompFunc<R, string>> 
@@ -30,6 +31,7 @@ export class ConnectiveRenderer<R = PinLike | Observable<RawValue>, T = string |
       new ComponentPlugin<R | PinLike | Observable<RawValue>, T | CompFunc<R, string>>(),
       new TrackPlugin<R | PinLike | Observable<RawValue>, T | CompFunc<R, string>>(),
       new ExposePlugin<R | PinLike | Observable<RawValue>, T | CompFunc<R, string>>(),
+      new CheckCompInputsPlugin<R | PinLike | Observable<RawValue>, T | CompFunc<R, string>>(),
       ...rxjsPlugins<R | PinLike | Observable<RawValue>, T | CompFunc<R, string>>(),
       ...connectivePlugins<R | PinLike | Observable<RawValue>, T | CompFunc<R, string>>(),
     );
