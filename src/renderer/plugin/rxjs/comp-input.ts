@@ -1,5 +1,5 @@
 import { Subject, Observable } from "rxjs";
-import { isPinLike, PinLike } from "@connectv/core";
+import { isPinLike, Bindable } from "@connectv/core";
 
 import * as L from "../../../shared/life-cycle";
 import { RawValue, PropsType } from "../../../shared/types";
@@ -8,8 +8,6 @@ import { PluginPriority } from "../plugin";
 import { CompInputOptions, CompFunc, ComponentSignature, CompInputOptionsSpecified } from "../component/types";
 import { CompIOPlugin } from "../component/basic-plugins";
 import { ComponentInputMissingError } from "../component/errors/input-missing.error";
-import { Bindable } from "@connectv/core/dist/es5";
-
 
 
 export class CompInputSubject<T> extends Subject<T> {
