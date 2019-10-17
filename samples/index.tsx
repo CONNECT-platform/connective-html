@@ -1,16 +1,18 @@
 import { wrap, map, pin, sink } from '@connectv/core';
 import { interval } from 'rxjs';
+import { map as _map } from 'rxjs/operators';
 
 import { ComponentThis } from '../src/renderer/plugin/component/types';
 import Renderer from '../src/renderer';
+import { CompInputSubject } from '../src/renderer/plugin/rxjs/comp-input';
 
 
 function MyComp(this: ComponentThis, props: {msg: string, i?: any, o?: any}, renderer: Renderer) {
-  let i = pin();
-  this.track(i.to(sink(console.log)));
+  let i = new CompInputSubject<any>();
+
   this.expose({
     inputs: {i},
-    outputs: {o: i.to(map((x: any) => `Got: ${x}`))}
+    outputs: {o: i.pipe(_map(x => `Got ${x}`))}
   });
 
   return <fragment>{props.msg}</fragment>;

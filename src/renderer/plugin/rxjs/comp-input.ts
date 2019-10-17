@@ -11,7 +11,7 @@ import { ComponentInputMissingError } from "../component/errors/input-missing.er
 
 
 export class CompInputSubject<T> extends Subject<T> {
-  constructor(readonly options: CompInputOptions<T>) {
+  constructor(readonly options: CompInputOptions<T> = {}) {
     super();
   }
 }
