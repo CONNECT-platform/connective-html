@@ -23,11 +23,12 @@ export class ComponentPlugin<Renderable=RawValue, Tag=CompFunc<Renderable, strin
     if (typeof tag === 'function') {
       let compFunc = tag as CompFunc<Renderable | RawValue, Tag>;
       let extras = {};
+      let _props = props || {};
       let post = this._host.plugins
         .filter(isCompProcessPlugin)
-        .map(plugin => plugin.prepare(compFunc, props, children, extras));
+        .map(plugin => plugin.prepare(compFunc, _props, children, extras));
 
-      let _res = compFunc.apply(extras, [props, this._host, children]);
+      let _res = compFunc.apply(extras, [_props, this._host, children]);
 
       post.reverse().forEach(p => { if (p) p(_res); });
 
