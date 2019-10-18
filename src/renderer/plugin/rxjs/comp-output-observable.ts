@@ -11,7 +11,7 @@ import { CompPropPlugin } from "../component/basic-plugins";
 import trackable from "./trackable";
 
 
-export class CompOutputPlugin<Renderable=RawValue, Tag=CompFunc<Renderable | string> | string>
+export class CompOutputObservablePlugin<Renderable=RawValue, Tag=CompFunc<Renderable | string> | string>
 implements CompPropPlugin<Renderable, Tag> {
   priority = PluginPriority.High;
 

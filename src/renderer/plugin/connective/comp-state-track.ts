@@ -1,3 +1,5 @@
+import { State } from '@connectv/core';
+
 import * as L from '../../../shared/life-cycle';
 import { RawValue } from "../../../shared/types";
 
@@ -5,7 +7,6 @@ import { PluginPriority } from "../plugin";
 
 import { CompFunc, ComponentSignature } from "../component/types";
 import { CompIOPlugin } from "../component/basic-plugins";
-import { State } from '@connectv/core';
 
 
 export class CompStateTrackPlugin<Renderable=RawValue, Tag=CompFunc<Renderable | string> | string>

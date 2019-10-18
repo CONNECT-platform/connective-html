@@ -15,8 +15,7 @@ implements CompPropPlugin<Renderable, Tag> {
         && prop instanceof State) {
       let state = signature.states[name];
 
-      prop.to(state);
-      state.to(prop);
+      prop.to(state).to(prop);
 
       return true;
     }

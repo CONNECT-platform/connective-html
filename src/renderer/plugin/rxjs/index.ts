@@ -4,7 +4,8 @@ import { SubjectEventHandlerPlugin } from './subject-event-handler';
 import { InputSubjectPlugin } from './input-subject';
 import { ObservableInnerHTMLPlugin } from './inner-html';
 import { CompInputSubjectPlugin } from './comp-input-subject';
-import { CompOutputPlugin } from './comp-output-subject';
+import { CompOutputObservablePlugin } from './comp-output-observable';
+import { CompOutputObservableEventsPlugin } from './comp-output-observable-events';
 
 
 export function rxjsPlugins<R, T>() {
@@ -15,6 +16,7 @@ export function rxjsPlugins<R, T>() {
     new SubjectEventHandlerPlugin<R, T>(),
     new InputSubjectPlugin<R, T>(),
     new CompInputSubjectPlugin<R, T>(),
-    new CompOutputPlugin<R, T>(),
+    new CompOutputObservablePlugin<R, T>(),
+    new CompOutputObservableEventsPlugin<R, T>(),
   ]
 }
