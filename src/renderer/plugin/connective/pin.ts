@@ -21,7 +21,7 @@ export class PinPlugin<R=never, T=string>
           else host.removeAttribute(prop);
         }
         else
-          host.setAttribute(prop, v.toString())
+          host.setAttribute(prop, v?v.toString():'')
       })), host);
       return true;
     }
@@ -31,7 +31,7 @@ export class PinPlugin<R=never, T=string>
   append(target: RawValue | R | PinLike | Node | (RawValue | R | PinLike | Node)[], host: Node): boolean {
     if (isPinLike(target)) {
       let node = document.createTextNode('');
-      L.attach(target.to(sink(v => node.textContent = v.toString())), node);
+      L.attach(target.to(sink(v => node.textContent = v?v.toString():'')), node);
       host.appendChild(node);
       
       return true;

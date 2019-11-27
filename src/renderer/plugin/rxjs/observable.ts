@@ -26,7 +26,7 @@ export class ObservablePlugin<R=never, T=string>
               else host.removeAttribute(prop);
             }
             else
-              host.setAttribute(prop, v.toString())
+              host.setAttribute(prop, v?v.toString():'')
           }); 
         },
         clear() { sub.unsubscribe(); },
@@ -45,7 +45,7 @@ export class ObservablePlugin<R=never, T=string>
       let sub: Subscription;
 
       L.attach(<Bindable & Clearable>{
-        bind() { sub = target.subscribe(v => node.textContent = v.toString()); },
+        bind() { sub = target.subscribe(v => node.textContent = v?v.toString():''); },
         clear() { sub.unsubscribe(); },
       }, node);
 
