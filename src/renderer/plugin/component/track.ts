@@ -18,9 +18,14 @@ export class TrackPlugin<Renderable=RawValue, Tag=CompFunc<Renderable | string> 
   ): (node: Node) => void {
 
     let tracked = <(Bindable | Clearable)[]>[];
-    extras.track = <TrackFunction>((whatever: Bindable | Clearable) => tracked.push(whatever));
+    let marker: undefined | Node = undefined;
+    extras.track = ((whatever: Bindable | Clearable) => tracked.push(whatever)) as any;
+    extras.track.mark = (node: Node) => marker = node;
 
     return (node: Node) => {
+      if (node instanceof DocumentFragment && marker)
+        L.setLifeCycleMarker(node, marker);
+
       tracked.forEach(thing => L.attach(thing, node));
     }
   }

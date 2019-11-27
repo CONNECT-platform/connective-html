@@ -13,12 +13,13 @@ export function lifeCycleInfo(node: Node, createIfNonExistent: boolean = false):
   let _node = node as any;
 
   if (node instanceof DocumentFragment) {
-    if (_node.lifecycleMarker) return lifeCycleInfo(_node.lifecycleMarker, createIfNonExistent);
+    let marker = getLifeCycleMarker(node);
+    if (marker) return lifeCycleInfo(marker, createIfNonExistent);
     else if (createIfNonExistent) {
-      _node.lifecycleMarker = document.createElement('i');
-      _node.lifecycleMarker.setAttribute('hidden', '');
-      node.appendChild(_node.lifecycleMarker);
-      return lifeCycleInfo(_node.lifecycleMarker, true);
+      marker = document.createElement('i');
+      marker.setAttribute('hidden', '');
+      setLifeCycleMarker(node, marker);
+      return lifeCycleInfo(marker, true);
     }
   }
   else {
@@ -28,6 +29,16 @@ export function lifeCycleInfo(node: Node, createIfNonExistent: boolean = false):
       return _node.lifecycle;
     }
   }
+}
+
+
+export function setLifeCycleMarker(fragment: DocumentFragment, marker: Node) {
+  (fragment as any).lifecycleMarker = marker;
+  fragment.appendChild(marker);
+}
+
+export function getLifeCycleMarker(fragment: DocumentFragment) {
+  return (fragment as any).lifecycleMarker;
 }
 
 

@@ -68,7 +68,10 @@ export type ExposeFunction = {
 };
 
 
-export type TrackFunction = (whatever: Bindable | Clearable) => void;
+export type TrackFunction = {
+  (whatever: Bindable | Clearable): void;
+  mark: (marker: Node) => void;
+}
 
 
 export type ComponentThis = {
