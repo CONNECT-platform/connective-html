@@ -28,7 +28,7 @@ function NotATodoList({}, renderer: Renderer) {
 
       <input type='text' _ref={input} placeholder='add an item ...'/>
       <button onclick={add}>
-        Add #{items.sub('length').to(map((x: any) => x + 1))}
+        Add #{items.to(map((l: any) => l.length + 1))}
       </button>
     </div>
 }
