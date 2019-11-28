@@ -4,6 +4,7 @@ import { RendererLike } from '../renderer/renderer-like';
 import { CompFunc, ComponentThis } from '../renderer/plugin/component/types';
 
 import { Marker } from './marker';
+import { scanRemove } from './util/scan';
 
 
 export interface SimpleListProps {
@@ -41,14 +42,10 @@ export function SimpleList(this: ComponentThis, props: SimpleListProps, renderer
     else if (_list.length < markers.length) {
       let prevMark = markers[_list.length - 1] || startMark;
 
-      for (let index = _list.length; index < markers.length; index++) {
-        let marker = markers[index];
-        let cursor: Node | null;
-        while ((cursor = prevMark.nextSibling) && cursor != marker)
-          (cursor.parentElement as HTMLElement).removeChild(cursor);
-
-        (marker.parentElement as HTMLElement).removeChild(marker);
-      }
+      for (let index = _list.length; index < markers.length; index++)
+        scanRemove(prevMark, markers[index], {
+          includeEnd: true
+        });
 
       markers.length = _list.length;
     }

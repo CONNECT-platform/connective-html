@@ -9,25 +9,18 @@ function NotATodoList({}, renderer: Renderer) {
   let items = deep(state([]));
   let input = ref<HTMLInputElement>();
 
-  const add = () => {
-    items.value = items.value.concat([{ title: input.el.value }]);
-    input.el.value = '';
-  }
-
-  const remove = (item: any) => items.value = items.value.filter((i: any) => i !== item);
-
   return <div>
       <h3>NOT TODOs</h3>
       <ul>
         <SimpleList of={items} each={item => 
-            <li onclick={() => remove(item.value)}>
+            <li onclick={() => items.value = items.value.filter((i: any) => i !== item.value)}>
               {item.sub('title')}
             </li>
         }/>
       </ul>
 
       <input type='text' _ref={input} placeholder='add an item ...'/>
-      <button onclick={add}>
+      <button onclick={() => { items.value = items.value.concat([{ title: input.el.value }]); input.el.value = ''; }}>
         Add #{items.to(map((l: any) => l.length + 1))}
       </button>
     </div>
