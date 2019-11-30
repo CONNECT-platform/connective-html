@@ -6,6 +6,7 @@ import Renderer from '../src/renderer';
 import ref from '../src/renderer/ref';
 
 
+
 function NotATodoList({}, renderer: Renderer) {
   let items = state([]);
   let input = ref<HTMLInputElement>();
@@ -16,8 +17,7 @@ function NotATodoList({}, renderer: Renderer) {
         <List of={items} each={item => 
             <li onclick={() => items.value = items.value.filter((i: any) => i !== item.value)}>
               {item.sub('title')}
-            </li>
-        }
+            </li>}
         key={(i: any) => i.id}/>
       </ul>
 

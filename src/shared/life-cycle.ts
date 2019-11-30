@@ -34,7 +34,8 @@ export function lifeCycleInfo(node: Node, createIfNonExistent: boolean = false):
 
 export function setLifeCycleMarker(fragment: DocumentFragment, marker: Node) {
   (fragment as any).lifecycleMarker = marker;
-  fragment.appendChild(marker);
+  if (!fragment.contains(marker))
+    fragment.appendChild(marker);
 }
 
 export function getLifeCycleMarker(fragment: DocumentFragment) {

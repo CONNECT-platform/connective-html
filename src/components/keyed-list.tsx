@@ -1,4 +1,4 @@
-import { State, SimpleDeep, KeyedDeep, KeyFunc, ChangeMap, PinLike, sink, value } from '@connectv/core';
+import { State, SimpleDeep, KeyedDeep, KeyFunc, ChangeMap, PinLike, sink } from '@connectv/core';
 
 import { RendererLike } from '../renderer/renderer-like';
 import { CompFunc, ComponentThis } from '../renderer/plugin/component/types';
