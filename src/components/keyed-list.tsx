@@ -35,7 +35,23 @@ export function KeyedList(this: ComponentThis, props: KeyedListProps, renderer: 
     else list = new KeyedDeep(_props.of.state, _props.key);
   }
 
+  this.track({
+    bind() {
+      list.value.forEach((entry: any) => {
+        const key = list.keyfunc(entry);
+        const prevMarker = markers[markers.length - 1] || startMark;
+        const marker = <Marker/>;
+        markers.push(marker);
+        renderer.render(<fragment>
+          {props.each(list.key(key), list.index(key))}
+          {marker}
+        </fragment>).after(prevMarker);
+      });
+    }
+  });
+
   this.track(list.changes.to(sink((changes: ChangeMap) => {
+    if (changes.initial) return; // --> ignore the initial change
     const len = list.value.length;
 
     // STEP 1: create extra markers if need be

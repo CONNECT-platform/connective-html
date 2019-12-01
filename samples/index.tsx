@@ -1,4 +1,4 @@
-import { state, map } from '@connectv/core';
+import { state, map, State, PinLike } from '@connectv/core';
 
 import { List } from '../src/components/list';
 import autoId from '../src/util/auto-id';
@@ -7,9 +7,22 @@ import ref from '../src/renderer/ref';
 
 
 export class NotATodoList extends Component {
-  items = state([]);
-  next = this.items.to(map((l: any[]) => l.length + 1));
+  items: State;
+  next: PinLike;
   input = ref<HTMLInputElement>();
+
+  init() {
+    this.items = state([]);
+    this.next = this.items.to(map((l: any[]) => l.length + 1));
+  }
+
+  signature() {
+    return {
+      states: {
+        items: this.items
+      }
+    }
+  }
 
   submit() {
     this.items.value = this.items.value.concat({
@@ -45,11 +58,14 @@ export class NotATodoList extends Component {
 
 let renderer = new Renderer();
 let listRef = ref<NotATodoList>();
+let notTodos = state([{id: autoId(), title: 'Sample'}]);
 
 renderer.render(
   <fragment>
-    <NotATodoList _ref={listRef}/>
+    <NotATodoList _ref={listRef} items={notTodos}/>
     <br/>
     <button onclick={() => listRef.$.submit()}>###</button>
   </fragment>
 ).on(document.body);
+
+notTodos.subscribe(console.log);

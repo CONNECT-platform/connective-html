@@ -19,10 +19,9 @@ import { PinLike } from '@connectv/core';
 import { Component as _C } from './plugin/component/types';
 import { CheckCompInputsPlugin } from './plugin/component/check-inputs';
 import { CompStateIOPlugin } from './plugin/component/state-io-plugin';
-import { Ref } from './ref';
 
 
-export class ConnectiveRenderer<R = Ref<any> | PinLike | Observable<RawValue>, T = string | CompType<R, string>> 
+export class ConnectiveRenderer<R = RawValue, T = string> 
   extends ExtensibleRenderer<R | PinLike | Observable<RawValue>, T | CompType<R, string>> {
   constructor() {
     super(
@@ -44,5 +43,5 @@ export class ConnectiveRenderer<R = Ref<any> | PinLike | Observable<RawValue>, T
 
 
 export default ConnectiveRenderer;
-export abstract class Component<R = Ref<any> | PinLike | Observable<RawValue>, T = string | CompType<R, string>> 
+export abstract class Component<R = any, T = string | CompType<R, string>> 
             extends _C<R, T> {}
