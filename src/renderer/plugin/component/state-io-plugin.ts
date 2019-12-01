@@ -2,11 +2,11 @@ import { RawValue } from "../../../shared/types";
 
 import { PluginPriority } from "../plugin";
 
-import { CompFunc, ComponentSignature } from "./types";
+import { CompType, ComponentSignature } from "./types";
 import { CompIOPlugin } from "./basic-plugins";
 
 
-export class CompStateIOPlugin<Renderable=RawValue, Tag=CompFunc<Renderable | string> | string>
+export class CompStateIOPlugin<Renderable=RawValue, Tag=CompType<Renderable | string> | string>
 implements CompIOPlugin<Renderable, Tag> {
   wire(_: Node, signature: ComponentSignature) {
     if (signature.states) {

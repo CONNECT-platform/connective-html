@@ -5,11 +5,11 @@ import { RawValue } from "../../../shared/types";
 
 import { PluginPriority } from "../plugin";
 
-import { CompFunc, ComponentSignature } from "../component/types";
+import { CompType, ComponentSignature } from "../component/types";
 import { CompIOPlugin } from "../component/basic-plugins";
 
 
-export class CompStateTrackPlugin<Renderable=RawValue, Tag=CompFunc<Renderable | string> | string>
+export class CompStateTrackPlugin<Renderable=RawValue, Tag=CompType<Renderable | string> | string>
 implements CompIOPlugin<Renderable, Tag> {
   wire(node: Node, signature: ComponentSignature) {
     if (signature.states) {

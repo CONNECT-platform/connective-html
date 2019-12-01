@@ -1,7 +1,7 @@
 import { State, SimpleDeep, PinLike, sink, value } from '@connectv/core';
 
 import { RendererLike } from '../renderer/renderer-like';
-import { CompFunc, ComponentThis } from '../renderer/plugin/component/types';
+import { CompType, ComponentThis } from '../renderer/plugin/component/types';
 
 import { Marker } from './marker';
 import { scanRemove } from './util/scan';
@@ -13,7 +13,7 @@ export interface SimpleListProps {
 }
 
 
-export function SimpleList(this: ComponentThis, props: SimpleListProps, renderer: RendererLike<any, any | CompFunc>) {
+export function SimpleList(this: ComponentThis, props: SimpleListProps, renderer: RendererLike<any, any | CompType>) {
   let startMark = <Marker/>;
   this.track.mark(startMark);
 

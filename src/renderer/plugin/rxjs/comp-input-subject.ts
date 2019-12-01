@@ -5,7 +5,7 @@ import * as L from "../../../shared/life-cycle";
 import { RawValue } from "../../../shared/types";
 
 import { PluginPriority } from "../plugin";
-import { CompInputOptions, CompFunc, ComponentSignature, CompInputWithOptions } from "../component/types";
+import { CompInputOptions, CompType, ComponentSignature, CompInputWithOptions } from "../component/types";
 import { CompPropPlugin } from "../component/basic-plugins";
 
 
@@ -16,7 +16,7 @@ export class CompInputSubject<T> extends Subject<T> implements CompInputWithOpti
 }
 
 
-export class CompInputSubjectPlugin<Renderable=RawValue, Tag=CompFunc<Renderable | string> | string>
+export class CompInputSubjectPlugin<Renderable=RawValue, Tag=CompType<Renderable | string> | string>
 implements CompPropPlugin<Renderable, Tag> {
   wireProp(name: string, prop: any, node: Node, signature: ComponentSignature) {
     if (signature.inputs && name in signature.inputs && signature.inputs[name] instanceof Subject) {

@@ -7,13 +7,13 @@ import { RawValue } from "../../../shared/types";
 import { polyfillCustomEvent } from '../util/custom-event.polyfill';
 import { PluginPriority } from "../plugin";
 
-import { CompFunc, ComponentSignature } from "../component/types";
+import { CompType, ComponentSignature } from "../component/types";
 import { CompIOPlugin } from "../component/basic-plugins";
 
 import trackable from './trackable';
 
 
-export class CompOutputObservableEventsPlugin<Renderable=RawValue, Tag=CompFunc<Renderable | string> | string>
+export class CompOutputObservableEventsPlugin<Renderable=RawValue, Tag=CompType<Renderable | string> | string>
 implements CompIOPlugin<Renderable, Tag> {
   wire(node: Node, signature: ComponentSignature) {
     if (!(node instanceof DocumentFragment) && signature.outputs) {

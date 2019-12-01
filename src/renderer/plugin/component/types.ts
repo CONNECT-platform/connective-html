@@ -1,13 +1,61 @@
-import { Bindable } from "@connectv/core";
-import { Clearable } from "@connectv/core/dist/es5";
+import { Bindable, Clearable, isBindable, isClearable } from "@connectv/core";
+import { Unsubscribable } from "rxjs";
+
 import { RawValue, PropsType } from "../../../shared/types";
 import { RendererLike } from "../../renderer-like";
 
 
+export abstract class Component<Renderable=RawValue, Tag=string> {
+  static __CVH_component_class__ = true;
+
+  constructor(
+    protected props: PropsType<RawValue | Renderable>,
+    protected children: (RawValue | Renderable | Node)[],
+    private _adapter: ComponentThis,
+  ) {
+    _adapter.track(this);
+    this.init();
+
+    let _signature = this.signature();
+    if (_signature) _adapter.expose(_signature);
+  }
+
+  protected init() {}
+  public bind() {}
+  public clear() {}
+  protected signature(): ComponentSignature | undefined { return undefined; }
+  public abstract render(
+    renderer: RendererLike<Renderable | RawValue, Tag | string | CompType<Renderable | RawValue, Tag>>): Node;
+
+  protected track(sub: Unsubscribable | Bindable | Clearable) {
+    if (isBindable(sub) || isClearable(sub))
+      this._adapter.track(sub);
+    else
+      this._adapter.track({
+        clear() { sub.unsubscribe() }
+      });
+  }
+}
+
+
+export type CompClass<Renderable=RawValue, Tag=string> = {
+  new(
+    props: PropsType<RawValue | Renderable>,
+    children: (RawValue | Renderable | Node)[],
+    _adapter: ComponentThis,
+  ): Component<Renderable, Tag>
+};
+
 export type CompFunc<Renderable=RawValue, Tag=string> = (
   props: PropsType<RawValue | Renderable> | undefined,
-  renderer: RendererLike<Renderable | RawValue, Tag | string | CompFunc<Renderable, Tag>>,
+  renderer: RendererLike<Renderable | RawValue, Tag | string | CompType<Renderable, Tag>>,
   children?: (RawValue | Renderable | Node)[]) => Node;
+
+export type CompType<Renderable=RawValue, Tag=string> = CompClass<Renderable, Tag> | CompFunc<Renderable, Tag>;
+
+export function isCompClass<Renderable, Tag>(comp: CompType<Renderable, Tag>): comp is CompClass<Renderable, Tag> {
+  return (comp as any).__CVH_component_class__;
+}
 
 
 export interface CompInSignature {

@@ -1,7 +1,7 @@
 import { State, SimpleDeep, KeyedDeep, KeyFunc, ChangeMap, PinLike, sink } from '@connectv/core';
 
 import { RendererLike } from '../renderer/renderer-like';
-import { CompFunc, ComponentThis } from '../renderer/plugin/component/types';
+import { CompType, ComponentThis } from '../renderer/plugin/component/types';
 
 import { Marker } from './marker';
 import { scanRemove } from './util/scan';
@@ -21,7 +21,7 @@ export interface KeyedListPropsWithoutKey {
 export type KeyedListProps = KeyedListPropsWithKey | KeyedListPropsWithoutKey;
 
 
-export function KeyedList(this: ComponentThis, props: KeyedListProps, renderer: RendererLike<any, any | CompFunc>) {
+export function KeyedList(this: ComponentThis, props: KeyedListProps, renderer: RendererLike<any, any | CompType>) {
   let startMark = <Marker/>;
   this.track.mark(startMark);
 

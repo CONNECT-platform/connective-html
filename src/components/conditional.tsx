@@ -1,5 +1,5 @@
 import { RendererLike } from '../renderer/renderer-like';
-import { CompFunc, ComponentThis } from '../renderer/plugin/component/types';
+import { CompType, ComponentThis } from '../renderer/plugin/component/types';
 import { PinLike, wrap, sink } from '@connectv/core';
 import { Observable } from 'rxjs';
 import { Marker } from './marker';
@@ -14,7 +14,7 @@ export interface ConditionalProps {
 }
 
 
-export function Conditional(this: ComponentThis, props: ConditionalProps, renderer: RendererLike<any, any | CompFunc>) {
+export function Conditional(this: ComponentThis, props: ConditionalProps, renderer: RendererLike<any, any | CompType>) {
   let start = <Marker/>;
   let end = <Marker/>;
   this.track.mark(start);

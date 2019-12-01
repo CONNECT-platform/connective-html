@@ -1,7 +1,7 @@
 import { RendererLike } from '../renderer/renderer-like';
-import { CompFunc } from '../renderer/plugin/component/types';
+import { CompType } from '../renderer/plugin/component/types';
 
 
-export function Marker(_: {}, renderer: RendererLike<any, any | CompFunc>) {
+export function Marker(_: {}, renderer: RendererLike<any, any | CompType>) {
   return <marker style="display: none"></marker>;
 }

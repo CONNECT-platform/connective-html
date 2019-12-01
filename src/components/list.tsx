@@ -1,5 +1,5 @@
 import { RendererLike } from '../renderer/renderer-like';
-import { CompFunc } from '../renderer/plugin/component/types';
+import { CompType } from '../renderer/plugin/component/types';
 
 import { SimpleList, SimpleListProps } from './simple-list';
 import { KeyedList, KeyedListProps, KeyedListPropsWithKey, KeyedListPropsWithoutKey } from './keyed-list';
@@ -17,7 +17,7 @@ function _isKeyedListPropWithoutKey(props: ListProps): props is KeyedListPropsWi
   return props.of instanceof KeyedDeep;
 }
 
-export function List(props: ListProps, renderer: RendererLike<any, any | CompFunc>) {
+export function List(props: ListProps, renderer: RendererLike<any, any | CompType>) {
   if (_isKeyedListPropWithKey(props))
     return <KeyedList of={props.of} each={props.each} key={props.key}/>;
   else if (_isKeyedListPropWithoutKey(props))

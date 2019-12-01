@@ -4,7 +4,7 @@ import { EventHandlerPlugin } from './plugin/event-handler';
 import { RefPlugin } from './plugin/ref';
 import { ObjectValuePlugin } from './plugin/object-value';
 import { InnerHTMLPlugin } from './plugin/inner-html';
-import { CompFunc } from './plugin/component/types';
+import { CompType } from './plugin/component/types';
 import { ComponentPlugin } from './plugin/component/component';
 import { TrackPlugin } from './plugin/component/track';
 import { ExposePlugin } from './plugin/component/expose';
@@ -16,29 +16,33 @@ import { RawValue } from '../shared/types';
 
 import { Observable } from 'rxjs';
 import { PinLike } from '@connectv/core';
+import { Component as _C } from './plugin/component/types';
 import { CheckCompInputsPlugin } from './plugin/component/check-inputs';
 import { CompStateIOPlugin } from './plugin/component/state-io-plugin';
+import { Ref } from './ref';
 
 
-export class ConnectiveRenderer<R = PinLike | Observable<RawValue>, T = string | CompFunc<R, string>> 
-  extends ExtensibleRenderer<R | PinLike | Observable<RawValue>, T | CompFunc<R, string>> {
+export class ConnectiveRenderer<R = Ref<any> | PinLike | Observable<RawValue>, T = string | CompType<R, string>> 
+  extends ExtensibleRenderer<R | PinLike | Observable<RawValue>, T | CompType<R, string>> {
   constructor() {
     super(
-      new LifeCyclePlugin<R | PinLike | Observable<RawValue>, T | CompFunc<R, string>>(),
-      new EventHandlerPlugin<R | PinLike | Observable<RawValue>, T | CompFunc<R, string>>(),
-      new RefPlugin<R | PinLike | Observable<RawValue>, T | CompFunc<R, string>>(),
-      new ObjectValuePlugin<R | PinLike | Observable<RawValue>, T | CompFunc<R, string>>(),
-      new InnerHTMLPlugin<R | PinLike | Observable<RawValue>, T | CompFunc<R, string>>(),
-      new ComponentPlugin<R | PinLike | Observable<RawValue>, T | CompFunc<R, string>>(),
-      new TrackPlugin<R | PinLike | Observable<RawValue>, T | CompFunc<R, string>>(),
-      new ExposePlugin<R | PinLike | Observable<RawValue>, T | CompFunc<R, string>>(),
-      new CompStateIOPlugin<R | PinLike | Observable<RawValue>, T | CompFunc<R, string>>(),
-      new CheckCompInputsPlugin<R | PinLike | Observable<RawValue>, T | CompFunc<R, string>>(),
-      ...rxjsPlugins<R | PinLike | Observable<RawValue>, T | CompFunc<R, string>>(),
-      ...connectivePlugins<R | PinLike | Observable<RawValue>, T | CompFunc<R, string>>(),
+      new LifeCyclePlugin<R | PinLike | Observable<RawValue>, T | CompType<R, string>>(),
+      new EventHandlerPlugin<R | PinLike | Observable<RawValue>, T | CompType<R, string>>(),
+      new RefPlugin<R | PinLike | Observable<RawValue>, T | CompType<R, string>>(),
+      new ObjectValuePlugin<R | PinLike | Observable<RawValue>, T | CompType<R, string>>(),
+      new InnerHTMLPlugin<R | PinLike | Observable<RawValue>, T | CompType<R, string>>(),
+      new ComponentPlugin<R | PinLike | Observable<RawValue>, T | CompType<R, string>>(),
+      new TrackPlugin<R | PinLike | Observable<RawValue>, T | CompType<R, string>>(),
+      new ExposePlugin<R | PinLike | Observable<RawValue>, T | CompType<R, string>>(),
+      new CompStateIOPlugin<R | PinLike | Observable<RawValue>, T | CompType<R, string>>(),
+      new CheckCompInputsPlugin<R | PinLike | Observable<RawValue>, T | CompType<R, string>>(),
+      ...rxjsPlugins<R | PinLike | Observable<RawValue>, T | CompType<R, string>>(),
+      ...connectivePlugins<R | PinLike | Observable<RawValue>, T | CompType<R, string>>(),
     );
   }
 }
 
 
 export default ConnectiveRenderer;
+export abstract class Component<R = Ref<any> | PinLike | Observable<RawValue>, T = string | CompType<R, string>> 
+            extends _C<R, T> {}

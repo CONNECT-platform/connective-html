@@ -5,13 +5,13 @@ import * as L from '../../../shared/life-cycle';
 
 import { PluginPriority } from '../plugin';
 import { CompProcessPlugin } from './basic-plugins';
-import { CompFunc, TrackFunction } from './types';
+import { CompType } from './types';
 
 
-export class TrackPlugin<Renderable=RawValue, Tag=CompFunc<Renderable | string> | string>
+export class TrackPlugin<Renderable=RawValue, Tag=CompType<Renderable | string> | string>
   implements CompProcessPlugin<Renderable, Tag> {
   prepare(
-    _: CompFunc<Renderable, Tag>, 
+    _: CompType<Renderable | RawValue, Tag>, 
     __: unknown,
     ___: unknown, 
     extras: { [name: string]: any; }

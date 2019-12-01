@@ -4,6 +4,7 @@ import { Bindable, Clearable, isBindable, isClearable } from '@connectv/core';
 export interface LifeCycleInfo {
   bindables?: Bindable[];
   clearables?: Clearable[];
+  bound: boolean;
 }
 
 
@@ -25,7 +26,7 @@ export function lifeCycleInfo(node: Node, createIfNonExistent: boolean = false):
   else {
     if (_node.lifecycle) return _node.lifecycle as LifeCycleInfo;
     else if (createIfNonExistent) {
-      _node.lifecycle = <LifeCycleInfo>{};
+      _node.lifecycle = <LifeCycleInfo>{ bound: false };
       return _node.lifecycle;
     }
   }
@@ -45,7 +46,12 @@ export function getLifeCycleMarker(fragment: DocumentFragment) {
 
 export function bind(node: Node) {
   let lifecycle = lifeCycleInfo(node);
-  if (lifecycle && lifecycle.bindables) lifecycle.bindables.forEach(b => b.bind());
+  if (lifecycle) {
+    if (lifecycle.bound) return;
+
+    lifecycle.bound = true;
+    if (lifecycle.bindables) lifecycle.bindables.forEach(b => b.bind());
+  }
 
   node.childNodes.forEach(bind);
 

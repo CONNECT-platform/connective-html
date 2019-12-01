@@ -5,7 +5,7 @@ import { Observable } from "rxjs";
 import { RawValue } from "../../../shared/types";
 
 import { PluginPriority } from "../plugin";
-import { CompInputWithOptions, CompInputOptions, CompFunc, ComponentSignature } from "../component/types";
+import { CompInputWithOptions, CompInputOptions, CompType, ComponentSignature } from "../component/types";
 import { CompPropPlugin } from "../component/basic-plugins";
 
 
@@ -16,7 +16,7 @@ export class CompInputPin extends Pin implements CompInputWithOptions<any> {
 }
 
 
-export class CompInputPinPlugin<Renderable=RawValue, Tag=CompFunc<Renderable | string> | string>
+export class CompInputPinPlugin<Renderable=RawValue, Tag=CompType<Renderable | string> | string>
 implements CompPropPlugin<Renderable, Tag> {
   wireProp(name: string, prop: any, _: Node, signature: ComponentSignature) {
     if (signature.inputs && name in signature.inputs && isPinLike(signature.inputs[name])) {

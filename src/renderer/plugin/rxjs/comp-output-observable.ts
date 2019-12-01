@@ -6,12 +6,12 @@ import * as L from "../../../shared/life-cycle";
 import { RawValue } from "../../../shared/types";
 
 import { PluginPriority } from "../plugin";
-import { CompFunc, ComponentSignature } from "../component/types";
+import { CompType, ComponentSignature } from "../component/types";
 import { CompPropPlugin } from "../component/basic-plugins";
 import trackable from "./trackable";
 
 
-export class CompOutputObservablePlugin<Renderable=RawValue, Tag=CompFunc<Renderable | string> | string>
+export class CompOutputObservablePlugin<Renderable=RawValue, Tag=CompType<Renderable | string> | string>
 implements CompPropPlugin<Renderable, Tag> {
   priority = PluginPriority.High;
 

@@ -2,21 +2,21 @@ import { RawValue, PropsType } from '../../../shared/types';
 
 import { PluginPriority, PluginHost } from '../plugin';
 import { CompProcessPlugin, isCompIOPlugin, isCompPropPlugin } from './basic-plugins';
-import { CompFunc, ComponentSignature, ExposeFunction } from './types';
+import { CompType, ComponentSignature, ExposeFunction } from './types';
 import { ComponentInputUnrecognizedError, ComponentOutputUnrecognizedError } from './errors/unhandled-signature-prop.error';
 
 
-export class ExposePlugin<Renderable=RawValue, Tag=CompFunc<Renderable | string> | string>
+export class ExposePlugin<Renderable=RawValue, Tag=CompType<Renderable | string> | string>
   implements CompProcessPlugin<Renderable, Tag> {
 
-  private _host: PluginHost<Renderable | RawValue, Tag | CompFunc<Renderable, Tag> | string>;
+  private _host: PluginHost<Renderable | RawValue, Tag | CompType<Renderable, Tag> | string>;
 
-  plugged(host: PluginHost<Renderable | RawValue, Tag | CompFunc<Renderable, Tag> | string>) {
+  plugged(host: PluginHost<Renderable | RawValue, Tag | CompType<Renderable, Tag> | string>) {
     this._host = host;
   }
 
   prepare(
-    comp: CompFunc<RawValue | Renderable, Tag>, 
+    comp: CompType<RawValue | Renderable, Tag>, 
     props: PropsType<Renderable | RawValue>,
     children: (RawValue | Renderable | Node)[], 
     extras: { [name: string]: any; }
