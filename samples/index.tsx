@@ -1,9 +1,12 @@
-import { state, map, State, PinLike } from '@connectv/core';
+import { state, map, State, PinLike, filter } from '@connectv/core';
 
 import { List } from '../src/components/list';
 import autoId from '../src/util/auto-id';
 import Renderer, { Component } from '../src/renderer';
 import ref from '../src/renderer/ref';
+import { rxToggleList, toggleList } from '../src/util/toggle-list';
+import { interval } from 'rxjs';
+import { map as _map } from 'rxjs/operators';
 
 
 export class NotATodoList extends Component {
@@ -69,3 +72,30 @@ renderer.render(
 ).on(document.body);
 
 notTodos.subscribe(console.log);
+
+
+renderer.render(
+  <fragment>
+    <br/><br/><br/>
+    <style>
+      {`
+        .odd {
+          color: blue;
+        }
+
+        .even {
+          color: red;
+        }
+
+        .whynot {
+          background: #bdbdbd;
+        }
+      `}
+    </style>
+    <div class={toggleList({
+      odd: interval(1000).pipe(_map(x => x % 2 == 1)),
+      even: interval(1000).pipe(_map(x => x % 2 == 0)),
+      whynot: interval(1000).pipe(_map(x => x % 3 != 0)),
+    })}>Hellow</div>
+  </fragment>
+).on(document.body);
