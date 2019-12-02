@@ -38,12 +38,14 @@ export function KeyedList(this: ComponentThis, props: KeyedListProps, renderer: 
       list = new KeyedDeep(new State(), _props.key);
       if (isPinLike(_props.of)) _props.of.to(list);
       else wrap(_props.of).to(list);
+
+      this.track(list);
     }
   }
 
   this.track({
     bind() {
-      list.value.forEach((entry: any) => {
+      (list.value || []).forEach((entry: any) => {
         const key = list.keyfunc(entry);
         const prevMarker = markers[markers.length - 1] || startMark;
         const marker = <Marker/>;
