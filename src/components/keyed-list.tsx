@@ -35,7 +35,7 @@ export function KeyedList(this: ComponentThis, props: KeyedListProps, renderer: 
     if (_props.of instanceof State) list = new KeyedDeep(_props.of, _props.key);
     else if (_props.of instanceof SimpleDeep) list = new KeyedDeep(_props.of.state, _props.key);
     else {
-      list = new KeyedDeep(new State(), _props.key);
+      list = new KeyedDeep(new State([]), _props.key);
       if (isPinLike(_props.of)) _props.of.to(list);
       else wrap(_props.of).to(list);
 
