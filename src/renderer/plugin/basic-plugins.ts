@@ -1,10 +1,11 @@
 import { RawValue, PropsType } from '../../shared/types';
-import { Plugin } from './plugin';
+import { Plugin, PluginHost } from './plugin';
 
 
 export interface CreatePlugin<Renderable=RawValue, Tag=string> extends Plugin<Renderable, Tag> {
   create(tag: string | Tag, props: PropsType<RawValue | Renderable> | undefined, 
-    ...children: (Renderable | RawValue | Node)[]): Node | undefined;
+    children: (Renderable | RawValue | Node)[],
+    pluginHost: PluginHost<Renderable, Tag>): Node | undefined;
 }
 
 
@@ -15,7 +16,7 @@ export function isCreatePlugin<Renderable, Tag>(whatever: Plugin<Renderable, Tag
 
 
 export interface PostCreatePlugin<Renderable=RawValue, Tag=string> extends Plugin<Renderable, Tag> {
-  postCreate(node: Node): Node;
+  postCreate(node: Node, pluginHost: PluginHost<Renderable, Tag>): Node;
 }
 
 
@@ -26,7 +27,8 @@ export function isPostCreatePlugin<Renderable, Tag>(whatever: Plugin<Renderable,
 
 
 export interface PropertyPlugin<Renderable=RawValue, Tag=string> extends Plugin<Renderable, Tag> {
-  setprop(prop: string, target: Renderable | RawValue, host: HTMLElement): boolean;
+  setprop(prop: string, target: Renderable | RawValue, host: HTMLElement, 
+          pluginHost: PluginHost<Renderable, Tag>): boolean;
 }
 
 
@@ -37,7 +39,8 @@ export function isPropertyPlugin<Renderable, Tag>(whatever: Plugin<Renderable, T
 
 
 export interface AppendPlugin<Renderable=RawValue, Tag=String> extends Plugin<Renderable, Tag> {
-  append(target: RawValue | Renderable | Node | (RawValue | Renderable | Node)[], host: Node): boolean;
+  append(target: RawValue | Renderable | Node | (RawValue | Renderable | Node)[], host: Node,
+        pluginHost: PluginHost<Renderable, Tag>): boolean;
 }
 
 
@@ -48,7 +51,7 @@ export function isAppendPlugin<Renderable, Tag>(whatever: Plugin<Renderable, Tag
 
 
 export interface PostRenderPlugin<Renderable=RawValue, Tag=string> extends Plugin<Renderable, Tag> {
-  postRender(node: Node): void;
+  postRender(node: Node, pluginHost: PluginHost<Renderable, Tag>): void;
 }
 
 

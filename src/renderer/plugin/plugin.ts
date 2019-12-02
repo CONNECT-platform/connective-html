@@ -15,6 +15,5 @@ export interface PluginHost<Renderable, Tag> extends RendererLike<Renderable, Ta
 
 export interface Plugin<Renderable=RawValue, Tag=string> {
   priority: PluginPriority;
-  plugged?(host: PluginHost<Renderable, Tag>): void;
   unique?(plugin: Plugin<Renderable, Tag>): boolean;
 }

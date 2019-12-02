@@ -26,7 +26,6 @@ export class ExtensibleRenderer<Renderable=RawValue, Tag=string>
         }
   
         this.plugins.push(plugin);
-        if (plugin.plugged) plugin.plugged(this);
       }
     }
 
@@ -43,21 +42,21 @@ export class ExtensibleRenderer<Renderable=RawValue, Tag=string>
       ...children: (RawValue | Renderable | Node)[]
   ): Node {
     let _node: Node | undefined = undefined;
-    this.plugins.some(plugin => isCreatePlugin(plugin) && !!(_node = plugin.create(tag, props, ...children)));
+    this.plugins.some(plugin => isCreatePlugin(plugin) && !!(_node = plugin.create(tag, props, children, this)));
     if (_node) return _node;
 
     _node = super.create(tag, props, ...children);
-    this.plugins.filter(isPostCreatePlugin).forEach(plugin => plugin.postCreate(_node as Node));
+    this.plugins.filter(isPostCreatePlugin).forEach(plugin => plugin.postCreate(_node as Node, this));
     return _node;
   }
 
   public setprop(prop: string, target: RawValue | Renderable, host: HTMLElement) {
-    if (this.plugins.some(plugin => isPropertyPlugin(plugin) && plugin.setprop(prop, target, host))) return;
+    if (this.plugins.some(plugin => isPropertyPlugin(plugin) && plugin.setprop(prop, target, host, this))) return;
     super.setprop(prop, target, host);
   }
 
   public append(target: RawValue | Renderable | Node | (RawValue | Renderable | Node)[], host: Node) {
-    if (this.plugins.some(plugin => isAppendPlugin(plugin) && plugin.append(target, host))) return;
+    if (this.plugins.some(plugin => isAppendPlugin(plugin) && plugin.append(target, host, this))) return;
     super.append(target, host);
   }
 
@@ -72,9 +71,9 @@ export class ExtensibleRenderer<Renderable=RawValue, Tag=string>
       let _R = _fn();
 
       if (children)
-        children.forEach(child => _postRender.forEach(plugin => plugin.postRender(child)));
+        children.forEach(child => _postRender.forEach(plugin => plugin.postRender(child, this)));
       else
-        _postRender.forEach(plugin => plugin.postRender(node));
+        _postRender.forEach(plugin => plugin.postRender(node, this));
       return _R;
     };
 

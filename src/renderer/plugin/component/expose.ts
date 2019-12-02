@@ -9,17 +9,12 @@ import { ComponentInputUnrecognizedError, ComponentOutputUnrecognizedError } fro
 export class ExposePlugin<Renderable=RawValue, Tag=CompType<Renderable | string> | string>
   implements CompProcessPlugin<Renderable, Tag> {
 
-  private _host: PluginHost<Renderable | RawValue, Tag | CompType<Renderable, Tag> | string>;
-
-  plugged(host: PluginHost<Renderable | RawValue, Tag | CompType<Renderable, Tag> | string>) {
-    this._host = host;
-  }
-
   prepare(
     comp: CompType<RawValue | Renderable, Tag>, 
     props: PropsType<Renderable | RawValue>,
     children: (RawValue | Renderable | Node)[], 
-    extras: { [name: string]: any; }
+    extras: { [name: string]: any; },
+    pluginHost: PluginHost<RawValue | Renderable, Tag>,
   ): (node: Node) => void {
 
     let _signature = <ComponentSignature>{
@@ -41,15 +36,15 @@ export class ExposePlugin<Renderable=RawValue, Tag=CompType<Renderable | string>
     extras.expose = expose;
 
     return (node: Node) => {
-      this._host.plugins
+      pluginHost.plugins
         .filter(isCompIOPlugin)
         .forEach(plugin => 
-          plugin.wire(node, _signature, props, comp, children)
+          plugin.wire(node, _signature, props, comp, children, pluginHost)
         );
 
-      let _propPlugins = this._host.plugins.filter(isCompPropPlugin);
+      let _propPlugins = pluginHost.plugins.filter(isCompPropPlugin);
       Object.entries(props).forEach(([name, prop]) => {
-        if (!_propPlugins.find(plugin => plugin.wireProp(name, prop, node, _signature))) {
+        if (!_propPlugins.find(plugin => plugin.wireProp(name, prop, node, _signature, pluginHost))) {
           if (_signature.inputs && name in _signature.inputs)
             throw new ComponentInputUnrecognizedError(name, props);
           else if (_signature.outputs && name in _signature.outputs)

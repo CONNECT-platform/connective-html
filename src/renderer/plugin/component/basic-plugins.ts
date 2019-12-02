@@ -1,4 +1,4 @@
-import { Plugin } from '../plugin';
+import { Plugin, PluginHost } from '../plugin';
 import { RawValue, PropsType } from '../../../shared/types';
 import { RendererLike } from '../../renderer-like';
 import { CompType, ComponentSignature } from './types';
@@ -10,7 +10,8 @@ export interface CompProcessPlugin<Renderable=RawValue, Tag=string>
     tag: CompType<Renderable | RawValue, Tag>,
     props: PropsType<RawValue | Renderable> | undefined,
     children: (RawValue | Renderable | Node)[],
-    extra: {[name: string]: any}
+    extra: {[name: string]: any},
+    pluginHost: PluginHost<Renderable, Tag>,
   ): (result: Node) => void;
 }
 
@@ -25,8 +26,10 @@ export interface CompIOPlugin<Renderable=RawValue, Tag=string>
   extends Plugin<Renderable | RawValue, Tag | string | CompType<Renderable, Tag>> {
   wire(node: Node, signature: ComponentSignature,
       props: PropsType<RawValue | Renderable> | undefined,
-      tag?: CompType<Renderable, Tag>,
-      children?: (RawValue | Renderable | Node)[]): void;
+      tag: CompType<Renderable, Tag>,
+      children: (RawValue | Renderable | Node)[],
+      pluginHost: PluginHost<Renderable, Tag>,
+  ): void;
 }
 
 
@@ -42,7 +45,9 @@ export interface CompPropPlugin<Renderable=RawValue, Tag=string>
     name: string, 
     prop: any, 
     node: Node,
-    signature: ComponentSignature): boolean;
+    signature: ComponentSignature,
+    pluginHost: PluginHost<Renderable, Tag>,
+  ): boolean;
 }
 
 
