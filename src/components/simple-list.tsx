@@ -26,6 +26,8 @@ export function SimpleList(this: ComponentThis, props: SimpleListProps, renderer
     list = new SimpleDeep(new State());
     if (isPinLike(props.of)) props.of.to(list);
     else wrap(props.of).to(list);
+
+    this.track(list);
   }
 
   this.track(list.to(sink(_list => {
