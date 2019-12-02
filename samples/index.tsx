@@ -1,13 +1,28 @@
-import { state, map, State, PinLike, filter } from '@connectv/core';
+import { state, map, State, PinLike } from '@connectv/core';
 
 import { List } from '../src/components/list';
 import autoId from '../src/util/auto-id';
 import Renderer, { Component } from '../src/renderer';
 import ref from '../src/renderer/ref';
-import { toggleList } from '../src/util/toggle-list';
-import { interval } from 'rxjs';
 import { map as _map } from 'rxjs/operators';
-import { reactiveLiteral as $ } from '../src/util/reactive-literal';
+import styled from '../src/renderer/plugin/styled';
+import preset from 'jss-preset-default';
+import jss from 'jss';
+
+jss.setup(preset());
+
+const { classes } = jss.createStyleSheet({
+  button: {
+    outline: 'none',
+    height: 32,
+    border: 'none',
+    'border-radius': 3,
+    background: 'blue',
+    color: 'white',
+    cursor: 'pointer'
+  }
+})
+.attach();
 
 
 export class NotATodoList extends Component {
@@ -42,6 +57,7 @@ export class NotATodoList extends Component {
   }
 
   render(renderer: Renderer) {
+    renderer = renderer.plug(styled(classes));
     return (
       <div>
         <h3>NOT TODOs</h3>
@@ -73,31 +89,3 @@ renderer.render(
 ).on(document.body);
 
 notTodos.subscribe(console.log);
-
-
-renderer.render(
-  <fragment>
-    <br/><br/><br/>
-    <style>
-      {`
-        .odd {
-          color: blue;
-        }
-
-        .even {
-          color: red;
-        }
-
-        .whynot {
-          background: #bdbdbd;
-        }
-      `}
-    </style>
-    <span style={$`font-size: ${interval(500)}px; transform: rotate(${interval(20)}deg); display: inline-block`}
-      class={toggleList({
-        odd: interval(1000).pipe(_map(x => x % 2 == 1)),
-        even: interval(1000).pipe(_map(x => x % 2 == 0)),
-        whynot: interval(1000).pipe(_map(x => x % 3 != 0)),
-      })}>Hellow</span>
-  </fragment>
-).on(document.body);

@@ -16,7 +16,7 @@ export function isCreatePlugin<Renderable, Tag>(whatever: Plugin<Renderable, Tag
 
 
 export interface PostCreatePlugin<Renderable=RawValue, Tag=string> extends Plugin<Renderable, Tag> {
-  postCreate(node: Node, pluginHost: PluginHost<Renderable, Tag>): Node;
+  postCreate(node: Node, pluginHost: PluginHost<Renderable, Tag>): void;
 }
 
 
