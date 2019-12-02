@@ -1,6 +1,6 @@
 import { Observable, combineLatest } from "rxjs";
 import { map as _map } from "rxjs/operators";
-import { PinLike, expr, group, wrap, pack, map } from "@connectv/core";
+import { PinLike, group, wrap, pack, map } from "@connectv/core";
 
 
 export type ReactiveNameMap = {[name: string]: Observable<boolean> | PinLike};
