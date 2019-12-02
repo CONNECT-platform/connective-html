@@ -1,4 +1,4 @@
-import { State } from "@connectv/core";
+import { State, SimpleDeep } from "@connectv/core";
 
 import { RawValue } from "../../../shared/types";
 
@@ -11,8 +11,8 @@ export class CompStateBindPlugin<Renderable=RawValue, Tag=CompType<Renderable | 
 implements CompPropPlugin<Renderable, Tag> {
   wireProp(name: string, prop: any, _: Node, signature: ComponentSignature) {
     if (signature.states && name in signature.states 
-        && signature.states[name] instanceof State 
-        && prop instanceof State) {
+        && (signature.states[name] instanceof State || signature.states[name] instanceof SimpleDeep)
+        && (prop instanceof State || prop instanceof SimpleDeep)) {
       let state = signature.states[name];
 
       prop.to(state).to(prop);

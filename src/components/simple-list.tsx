@@ -1,14 +1,15 @@
-import { State, SimpleDeep, PinLike, sink, value } from '@connectv/core';
+import { State, SimpleDeep, PinLike, sink, value, isPinLike, wrap } from '@connectv/core';
 
 import { RendererLike } from '../renderer/renderer-like';
 import { CompType, ComponentThis } from '../renderer/plugin/component/types';
 
 import { Marker } from './marker';
 import { scanRemove } from './util/scan';
+import { Observable } from 'rxjs';
 
 
 export interface SimpleListProps {
-  of: State | SimpleDeep,
+  of: State | SimpleDeep | PinLike | Observable<any[]>,
   each: (sub: SimpleDeep, index?: PinLike) => Node;
 }
 
@@ -18,7 +19,14 @@ export function SimpleList(this: ComponentThis, props: SimpleListProps, renderer
   this.track.mark(startMark);
 
   let markers: Node[] = [];
-  let list = (props.of instanceof SimpleDeep)?(props.of):(new SimpleDeep(props.of));
+  let list: SimpleDeep;
+  if (props.of instanceof SimpleDeep) list = props.of;
+  else if (props.of instanceof State) list = new SimpleDeep(props.of);
+  else {
+    list = new SimpleDeep(new State());
+    if (isPinLike(props.of)) props.of.to(list);
+    else wrap(props.of).to(list);
+  }
 
   this.track(list.to(sink(_list => {
     if (_list.length > markers.length) {

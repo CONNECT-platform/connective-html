@@ -1,14 +1,15 @@
-import { State, SimpleDeep, KeyedDeep, KeyFunc, ChangeMap, PinLike, sink } from '@connectv/core';
+import { State, SimpleDeep, KeyedDeep, KeyFunc, ChangeMap, PinLike, sink, isPinLike, wrap } from '@connectv/core';
 
 import { RendererLike } from '../renderer/renderer-like';
 import { CompType, ComponentThis } from '../renderer/plugin/component/types';
 
 import { Marker } from './marker';
 import { scanRemove } from './util/scan';
+import { Observable } from 'rxjs';
 
 
 export interface KeyedListPropsWithKey {
-  of: State | SimpleDeep;
+  of: State | SimpleDeep | PinLike | Observable<any[]>;
   each: (sub: SimpleDeep, index?: PinLike) => Node;
   key: KeyFunc;
 }
@@ -32,7 +33,12 @@ export function KeyedList(this: ComponentThis, props: KeyedListProps, renderer: 
   else {
     let _props = props as KeyedListPropsWithKey;
     if (_props.of instanceof State) list = new KeyedDeep(_props.of, _props.key);
-    else list = new KeyedDeep(_props.of.state, _props.key);
+    else if (_props.of instanceof SimpleDeep) list = new KeyedDeep(_props.of.state, _props.key);
+    else {
+      list = new KeyedDeep(new State(), _props.key);
+      if (isPinLike(_props.of)) _props.of.to(list);
+      else wrap(_props.of).to(list);
+    }
   }
 
   this.track({
