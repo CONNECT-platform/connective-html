@@ -19,6 +19,7 @@ import { PinLike } from '@connectv/core';
 import { Component as _C } from './plugin/component/types';
 import { CheckCompInputsPlugin } from './plugin/component/check-inputs';
 import { CompStateIOPlugin } from './plugin/component/state-io-plugin';
+import { ContextPlugin } from './plugin/component/context';
 
 
 export class ConnectiveRenderer<R = RawValue, T = string> 
@@ -33,6 +34,7 @@ export class ConnectiveRenderer<R = RawValue, T = string>
       new ComponentPlugin<R | PinLike | Observable<RawValue>, T | CompType<R, string>>(),
       new TrackPlugin<R | PinLike | Observable<RawValue>, T | CompType<R, string>>(),
       new ExposePlugin<R | PinLike | Observable<RawValue>, T | CompType<R, string>>(),
+      new ContextPlugin<R | PinLike | Observable<RawValue>, T | CompType<R, string>>(),
       new CompStateIOPlugin<R | PinLike | Observable<RawValue>, T | CompType<R, string>>(),
       new CheckCompInputsPlugin<R | PinLike | Observable<RawValue>, T | CompType<R, string>>(),
       ...rxjsPlugins<R | PinLike | Observable<RawValue>, T | CompType<R, string>>(),

@@ -1,91 +1,23 @@
-import { state, map, State, PinLike } from '@connectv/core';
-
-import { List } from '../src/components/list';
-import autoId from '../src/util/auto-id';
-import Renderer, { Component } from '../src/renderer';
-import ref from '../src/renderer/ref';
-import { map as _map } from 'rxjs/operators';
-import styled from '../src/renderer/plugin/styled';
-import preset from 'jss-preset-default';
-import jss from 'jss';
-
-jss.setup(preset());
-
-const { classes } = jss.createStyleSheet({
-  button: {
-    outline: 'none',
-    height: 32,
-    border: 'none',
-    'border-radius': 3,
-    background: 'blue',
-    color: 'white',
-    cursor: 'pointer'
-  }
-})
-.attach();
+import Renderer from '../src/renderer';
+import { Context } from '../src/components/context';
+import { ComponentThis } from '../src/renderer/plugin/component/types';
+import { state, source } from '@connectv/core';
+import { interval } from 'rxjs';
 
 
-export class NotATodoList extends Component {
-  items: State;
-  next: PinLike;
-  input = ref<HTMLInputElement>();
-
-  init() {
-    this.items = state([]);
-    this.next = this.items.to(map((l: any[]) => l.length + 1));
-  }
-
-  signature() {
-    return {
-      states: {
-        items: this.items
-      }
-    }
-  }
-
-  submit() {
-    this.items.value = this.items.value.concat({
-      id: autoId(), 
-      title: this.input.$.value
-    });
-
-    this.input.$.value = ''; 
-  }
-
-  remove(id: string) {
-    this.items.value = this.items.value.filter((i: any) => i.id !== id);
-  }
-
-  render(renderer: Renderer) {
-    renderer = renderer.plug(styled(classes));
-    return (
-      <div>
-        <h3>NOT TODOs</h3>
-        <ul>
-          <List of={this.items} each={item => 
-              <li onclick={() => this.remove(item.value.id)}>
-                {item.sub('title')}
-              </li>}
-          key={(i: any) => i.id}/>
-        </ul>
-
-        <input type='text' _ref={this.input} placeholder='add an item ...'/>
-        <button onclick={() => this.submit()}>Add #{this.next}</button>
-      </div>
-    )
-  }
+function MyComp(this: ComponentThis, _: {}, renderer: Renderer) {
+  return <div>hellow {this.context('dude')} -- {this.context('content')}</div>
 }
 
 let renderer = new Renderer();
-let listRef = ref<NotATodoList>();
-let notTodos = state([{id: autoId(), title: 'Sample'}]);
+renderer.render(<fragment>
+  <Context dude={'world'}>
+    <Context content={interval(1000)}>
+      <MyComp/>
+    </Context>
+    <Context dude={'jack'}>
+      <MyComp/>
+    </Context>
+  </Context>
+</fragment>).on(document.body);
 
-renderer.render(
-  <fragment>
-    <NotATodoList _ref={listRef} items={notTodos}/>
-    <br/>
-    <button onclick={() => listRef.$.submit()}>###</button>
-  </fragment>
-).on(document.body);
-
-notTodos.subscribe(console.log);

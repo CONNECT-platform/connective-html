@@ -1,4 +1,4 @@
-import { Bindable, Clearable, isBindable, isClearable } from "@connectv/core";
+import { Bindable, Clearable, isBindable, isClearable, PinLike } from "@connectv/core";
 import { Unsubscribable } from "rxjs";
 
 import { RawValue, PropsType } from "../../../shared/types";
@@ -122,13 +122,18 @@ export type TrackFunction = {
 }
 
 
+export type ContextFunction = (key: string) => PinLike;
+
+
 export type ComponentThis = {
   track: TrackFunction;
   expose: ExposeFunction;
+  context: ContextFunction;
 }
 
 
 export type SafeComponentThis = {
   track?: TrackFunction;
   expose?: ExposeFunction;
+  context?: ContextFunction;
 }
