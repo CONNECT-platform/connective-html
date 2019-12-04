@@ -14,8 +14,6 @@ declare module HTML {
     class?: Renderable;
     /**Specifies whether the content of an element is editable or not */
     contenteditable?: Renderable;
-    /**Used to store custom data private to the page or application */
-    'data-'?: {[key: string]: Renderable};
     /**Specifies the text direction for the content in an element */
     dir?: Renderable;
     /**Specifies whether an element is draggable or not */
