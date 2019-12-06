@@ -2,6 +2,7 @@ import { Bindable, Clearable, isBindable, isClearable, PinLike } from "@connectv
 import { Unsubscribable } from "rxjs";
 
 import { RawValue, PropsType } from "../../../shared/types";
+import { ChildType } from "../../renderer";
 import { RendererLike } from "../../renderer-like";
 
 
@@ -10,7 +11,7 @@ export abstract class Component<Renderable=RawValue, Tag=string> {
 
   constructor(
     protected props: PropsType<RawValue | Renderable>,
-    protected children: (RawValue | Renderable | Node)[],
+    protected children: ChildType<Renderable>[],
     private _adapter: ComponentThis,
   ) {
     _adapter.track(this);
@@ -41,7 +42,7 @@ export abstract class Component<Renderable=RawValue, Tag=string> {
 export type CompClass<Renderable=RawValue, Tag=string> = {
   new(
     props: PropsType<RawValue | Renderable>,
-    children: (RawValue | Renderable | Node)[],
+    children: ChildType<Renderable>[],
     _adapter: ComponentThis,
   ): Component<Renderable, Tag>
 };
@@ -49,7 +50,7 @@ export type CompClass<Renderable=RawValue, Tag=string> = {
 export type CompFunc<Renderable=RawValue, Tag=string> = (
   props: PropsType<RawValue | Renderable> | undefined,
   renderer: RendererLike<Renderable | RawValue, Tag | string | CompType<Renderable, Tag>>,
-  children?: (RawValue | Renderable | Node)[]) => Node;
+  children?: ChildType<Renderable>[]) => Node;
 
 export type CompType<Renderable=RawValue, Tag=string> = CompClass<Renderable, Tag> | CompFunc<Renderable, Tag>;
 

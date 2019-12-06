@@ -7,11 +7,14 @@ import { UnsupportedPropError } from './error/unsupported-prop.error';
 import { UnsupportedChildError } from './error/unsupported-child.error';
 
 
+export type ChildType<Renderable> = Renderable | RawValue | Node | ChildArray<Renderable>;
+export interface ChildArray<Renderable> extends Array<ChildType<Renderable>> {}
+
 export class Renderer<Renderable=RawValue, Tag=string> implements RendererLike<Renderable, Tag> {
   public create(
     tag: string | Tag, 
     props: PropsType<Renderable | RawValue> | undefined, 
-    ...children: (Renderable | RawValue | Node)[]
+    ...children: ChildType<Renderable>[]
   ): Node {
     if (typeof tag == 'string') {
       let el: Node;
@@ -21,7 +24,7 @@ export class Renderer<Renderable=RawValue, Tag=string> implements RendererLike<R
         if (props)
           Object.entries(props).forEach(([prop, target]) => this.setprop(prop, target, el as HTMLElement));
       }
-      
+
       children.forEach(child => this.append(child, el));
       return el;
     }
@@ -42,7 +45,7 @@ export class Renderer<Renderable=RawValue, Tag=string> implements RendererLike<R
     }
   }
 
-  public append(target: RawValue | Renderable | Node | (RawValue | Renderable | Node)[], host: Node) {
+  public append(target: ChildType<Renderable>, host: Node) {
     if (target instanceof Node)
       host.appendChild(target);
     else if (Array.isArray(target))

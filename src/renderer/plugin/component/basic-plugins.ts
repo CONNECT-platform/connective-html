@@ -1,6 +1,6 @@
 import { Plugin, PluginHost } from '../plugin';
 import { RawValue, PropsType } from '../../../shared/types';
-import { RendererLike } from '../../renderer-like';
+import { ChildType } from '../../renderer';
 import { CompType, ComponentSignature } from './types';
 
 
@@ -9,7 +9,7 @@ export interface CompProcessPlugin<Renderable=RawValue, Tag=string>
   prepare(
     tag: CompType<Renderable | RawValue, Tag>,
     props: PropsType<RawValue | Renderable> | undefined,
-    children: (RawValue | Renderable | Node)[],
+    children: ChildType<Renderable>[],
     extra: {[name: string]: any},
     pluginHost: PluginHost<Renderable, Tag>,
   ): (result: Node) => void;

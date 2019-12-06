@@ -1,6 +1,9 @@
+import { RawValue, PropsType } from '../../../shared/types';
+
+import { ChildType } from '../../renderer';
 import { PluginPriority, PluginHost } from '../plugin';
 import { CreatePlugin } from '../basic-plugins';
-import { RawValue, PropsType } from '../../../shared/types';
+
 import { isCompProcessPlugin } from './basic-plugins';
 import { CompType, isCompClass } from './types';
 
@@ -13,7 +16,7 @@ export class ComponentPlugin<Renderable=RawValue, Tag=CompType<Renderable, strin
   create(
     tag: string | CompType<Renderable, Tag> | Tag, 
     props: PropsType<RawValue | Renderable> | undefined, 
-    children: (RawValue | Renderable | Node)[],
+    children: ChildType<Renderable>[],
     host: PluginHost<Renderable | RawValue, Tag | CompType<Renderable, Tag> | string>
   ): Node | undefined {
     if (typeof tag === 'function') {

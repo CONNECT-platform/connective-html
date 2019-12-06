@@ -1,6 +1,6 @@
 import { RawValue, PropsType } from '../shared/types';
 
-import { Renderer } from './renderer';
+import { Renderer, ChildType } from './renderer';
 import { Plugin, PluginHost } from './plugin/plugin';
 import { isCreatePlugin, isPostCreatePlugin, isPropertyPlugin, isAppendPlugin, isPostRenderPlugin } 
   from './plugin/basic-plugins';
@@ -39,7 +39,7 @@ export class ExtensibleRenderer<Renderable=RawValue, Tag=string>
   public create(
       tag: Tag | string, 
       props: PropsType<RawValue | Renderable> | undefined, 
-      ...children: (RawValue | Renderable | Node)[]
+      ...children: ChildType<Renderable>[]
   ): Node {
     let _node: Node | undefined = undefined;
     this.plugins.some(plugin => isCreatePlugin(plugin) && !!(_node = plugin.create(tag, props, children, this)));
@@ -55,9 +55,14 @@ export class ExtensibleRenderer<Renderable=RawValue, Tag=string>
     super.setprop(prop, target, host);
   }
 
-  public append(target: RawValue | Renderable | Node | (RawValue | Renderable | Node)[], host: Node) {
-    if (this.plugins.some(plugin => isAppendPlugin(plugin) && plugin.append(target, host, this))) return;
-    super.append(target, host);
+  public append(target: ChildType<Renderable>, host: Node) {
+    if (Array.isArray(target)) {
+      target.forEach(_ => this.append(_, host));
+    }
+    else {
+      if (this.plugins.some(plugin => isAppendPlugin(plugin) && plugin.append(target, host, this))) return;
+      super.append(target, host);
+    }
   }
 
   public render<T extends Node>(node: T): ToBeRendered<T> {

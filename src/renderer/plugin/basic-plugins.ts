@@ -1,10 +1,12 @@
 import { RawValue, PropsType } from '../../shared/types';
+
+import { ChildType } from '../renderer';
 import { Plugin, PluginHost } from './plugin';
 
 
 export interface CreatePlugin<Renderable=RawValue, Tag=string> extends Plugin<Renderable, Tag> {
   create(tag: string | Tag, props: PropsType<RawValue | Renderable> | undefined, 
-    children: (Renderable | RawValue | Node)[],
+    children: ChildType<Renderable>[],
     pluginHost: PluginHost<Renderable, Tag>): Node | undefined;
 }
 
