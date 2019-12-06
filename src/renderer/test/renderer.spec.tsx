@@ -1,20 +1,9 @@
 import { should, expect } from 'chai'; should();
-import jsdom from 'jsdom-global';
-
-import { Renderer } from '../renderer';
 
 
-describe('Renderer', () => {
-  beforeEach(function() {
-    this.jsdom = jsdom();
-  });
-
-  afterEach(function() {
-    this.jsdom();
-  });
-
+export function testRendererSpec(rendererFactory: <R=any, T=any>(...args: any[]) => any) {
   it('should be TSX compliant.', () => {
-    let renderer = new Renderer();
+    let renderer = rendererFactory();
     renderer.render(<div id="hellow" tabindex={42 * 2}><span>World</span></div>).on(document.body);
     let div = document.getElementById('hellow') as HTMLElement;
 
@@ -25,12 +14,12 @@ describe('Renderer', () => {
   });
 
   it('should create HTMLElements with TSX syntax.', () => {
-    let renderer = new Renderer();
+    let renderer = rendererFactory();
     expect(<div>hellow</div>).to.be.instanceOf(HTMLElement);
   });
 
   it('should render the created html elements on the DOM (not another object).', () => {
-    let renderer = new Renderer();
+    let renderer = rendererFactory();
     let x = <div id='hellow'>Hellow</div>;
     renderer.render(x).on(document.body);
     expect(document.getElementById('hellow')).to.equal(x);
@@ -38,19 +27,19 @@ describe('Renderer', () => {
 
   describe('.create()', () => {
     it('should create an html element with given tag.', () => {
-      let renderer = new Renderer();
+      let renderer = rendererFactory();
       renderer.create('img', {}).should.be.instanceOf(HTMLImageElement);
       renderer.create('span', {}).should.be.instanceOf(HTMLSpanElement);
       renderer.create('div', {}).should.be.instanceOf(HTMLDivElement);
     });
 
     it('should create a `DocumentFragment` when passed tag is "fragment".', () => {
-      let renderer = new Renderer();
+      let renderer = rendererFactory();
       renderer.create('fragment', {}).should.be.instanceOf(DocumentFragment);
     });
 
     it('should set given properties on created element.', () => {
-      let renderer = new Renderer();
+      let renderer = rendererFactory();
       let div = renderer.create('div', {class: 'hellow', 'data-whatever': 'whatever'}) as HTMLElement;
       
       expect(div.getAttribute('class')).to.equal('hellow');
@@ -62,7 +51,7 @@ describe('Renderer', () => {
     });
 
     it('should append given elements to the created element.', () => {
-      let renderer = new Renderer();
+      let renderer = rendererFactory();
       let child1 = renderer.create('div', {});
       let child2 = renderer.create('div', {});
       let parent = renderer.create('div', {}, child1, child2);
@@ -72,7 +61,7 @@ describe('Renderer', () => {
     });
 
     it('should append given raw values in string form as a text node to the created element.', () => {
-      let renderer = new Renderer();
+      let renderer = rendererFactory();
       let div = renderer.create('div', {}, 'hellow', true, 42);
 
       div.childNodes.item(0).should.be.instanceOf(Text);
@@ -86,7 +75,7 @@ describe('Renderer', () => {
     });
 
     it('should append each element of passed arrays to the created element.', () => {
-      let renderer = new Renderer();
+      let renderer = rendererFactory();
       let child1 = renderer.create('div', {});
       let child2 = renderer.create('div', {});
       let div = renderer.create('div', {}, child1, [false, 'yo'], 'world', [child2, [true, 42]]);
@@ -101,17 +90,17 @@ describe('Renderer', () => {
     });
 
     it('should throw an error if a non-string tag is given.', () => {
-      let renderer = new Renderer<any, number>();
+      let renderer = rendererFactory<any, number>();
       expect(() => renderer.create(42, {})).to.throw();
     });
 
     it('should throw an error if a non-raw attribute is given.', () => {
-      let renderer = new Renderer<any>();
+      let renderer = rendererFactory<any>();
       expect(() => renderer.create('div', {x: [42]})).to.throw();
     });
 
     it('should throw an error if a non-renderable child is given.', () => {
-      let renderer = new Renderer<any>();
+      let renderer = rendererFactory<any>();
       expect(() => renderer.create('div', {}, {x : 42})).to.throw();
     });
   });
@@ -119,7 +108,7 @@ describe('Renderer', () => {
   describe('.render()', () => {
     describe('.on()', () => {
       it('should render given node on given parent.', () => {
-        let renderer = new Renderer();
+        let renderer = rendererFactory();
         let parent = <div></div>;
         let child = <div></div>;
         renderer.render(child).on(parent);
@@ -131,7 +120,7 @@ describe('Renderer', () => {
 
     describe('.before()', () => {
       it('should render given node before the given reference node.', () => {
-        let renderer = new Renderer();
+        let renderer = rendererFactory();
         let ref = <div></div>;
         let parent = <div>{ref}</div>;
         let child = <div></div>;
@@ -145,7 +134,7 @@ describe('Renderer', () => {
 
     describe('.after()', () => {
       it('should render given node after the given reference node.', () => {
-        let renderer = new Renderer();
+        let renderer = rendererFactory();
         let ref = <div></div>;
         let parent = <div>{ref}</div>;
         let child = <div></div>;
@@ -157,4 +146,4 @@ describe('Renderer', () => {
       });
     });
   });
-});
+}

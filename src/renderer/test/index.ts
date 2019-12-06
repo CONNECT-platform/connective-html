@@ -1,4 +1,4 @@
 describe('renderer', () => {
-  require('./renderer');
-  require('./ref');
+  require('./renderer.test');
+  require('./ref.test');
 });
