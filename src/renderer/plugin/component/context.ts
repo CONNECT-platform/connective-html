@@ -5,7 +5,7 @@ import * as Context from "../../../shared/context";
 import { PluginPriority, PluginHost } from "../plugin";
 
 import { CompType } from "./types";
-import { CompProcessPlugin, isCompContextPlugin } from "./basic-plugins";
+import { CompProcessPlugin, isCompContextPlugin, isDefaultReactiveRecipientPlugin } from "./basic-plugins";
 import { Subscription } from "rxjs";
 import { UnhandledComponentContextError } from "./errors/unhandled-component-context.error";
 
@@ -21,8 +21,11 @@ export class ContextPlugin<Renderable=RawValue, Tag=CompType<Renderable | string
       pluginHost: PluginHost<Renderable, Tag>,
     ): (node: Node) => void {
 
+      let _plugin = pluginHost.plugins.find(isDefaultReactiveRecipientPlugin);
+      let _default = () => _plugin?_plugin.defaultContext():undefined;
+
       const map: {[key: string]: any} = {};
-      const context = <T>(key: string, recipient?: T): T => map[key] = map[key] || recipient;
+      const context = <T>(key: string, recipient?: T): T => map[key] = map[key] || recipient || _default();
       extras.context = context;
 
       return (node: Node) => {

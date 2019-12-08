@@ -1,4 +1,4 @@
-import { Plugin, PluginHost } from '../plugin';
+import { Plugin, PluginHost, PluginPriority } from '../plugin';
 import { RawValue, PropsType } from '../../../shared/types';
 import { ChildType } from '../../renderer';
 import { CompType, ComponentSignature } from './types';
@@ -74,4 +74,25 @@ export interface CompContextPlugin<Renderable=RawValue, Tag=string>
 export function isCompContextPlugin<Renderable, Tag>(whatever: Plugin<Renderable, Tag>):
   whatever is CompContextPlugin<Renderable, Tag> {
   return whatever && (whatever as any).wireContext && typeof (whatever as any).wireContext == 'function';
+}
+
+
+export abstract class DefaultReactiveRecipientPlugin<Renderable=RawValue, Tag=string>
+  implements Plugin<Renderable | RawValue, Tag | string | CompType<Renderable, Tag>> {
+  unique(plugin: Plugin<Renderable, Tag>) {
+    return plugin instanceof DefaultReactiveRecipientPlugin;
+  }
+
+  abstract defaultInput(): any;
+  abstract defaultOutput(): any;
+  abstract defaultState(): any;
+  abstract defaultContext(): any;
+
+  priority = PluginPriority.Fallback;
+}
+
+
+export function isDefaultReactiveRecipientPlugin<Renderable, Tag>(whatever: Plugin<Renderable, Tag>):
+  whatever is DefaultReactiveRecipientPlugin<Renderable, Tag> {
+  return whatever instanceof DefaultReactiveRecipientPlugin;
 }

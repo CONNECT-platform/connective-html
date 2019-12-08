@@ -9,6 +9,7 @@ import { CompStateBindPlugin } from './comp-state-bind';
 import { CompStateTrackPlugin } from './comp-state-track';
 import { CompOutputPinEventsPlugin } from './comp-output-pin-event';
 import { CompContextPinPlugin } from './comp-context-pin';
+import { DefaultPinLikeRecipientPlugin } from './default-recipient';
 
 
 export function connectivePlugins<R, T>() {
@@ -24,5 +25,6 @@ export function connectivePlugins<R, T>() {
     new CompOutputPinPlugin<R, T>(),
     new CompOutputPinEventsPlugin<R, T>(),
     new CompContextPinPlugin<R, T>(),
+    new DefaultPinLikeRecipientPlugin<R, T>(),
   ]
 }

@@ -1,7 +1,7 @@
 import { RawValue, PropsType } from '../../../shared/types';
 
 import { PluginPriority, PluginHost } from '../plugin';
-import { CompProcessPlugin, isCompIOPlugin, isCompPropPlugin } from './basic-plugins';
+import { CompProcessPlugin, isCompIOPlugin, isCompPropPlugin, isDefaultReactiveRecipientPlugin } from './basic-plugins';
 import { CompType, ComponentSignature, ExposeFunction } from './types';
 import { ComponentInputUnrecognizedError, ComponentOutputUnrecognizedError } from './errors/unhandled-signature-prop.error';
 
@@ -29,9 +29,14 @@ export class ExposePlugin<Renderable=RawValue, Tag=CompType<Renderable | string>
       if (signature.states) Object.assign(_signature.states, signature.states);
     }) as any;
 
-    expose.in = (name: string, input: any) => { expose({inputs: {[name]: input}}); }
-    expose.out = (name: string, output: any) => { expose({outputs: {[name]: output}}); }
-    expose.state = (name: string, state: any) => { expose({states: {[name]: state}}); }
+    let _plugin = pluginHost.plugins.find(isDefaultReactiveRecipientPlugin);
+    let _defaultI = () => _plugin?_plugin.defaultInput():undefined;
+    let _defaultO = () => _plugin?_plugin.defaultOutput():undefined;
+    let _defaultS = () => _plugin?_plugin.defaultState():undefined;
+
+    expose.in = (name: string, i?: any) => { let _ = i || _defaultI(); expose({inputs: {[name]: _}}); return _ }
+    expose.out = (name: string, o?: any) => { let _ = o || _defaultO(); expose({outputs: {[name]: _}}); return _ }
+    expose.state = (name: string, s?: any) => { let _ = s || _defaultS(); expose({states: {[name]: _}}); return _ }
 
     extras.expose = expose;
 

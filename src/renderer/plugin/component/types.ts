@@ -111,9 +111,9 @@ export function isCompInputWithOptions<T>(whatever: any):
 
 export type ExposeFunction = {
   (signature: ComponentSignature): void;
-  in: (name: string, input: any) => void;
-  out: (name: string, output: any) => void;
-  state: (name: string, state: any) => void;
+  in: (name: string, input?: any) => void;
+  out: (name: string, output?: any) => void;
+  state: (name: string, state?: any) => void;
 };
 
 
@@ -123,7 +123,7 @@ export type TrackFunction = {
 }
 
 
-export type ContextFunction = <T>(key: string, recipient?: T) => T;
+export type ContextFunction = <T=PinLike>(key: string, recipient?: T) => T;
 
 
 export type ComponentThis = {

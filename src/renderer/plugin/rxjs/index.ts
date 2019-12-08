@@ -7,6 +7,7 @@ import { CompInputSubjectPlugin } from './comp-input-subject';
 import { CompOutputObservablePlugin } from './comp-output-observable';
 import { CompOutputObservableEventsPlugin } from './comp-output-observable-events';
 import { CompContextSubjectPlugin } from './comp-context-subject';
+import { DefaultSubjectRecipientPlugin } from './default-recipient';
 
 
 export function rxjsPlugins<R, T>() {
@@ -20,5 +21,6 @@ export function rxjsPlugins<R, T>() {
     new CompOutputObservablePlugin<R, T>(),
     new CompOutputObservableEventsPlugin<R, T>(),
     new CompContextSubjectPlugin<R, T>(),
+    new DefaultSubjectRecipientPlugin<R, T>(),
   ]
 }
