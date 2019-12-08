@@ -123,7 +123,7 @@ export type TrackFunction = {
 }
 
 
-export type ContextFunction = (key: string) => PinLike;
+export type ContextFunction = <T>(key: string, recipient?: T) => T;
 
 
 export type ComponentThis = {

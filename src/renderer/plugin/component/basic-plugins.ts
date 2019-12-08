@@ -2,6 +2,7 @@ import { Plugin, PluginHost } from '../plugin';
 import { RawValue, PropsType } from '../../../shared/types';
 import { ChildType } from '../../renderer';
 import { CompType, ComponentSignature } from './types';
+import { Subscription } from 'rxjs';
 
 
 export interface CompProcessPlugin<Renderable=RawValue, Tag=string>
@@ -54,4 +55,23 @@ export interface CompPropPlugin<Renderable=RawValue, Tag=string>
 export function isCompPropPlugin<Renderable, Tag>(whatever: Plugin<Renderable, Tag>):
   whatever is CompPropPlugin<Renderable, Tag> {
   return whatever && (whatever as any).wireProp && typeof (whatever as any).wireProp == 'function';
+}
+
+
+export interface CompContextPlugin<Renderable=RawValue, Tag=string>
+  extends Plugin<Renderable | RawValue, Tag | string | CompType<Renderable, Tag>> {
+  wireContext(
+    name: string,
+    value: any,
+    recipient: any,
+    subReference: Subscription,
+    node: Node,
+    pluginHost: PluginHost<Renderable, Tag>,
+  ): boolean;
+}
+
+
+export function isCompContextPlugin<Renderable, Tag>(whatever: Plugin<Renderable, Tag>):
+  whatever is CompContextPlugin<Renderable, Tag> {
+  return whatever && (whatever as any).wireContext && typeof (whatever as any).wireContext == 'function';
 }

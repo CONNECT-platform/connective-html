@@ -8,6 +8,7 @@ import { CompOutputPinPlugin } from './comp-output-pin';
 import { CompStateBindPlugin } from './comp-state-bind';
 import { CompStateTrackPlugin } from './comp-state-track';
 import { CompOutputPinEventsPlugin } from './comp-output-pin-event';
+import { CompContextPinPlugin } from './comp-context-pin';
 
 
 export function connectivePlugins<R, T>() {
@@ -22,5 +23,6 @@ export function connectivePlugins<R, T>() {
     new CompInputPinPlugin<R, T>(),
     new CompOutputPinPlugin<R, T>(),
     new CompOutputPinEventsPlugin<R, T>(),
+    new CompContextPinPlugin<R, T>(),
   ]
 }
