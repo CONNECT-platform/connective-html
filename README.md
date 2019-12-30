@@ -19,7 +19,7 @@ let renderer = new Renderer();
 
 renderer.render(<div>You have been here for {interval(1000)} seconds.</div>).on(document.body);
 ```
-
+---
 ```tsx
 import { state, filter, map } from '@connectv/core';
 import Renderer from '@connectv/html';
