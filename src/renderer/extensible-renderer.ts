@@ -21,7 +21,7 @@ export class ExtensibleRenderer<Renderable=RawValue, Tag=string>
 
       if (!this.plugins.includes(plugin)) {
         if (plugin.unique !== undefined) {
-          let filter = plugin.unique;
+          let filter = plugin.unique.bind(plugin);
           this.plugins = this.plugins.filter(p => !filter(p));
         }
   
@@ -43,9 +43,8 @@ export class ExtensibleRenderer<Renderable=RawValue, Tag=string>
   ): Node {
     let _node: Node | undefined = undefined;
     this.plugins.some(plugin => isCreatePlugin(plugin) && !!(_node = plugin.create(tag, props, children, this)));
-    if (_node) return _node;
 
-    _node = super.create(tag, props, ...children);
+    if (!_node) _node = super.create(tag, props, ...children);
     this.plugins.filter(isPostCreatePlugin).forEach(plugin => plugin.postCreate(_node as Node, this));
     return _node;
   }
