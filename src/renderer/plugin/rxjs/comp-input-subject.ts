@@ -2,7 +2,6 @@ import { Subject, Observable } from "rxjs";
 import { isPinLike, Bindable, sink } from "@connectv/core";
 
 import * as L from "../../../shared/life-cycle";
-import { RawValue } from "../../../shared/types";
 
 import { PluginPriority } from "../plugin";
 import { CompInputOptions, CompType, ComponentSignature, CompInputWithOptions } from "../component/types";

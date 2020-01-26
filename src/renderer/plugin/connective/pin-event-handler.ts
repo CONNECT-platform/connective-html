@@ -1,8 +1,6 @@
 import { isPinLike, wrap } from '@connectv/core';
 import { fromEvent } from 'rxjs';
 
-import { RawValue } from '../../../shared/types';
-
 import { PluginPriority } from '../plugin';
 import { PropertyPlugin } from '../basic-plugins';
 

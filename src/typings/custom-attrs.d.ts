@@ -1,10 +1,10 @@
 declare module HTML {
-  type StateType = import('@connectv/core').State 
+  export type StateType = import('@connectv/core').State 
     | import('rxjs').BehaviorSubject<any> 
     | import('rxjs').BehaviorSubject<string>;
 
   interface Attributes {
-    _ref?: import('../renderer/ref').Ref;
+    _ref?: RefLike<Node>;
     _innerHTML?: HTML.Renderable;
   }
 

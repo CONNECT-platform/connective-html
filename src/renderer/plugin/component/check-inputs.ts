@@ -1,4 +1,4 @@
-import { RawValue, PropsType } from "../../../shared/types";
+import { PropsType } from "../../../shared/types";
 
 import { PluginPriority } from "../plugin";
 

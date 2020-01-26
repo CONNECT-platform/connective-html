@@ -1,7 +1,7 @@
 import { Bindable, Clearable, isBindable, isClearable, PinLike } from "@connectv/core";
 import { Unsubscribable } from "rxjs";
 
-import { RawValue, PropsType } from "../../../shared/types";
+import { PropsType } from "../../../shared/types";
 import { ChildType } from "../../renderer";
 import { RendererLike } from "../../renderer-like";
 

@@ -12,8 +12,6 @@ import { ExposePlugin } from './plugin/component/expose';
 import { rxjsPlugins } from './plugin/rxjs';
 import { connectivePlugins } from './plugin/connective';
 
-import { RawValue } from '../shared/types';
-
 import { Observable } from 'rxjs';
 import { PinLike } from '@connectv/core';
 import { Component as _C } from './plugin/component/types';

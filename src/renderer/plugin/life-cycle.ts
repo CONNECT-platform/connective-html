@@ -1,4 +1,3 @@
-import { RawValue } from '../../shared/types';
 import * as L from '../../shared/life-cycle';
 
 import { PluginPriority } from './plugin';

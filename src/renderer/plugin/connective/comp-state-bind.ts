@@ -1,7 +1,5 @@
 import { State, SimpleDeep } from "@connectv/core";
 
-import { RawValue } from "../../../shared/types";
-
 import { PluginPriority } from "../plugin";
 import { CompType, ComponentSignature } from "../component/types";
 import { CompPropPlugin } from "../component/basic-plugins";

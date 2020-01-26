@@ -219,7 +219,7 @@ describe.only('ExtensibleRenderer', () => {
       });
     });
 
-    describe.only('Appending process', () => {
+    describe('Appending process', () => {
       it('should use the first plugin that can support given node and host combination.');
       it('should test plugins by order of priority.');
       it('should invoke parent\'s node appending process when no plugin accepts the combination.');

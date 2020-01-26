@@ -1,4 +1,4 @@
-import { RawValue, PropsType } from '../shared/types';
+import { PropsType } from '../shared/types';
 
 import { Renderer, ChildType } from './renderer';
 import { Plugin, PluginHost } from './plugin/plugin';

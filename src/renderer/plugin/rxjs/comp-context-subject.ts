@@ -1,8 +1,6 @@
 import { Subscription, Observable, Subject } from "rxjs";
 import { isPinLike } from "@connectv/core";
 
-import { RawValue } from "../../../shared/types";
-
 import { CompContextPlugin } from "../component/basic-plugins";
 import { CompType } from "../component/types";
 import { PluginPriority } from "../plugin";

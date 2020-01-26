@@ -1,7 +1,6 @@
 import { State } from '@connectv/core';
 
 import * as L from '../../../shared/life-cycle';
-import { RawValue } from "../../../shared/types";
 
 import { PluginPriority } from "../plugin";
 

@@ -1,4 +1,4 @@
-export class Ref<T = Node> {
+export class Ref<T = Node> implements RefLike<T> {
   _resolved: boolean = false;
   _$: T;
 

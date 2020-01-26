@@ -1,6 +1,6 @@
 declare module HTML {
-  type Renderable = import('../shared/types').RawValue | 
-          import('rxjs').Observable<import('../shared/types').RawValue> |
+  type Renderable = RawValue | 
+          import('rxjs').Observable<RawValue> |
           import('@connectv/core').PinLike;
 
   type EventHandler = string | EventListener | 

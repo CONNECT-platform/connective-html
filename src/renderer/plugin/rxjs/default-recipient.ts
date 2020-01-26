@@ -1,7 +1,5 @@
 import { Subject } from "rxjs";
 
-import { RawValue } from "../../../shared/types";
-
 import { CompType } from "../component/types";
 import { DefaultReactiveRecipientPlugin } from "../component/basic-plugins";
 

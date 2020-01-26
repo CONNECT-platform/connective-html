@@ -1,7 +1,5 @@
 import { Subject, fromEvent } from 'rxjs';
 
-import { RawValue } from '../../../shared/types';
-
 import { PluginPriority } from '../plugin';
 import { PropertyPlugin } from '../basic-plugins';
 

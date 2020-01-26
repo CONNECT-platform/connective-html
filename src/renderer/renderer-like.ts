@@ -1,4 +1,4 @@
-import { RawValue, PropsType } from '../shared/types';
+import { PropsType } from '../shared/types';
 
 
 export interface ToBeRendered<T extends Node> {

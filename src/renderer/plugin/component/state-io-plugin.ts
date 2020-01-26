@@ -1,5 +1,3 @@
-import { RawValue } from "../../../shared/types";
-
 import { PluginPriority } from "../plugin";
 
 import { CompType, ComponentSignature } from "./types";

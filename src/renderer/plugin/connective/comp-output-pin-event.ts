@@ -1,7 +1,6 @@
 import { isPinLike, sink } from '@connectv/core';
 
 import * as L from '../../../shared/life-cycle';
-import { RawValue } from "../../../shared/types";
 
 import { polyfillCustomEvent } from '../util/custom-event.polyfill';
 import { PluginPriority } from "../plugin";

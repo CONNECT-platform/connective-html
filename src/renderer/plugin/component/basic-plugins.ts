@@ -1,5 +1,5 @@
 import { Plugin, PluginHost, PluginPriority } from '../plugin';
-import { RawValue, PropsType } from '../../../shared/types';
+import { PropsType } from '../../../shared/types';
 import { ChildType } from '../../renderer';
 import { CompType, ComponentSignature } from './types';
 import { Subscription } from 'rxjs';

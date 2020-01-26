@@ -1,7 +1,6 @@
 import { Observable, Subscription } from 'rxjs';
 import { Bindable, Clearable } from '@connectv/core';
 
-import { RawValue } from '../../../shared/types';
 import * as L from '../../../shared/life-cycle';
 
 import { PluginPriority } from '../plugin';

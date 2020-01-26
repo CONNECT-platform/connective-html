@@ -1,13 +1,23 @@
 {
   "name": "@connectv/html",
-  "version": "0.1.0",
+  "version": "0.0.2",
   "description": "fast and explicit reactive frontends",
-  "main": "index.js",
+  "main": "dist/es5/index.js",
+  "module": "dist/es6/index.js",
+  "types": "dist/es6/index.d.ts",
   "scripts": {
     "start": "webpack-dev-server --config ./conf/webpack/dev.conf.ts",
     "watch": "webpack --config ./conf/webpack/dev.conf.ts --watch",
-    "test": "ts-node --files --project conf/typescript/test.json test.ts"
+    "test": "ts-node --files --project conf/typescript/test.json test.ts",
+    "build-es5": "tsc -p conf/typescript/es5.json && cp -rf ./src/typings dist/es5",
+    "build-es6": "tsc -p conf/typescript/es6.json && cp -rf ./src/typings dist/es6",
+    "build": "npm run build-es5 && npm run build-es6"
   },
+  "files": [
+    "dist/es6",
+    "dist/es5",
+    "logo.svg"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/CONNECT-platform/connective-html.git"

@@ -1,4 +1,4 @@
-import { RawValue, PropsType } from "../../../shared/types";
+import { PropsType } from "../../../shared/types";
 import * as L from "../../../shared/life-cycle";
 import * as Context from "../../../shared/context";
 

@@ -2,8 +2,6 @@ import { isPinLike, PinLike, wrap, value } from "@connectv/core";
 import { Pin } from "@connectv/core/dist/es5";
 import { Observable } from "rxjs";
 
-import { RawValue } from "../../../shared/types";
-
 import { PluginPriority } from "../plugin";
 import { CompInputWithOptions, CompInputOptions, CompType, ComponentSignature } from "../component/types";
 import { CompPropPlugin } from "../component/basic-plugins";

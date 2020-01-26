@@ -2,7 +2,6 @@ import { isPinLike, PinLike, Source, source, sink } from "@connectv/core";
 import { Subject } from "rxjs";
 
 import * as L from "../../../shared/life-cycle";
-import { RawValue } from "../../../shared/types";
 
 import { PluginPriority } from "../plugin";
 import { CompType, ComponentSignature } from "../component/types";

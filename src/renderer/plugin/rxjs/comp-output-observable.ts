@@ -3,7 +3,6 @@ import { Subject, Observable } from "rxjs";
 import { tap } from "rxjs/operators";
 
 import * as L from "../../../shared/life-cycle";
-import { RawValue } from "../../../shared/types";
 
 import { PluginPriority } from "../plugin";
 import { CompType, ComponentSignature } from "../component/types";

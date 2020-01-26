@@ -1,4 +1,4 @@
-import { RawValue, PropsType } from '../../../shared/types';
+import { PropsType } from '../../../shared/types';
 
 import { PluginPriority, PluginHost } from '../plugin';
 import { CompProcessPlugin, isCompIOPlugin, isCompPropPlugin, isDefaultReactiveRecipientPlugin } from './basic-plugins';

@@ -1,7 +1,6 @@
 import { State, sink, wrap, map } from '@connectv/core';
 import { fromEvent } from 'rxjs';
 
-import { RawValue } from '../../../shared/types';
 import * as L from '../../../shared/life-cycle';
 
 import { PluginPriority } from '../plugin';
