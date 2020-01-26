@@ -1,6 +1,6 @@
 {
   "name": "@connectv/html",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "description": "fast and explicit reactive frontends",
   "main": "dist/es5/index.js",
   "module": "dist/es6/index.js",
@@ -9,8 +9,8 @@
     "start": "webpack-dev-server --config ./conf/webpack/dev.conf.ts",
     "watch": "webpack --config ./conf/webpack/dev.conf.ts --watch",
     "test": "ts-node --files --project conf/typescript/test.json test.ts",
-    "build-es5": "tsc -p conf/typescript/es5.json && cp -rf ./src/typings dist/es5",
-    "build-es6": "tsc -p conf/typescript/es6.json && cp -rf ./src/typings dist/es6",
+    "build-es5": "tsc -p conf/typescript/es5.json && cp -rf ./src/typings dist/es5 && rm -fr dist/es5/typings/index.ts",
+    "build-es6": "tsc -p conf/typescript/es6.json && cp -rf ./src/typings dist/es6 && rm -fr dist/es6/typings/index.ts",
     "build": "npm run build-es5 && npm run build-es6"
   },
   "files": [
