@@ -28,3 +28,14 @@ export function connectivePlugins<R, T>() {
     new DefaultPinLikeRecipientPlugin<R, T>(),
   ]
 }
+
+export {
+  PinPlugin, PinObjectValuePlugin, PinInnerHTMLPlugin,
+  PinEventHandlerPlugin, InputStatePlugin,
+  CompInputPinPlugin, CompContextPinPlugin,
+  CompStateBindPlugin, CompStateTrackPlugin,
+  CompOutputPinPlugin, CompOutputPinEventsPlugin,
+  DefaultPinLikeRecipientPlugin,
+}
+
+export { CompInputPin } from './comp-input-pin';

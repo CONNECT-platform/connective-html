@@ -24,3 +24,15 @@ export function rxjsPlugins<R, T>() {
     new DefaultSubjectRecipientPlugin<R, T>(),
   ]
 }
+
+
+export {
+  ObservablePlugin, ObservableObjectValuePlugin, ObservableInnerHTMLPlugin,
+  SubjectEventHandlerPlugin, InputSubjectPlugin,
+  CompInputSubjectPlugin, CompContextSubjectPlugin,
+  CompOutputObservablePlugin, CompOutputObservableEventsPlugin,
+  DefaultSubjectRecipientPlugin,
+}
+
+export { CompInputSubject } from './comp-input-subject';
+export { trackable, Trackable } from './trackable';

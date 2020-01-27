@@ -1,4 +1,8 @@
+import { Observable } from 'rxjs';
+import { PinLike } from '@connectv/core';
+
 import { ExtensibleRenderer } from './extensible-renderer';
+
 import { LifeCyclePlugin } from './plugin/life-cycle';
 import { EventHandlerPlugin } from './plugin/event-handler';
 import { RefPlugin } from './plugin/ref';
@@ -8,15 +12,11 @@ import { CompType } from './plugin/component/types';
 import { ComponentPlugin } from './plugin/component/component';
 import { TrackPlugin } from './plugin/component/track';
 import { ExposePlugin } from './plugin/component/expose';
-
 import { rxjsPlugins } from './plugin/rxjs';
 import { connectivePlugins } from './plugin/connective';
-
-import { Observable } from 'rxjs';
-import { PinLike } from '@connectv/core';
 import { Component as _C } from './plugin/component/types';
 import { CheckCompInputsPlugin } from './plugin/component/check-inputs';
-import { CompStateIOPlugin } from './plugin/component/state-io-plugin';
+import { CompStateIOPlugin } from './plugin/component/state-io';
 import { ContextPlugin } from './plugin/component/context';
 
 
@@ -43,5 +43,13 @@ export class ConnectiveRenderer<R = RawValue, T = string>
 
 
 export default ConnectiveRenderer;
-export abstract class Component<R = any, T = string | CompType<R, string>> 
+export abstract class Component<R = any, T = string | CompType<R, string>>
             extends _C<R, T> {}
+
+export { Renderer as RawRenderer } from './renderer';
+export { ExtensibleRenderer };
+export { Ref, ref } from './ref';
+export { RendererLike } from './renderer-like';
+
+export * from './plugin';
+export * from './error';
