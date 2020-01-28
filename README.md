@@ -11,8 +11,6 @@ npm i @connectv/html
 It is _simple_ as it enables working directly with DOM APIs with JSX syntax:
 
 ```tsx
-/** @jsx renderer.create */
-
 import Renderer from '@connectv/html';
 
 let renderer = new Renderer();
@@ -25,8 +23,6 @@ It is _explicit_ as it throws out any magical layer underneath the API (layers s
 such as (**RXJS**)[https://github.com/ReactiveX/rxjs] or (**CONNECTIVE**)[https://github.com/CONNECT-platform/connective]:
 
 ```tsx
-/** @jsx renderer.create */
-
 import { Renderer } from '@connectv/html';
 import { interval } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
