@@ -7,66 +7,37 @@ npm i @connectv/html
 ```
 <br>
 
-**CONNECTIVE HTML** is a JSX-compliant pure DOM renderer that is highly integrated with [**CONNECTIVE**](https://connective.dev)
-and [**RxJS**](https://rxjs-dev.firebaseapp.com/), enabling building modern reactive UIs with extreme explicitness
-and simplicity:
+**CONNECTIVE HTML** is a frontend library for creating modern reactive web applications in a simple and explicit manner.
+It is _simple_ as it enables working directly with DOM APIs with JSX syntax:
 
 ```tsx
 import Renderer from '@connectv/html';
-import { interval } from 'rxjs';
 
 let renderer = new Renderer();
 
-renderer.render(<div>You have been here for {interval(1000)} seconds.</div>).on(document.body);
+renderer.render(<div>Hellow World!</div>).on(document.body);
 ```
----
+([TRY IT!](https://stackblitz.com/edit/connective-html-hellowworld?file=index.tsx))
+
+It is _explicit_ as it throws out any magical layer underneath the API (layers such as Virtual DOM, automatic change detection, domain-specific compilations, etc.) in favor of directly working with reactive values using reactive libraries
+such as (**RXJS**)[https://github.com/ReactiveX/rxjs] or (**CONNECTIVE**)[https://github.com/CONNECT-platform/connective]:
+
 ```tsx
-import { state, filter, map } from '@connectv/core';
-import Renderer from '@connectv/html';
+import { Renderer } from '@connectv/html';
+import { interval } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 
 let renderer = new Renderer();
-
-let name = state();
 
 renderer.render(
-  <fragment>
-    <input type='text' _state={name}/> 
-    <br/>
-    <p>{name
-      .to(filter(x => x != 'Donald'))
-      .to(map(x => 'Hellow ' + x))}</p>
-  </fragment>
-).on(document.body);
+  <div>
+    You have been here for {
+      interval(1000)
+      .pipe(map(x => x + 1))
+      .pipe(startWith('0'))
+    } second(s).
+  </div>)
+.on(document.body);
 ```
+([TRY IT!](https://stackblitz.com/edit/connective-html-timer?file=index.tsx))
 
-The project aims to be:
-
-- surgical: render once, only update what needs to be updated when it needs to be updated, without it requiring anything else to be checked even.
-- explicit: no hidden layer between the code and the actual thing that gets run by the browser (except typescript transpiler). when you create a DOM element and render it, that IS the element that goes on the document, etc.
-- reactive: no more disguising reactive programming as imperative programming. embrace reactivity.
-
-This essentially means:
-
-- Directly working with DOM API
-- Fixing templating (and componenting) hassle with JSX
-- Fixing reactivity (state management) hassle with **CONNECTIVE**/**RxJS**
-
-Which means you will get about as performant as it gets (benchmarks needed), while also a modern, readable, intuitive UI code. Naturally you would need to know a bit about either one of **CONNECTIVE** or **RxJS** (or both), and generally be able to think reactively.
-
-# DISCLAIMER:
-
-This project is in super-early development. IT IS NOT TO BE USED on any production environment. All APIs are subject to
-extensive change or out-right deprecation without any notice.
-
-# For Early Testers / Contributers
-
-## How to run it:
-
-1. clone the repo
-2. `npm i`
-3. `npm start`
-4. open browser at `localhost:3000`
-
-## How to play with it:
-
-checkout (and modify) [samples/index.tsx](samples/index.tsx)
