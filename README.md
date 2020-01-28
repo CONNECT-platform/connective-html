@@ -5,6 +5,10 @@
 ```
 npm i @connectv/html
 ```
+or even easier:
+```
+npx @connectv/create-html <project-name>
+```
 <br>
 
 **CONNECTIVE HTML** is a frontend library for creating modern reactive web applications in a simple and explicit manner.
