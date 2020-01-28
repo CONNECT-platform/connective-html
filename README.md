@@ -21,7 +21,7 @@ let renderer = new Renderer();
 
 renderer.render(<div>Hellow World!</div>).on(document.body);
 ```
-[>> TRY IT!](https://stackblitz.com/edit/connective-html-hellowworld?file=index.tsx)
+[► TRY IT!](https://stackblitz.com/edit/connective-html-hellowworld?file=index.tsx)
 
 It is _explicit_ as it throws out any magical layer underneath the API (layers such as Virtual DOM, automatic change detection, domain-specific compilations, etc.) in favor of directly working with reactive values using reactive libraries
 such as [**RxJS**](https://github.com/ReactiveX/rxjs) or [**CONNECTIVE**](https://github.com/CONNECT-platform/connective):
@@ -43,7 +43,7 @@ renderer.render(
   </div>)
 .on(document.body);
 ```
-[>> TRY IT!](https://stackblitz.com/edit/connective-html-timer?file=index.tsx)
+[► TRY IT!](https://stackblitz.com/edit/connective-html-timer?file=index.tsx)
 
 # How To Setup
 
@@ -80,6 +80,8 @@ the instructions in its readme file.
 
 # How To Use
 
+> **WARNING**: This project is in really early stage, and should not be used for any means other than experimentation. To re-iterate, DO NOT USE THIS ON PRODUCTION (or do so at your own risk). All of the APIs at this stage are subject to change without any prior notice.
+
 The documentation (in-code and guides) are under construction. In the meanwhile, all I can offer are the following examples:
 
 ## Interactive Hellow World
@@ -103,7 +105,7 @@ renderer.render(
 ).on(document.body);
 ```
 
-[>> TRY IT!](https://stackblitz.com/edit/connective-html-helloworld-interactive)
+[► TRY IT!](https://stackblitz.com/edit/connective-html-helloworld-interactive)
 
 ## Not A TodoList
 
@@ -137,7 +139,7 @@ let renderer = new Renderer();
 renderer.render(<NotATodoList/>).on(document.body);
 ```
 
-[>> TRY IT!](https://stackblitz.com/edit/connective-html-todos)
+[► TRY IT!](https://stackblitz.com/edit/connective-html-todos)
 
 ## GitHub Repos
 
@@ -205,4 +207,12 @@ renderer.render(<fragment>
 </fragment>).on(document.body);
 ```
 
-[>> TRY IT!](https://stackblitz.com/edit/connective-html-github-repos)
+[► TRY IT!](https://stackblitz.com/edit/connective-html-github-repos)
+
+# How to Contribute
+
+The project is in its early stages. These are the areas that would require most help:
+
+- Unit-Tests: test coverage is currently pretty low, and this basically blocks the project from reliable changes to the codebase, which makes this priority number one.
+- Benchmarking: like any proper front-end framework/library, **CONNECTIVE HTML** should also be subject to standard benchmarks, particularly [this benchmark](https://github.com/krausest/js-framework-benchmark).
+- In-code documentation: the main goal here is to guide developers using the package, particularly those using an IDE that displays such documentation in-editor in various situations (such as autocomplete suggestions).
