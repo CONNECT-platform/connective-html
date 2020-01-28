@@ -21,7 +21,7 @@ let renderer = new Renderer();
 
 renderer.render(<div>Hellow World!</div>).on(document.body);
 ```
-[>TRY IT!](https://stackblitz.com/edit/connective-html-hellowworld?file=index.tsx)
+[>> TRY IT!](https://stackblitz.com/edit/connective-html-hellowworld?file=index.tsx)
 
 It is _explicit_ as it throws out any magical layer underneath the API (layers such as Virtual DOM, automatic change detection, domain-specific compilations, etc.) in favor of directly working with reactive values using reactive libraries
 such as [**RxJS**](https://github.com/ReactiveX/rxjs) or [**CONNECTIVE**](https://github.com/CONNECT-platform/connective):
@@ -43,7 +43,7 @@ renderer.render(
   </div>)
 .on(document.body);
 ```
-[>TRY IT!](https://stackblitz.com/edit/connective-html-timer?file=index.tsx)
+[>> TRY IT!](https://stackblitz.com/edit/connective-html-timer?file=index.tsx)
 
 # How To Setup
 
@@ -103,7 +103,7 @@ renderer.render(
 ).on(document.body);
 ```
 
-[>TRY IT!](https://stackblitz.com/edit/connective-html-helloworld-interactive)
+[>> TRY IT!](https://stackblitz.com/edit/connective-html-helloworld-interactive)
 
 ## Not A TodoList
 
@@ -119,9 +119,9 @@ export function NotATodoList({}, renderer: Renderer) {
 
   return <fragment>
     <ul>
-      <List of={items} each={(item, index) => 
+      <List of={items} each={item => 
           <li onclick={() => items.value = items.value.filter(i => i !== item.value)}>
-            #{index.to(map(_ => parseInt(_) + 1))} {item.sub('title')}
+            {item.sub('title')}
           </li>
       } key={i => i.id}/>
     </ul>
@@ -129,7 +129,7 @@ export function NotATodoList({}, renderer: Renderer) {
     <button onclick={() => {
       items.value = items.value.concat([{ title: input.$.value, id: autoId() }]);
       input.$.value = '';
-    }}>Add</button>
+    }}>Add #{items.to(map(l => l.length + 1))}</button>
   </fragment>
 }
 
@@ -137,4 +137,72 @@ let renderer = new Renderer();
 renderer.render(<NotATodoList/>).on(document.body);
 ```
 
-[>TRY IT!](https://stackblitz.com/edit/connective-html-todos)
+[>> TRY IT!](https://stackblitz.com/edit/connective-html-todos)
+
+## GitHub Repos
+
+Lists all of the repositories of a given GitHub user by their username:
+
+```tsx
+import { state, map, group, pin, filter, pipe, value } from '@connectv/core';
+import { Renderer, List } from '@connectv/html';
+
+import { ajax } from 'rxjs/ajax';
+import { debounceTime } from 'rxjs/operators';
+
+// --- A LOADING COMPONENT --- \\
+
+function Loading(_, renderer: Renderer) {
+  const show = pin();
+  this.expose({ inputs: { show } });
+
+  return <div hidden={show.to(map(_ => !_))}>Loading ...</div>
+}
+
+// --- A FUNCTION TO FETCH REPOS --- \\
+
+const fetchRepos = id => new Promise(resolve => {
+  ajax.getJSON(`https://api.github.com/users/${id}/repos`).subscribe(resolve);
+});
+
+// --- A COMPONENT TO RENDER REPOS --- \\
+
+function ReposGrid(_, renderer: Renderer) {
+  const id = pin();
+  this.expose({ inputs: { id }});
+
+  const repos = id.to(map((id, done) => fetchRepos(id).then(done)));
+  const loading = group(value(false), id.to(map(() => true)), repos.to(map(() => false)));
+
+  return <fragment>
+    <Loading show={loading}/>
+    <ul hidden={loading}>
+      <List of={repos} each={repo =>
+        <li>
+          <ul>
+            <li><a href={repo.sub('html_url')}>{repo.sub('name')}</a></li>
+            <li>{repo.sub('description')}</li>
+            <li>
+              {repo.sub('stargazers_count').to(map(_ => (_ || 'no') + ' star' + (_ != 1?'s':'')))}
+            </li>
+          </ul>
+          <hr/>
+        </li>
+      }/>
+    </ul>
+  </fragment>
+}
+
+// --- THE MAIN DOCUMENT --- \\
+
+let renderer = new Renderer();
+let id = state();
+
+renderer.render(<fragment>
+  <input type="text" _state={id} placeholder="github user id ..."/>
+  <hr/>
+  <ReposGrid id={id.to(filter(_ => _)).to(pipe(debounceTime(1000)))}/>
+</fragment>).on(document.body);
+```
+
+[>> TRY IT!](https://stackblitz.com/edit/connective-html-github-repos)
