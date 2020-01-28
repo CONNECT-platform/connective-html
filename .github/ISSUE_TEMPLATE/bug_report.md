@@ -1,12 +1,3 @@
----
-name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: ''
-assignees: ''
-
----
-
 ### Describe the bug
 Describe the bug as precisely as you can. Describe _what_ is the behavior you consider a bug.
 
