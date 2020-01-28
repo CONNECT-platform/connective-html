@@ -20,7 +20,7 @@ renderer.render(<div>Hellow World!</div>).on(document.body);
 ([TRY IT!](https://stackblitz.com/edit/connective-html-hellowworld?file=index.tsx))
 
 It is _explicit_ as it throws out any magical layer underneath the API (layers such as Virtual DOM, automatic change detection, domain-specific compilations, etc.) in favor of directly working with reactive values using reactive libraries
-such as [**RXJS**](https://github.com/ReactiveX/rxjs) or [**CONNECTIVE**](https://github.com/CONNECT-platform/connective):
+such as [**RxJS**](https://github.com/ReactiveX/rxjs) or [**CONNECTIVE**](https://github.com/CONNECT-platform/connective):
 
 ```tsx
 import { Renderer } from '@connectv/html';
