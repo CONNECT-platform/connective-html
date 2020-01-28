@@ -41,3 +41,27 @@ renderer.render(
 ```
 ([TRY IT!](https://stackblitz.com/edit/connective-html-timer?file=index.tsx))
 
+# How To Setup
+
+## Online Playground
+
+Fork [this](https://stackblitz.com/edit/connective-html-hellowworld) project on [StackBlitz](https://stackblitz.com).
+
+## New Typescript Project
+
+1. clone [this starter project](https://github.com/loreanvictor/connective-html-sample.git).
+2. change the git origin and name of the package.
+3. `npm i`
+4. `npm start`
+5. open browser on `localhost:3000`
+
+## Custom Typescript Setup
+
+1. `npm i @connectv/html`
+2. add the following to your `tsconfig.json` file:
+```json
+"compilerOptions": {
+    "jsx": "react",
+    "jsxFactory": "renderer.create"
+}
+```
