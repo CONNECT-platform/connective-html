@@ -80,7 +80,7 @@ the instructions in its readme file.
 
 # How To Use
 
-> **WARNING**: This project is in really early stage, and should not be used for any means other than experimentation. To re-iterate, DO NOT USE THIS ON PRODUCTION (or do so at your own risk). All of the APIs at this stage are subject to change without any prior notice.
+> **WARNING**: DO NOT USE THIS ON PRODUCTION. This project is at an early stage and requires further testing/benchmarking to ensure its security/efficiency for use on production. Additionally, at this stage all APIs are subject to change/removal without any prior notice.
 
 The documentation (in-code and guides) are under construction. In the meanwhile, all I can offer are the following examples:
 
