@@ -141,6 +141,55 @@ renderer.render(<NotATodoList/>).on(document.body);
 
 [► TRY IT!](https://stackblitz.com/edit/connective-html-todos)
 
+## Example: Not A TodoList Using `Component` Class
+
+Same as before, but this time with class based components instead of function based, if thats more your style:
+
+```tsx
+import { state, map } from '@connectv/core';
+import { Component, List, ref, autoId, Renderer } from '@connectv/html';
+
+
+export class NotATodoList extends Component {
+  items = state([]);
+  input = ref<HTMLInputElement>();
+
+  remove(item) {
+    this.items.value = this.items.value.filter(i => i !== item);
+  }
+
+  add() {
+    this.items.value = this.items.value.concat({
+      title: this.input.$.value,
+      id: autoId()
+    });
+
+    this.input.$.value = '';
+  }
+
+  render(renderer) {
+    return <fragment>
+      <ul>
+        <List of={this.items} each={item => 
+            <li onclick={() => this.remove(item.value)}>
+              {item.sub('title')}
+            </li>
+        } key={i => i.id}/>
+      </ul>
+      <input placeholder='Add an item ...' type='text' _ref={this.input}/>
+      <button onclick={() => this.add()}>
+        Add #{this.items.to(map(l => l.length + 1))}
+      </button>
+    </fragment>    
+  }
+}
+
+let renderer = new Renderer();
+renderer.render(<NotATodoList/>).on(document.body);
+```
+
+[► TRY IT!](https://stackblitz.com/edit/connective-html-todos-class)
+
 ## Example: GitHub Repos
 
 Lists all of the repositories of a given GitHub user by their username:
