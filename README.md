@@ -51,11 +51,13 @@ renderer.render(
 
 # How To Setup
 
-### Online Playground
+## Online Playground
 
 Fork [this](https://stackblitz.com/edit/connective-html-hellowworld) project on [StackBlitz](https://stackblitz.com).
 
-### New Typescript Project
+<br>
+
+## New Typescript Project
 
 1. make a project folder and `cd` to it.
 2. `npx @connectv/create-html`
@@ -70,8 +72,9 @@ _----- OR -----_
 clone [this starter project](https://github.com/loreanvictor/connective-html-sample.git) and follow
 the instructions in its readme file.
 
+<br>
 
-### Custom Typescript Setup
+## Custom Typescript Setup
 
 1. `npm i @connectv/html`
 2. add the following to your `tsconfig.json` file:
