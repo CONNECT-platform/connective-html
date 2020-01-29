@@ -4,7 +4,7 @@
 
 <br>
 
-# Table of Contents
+## Table of Contents
 
 - [What is this?](#what-is-this)
 - [How to Setup](#how-to-setup)
@@ -21,7 +21,7 @@
 
 <br>
 
-# What is this?
+## What is this?
 
 **CONNECTIVE HTML** is a frontend library for creating modern reactive web applications in a simple and explicit manner.
 
@@ -61,15 +61,15 @@ renderer.render(
 
 <br>
 
-# How to Setup
+## How to Setup
 
-## Online Playground
+### Online Playground
 
 Fork [this](https://stackblitz.com/edit/connective-html-hellowworld) project on [StackBlitz](https://stackblitz.com).
 
 <br>
 
-## New Typescript Project
+### New Typescript Project
 
 Run the following:
 
@@ -86,7 +86,7 @@ the instructions in its readme file.
 
 <br>
 
-## Custom Typescript Setup
+### Custom Typescript Setup
 
 To add to an existing project (or any frontend typescript project with your own custom setup):
 
@@ -105,7 +105,7 @@ And add the following to your `tsconfig.json` file:
 
 <br>
 
-# How to Use
+## How to Use
 
 > **WARNING**: DO NOT USE THIS ON PRODUCTION. This project is at an early stage and requires further testing/benchmarking to ensure its security/efficiency for use on production. Additionally, at this stage all APIs are subject to change/removal without any prior notice.
 
@@ -113,7 +113,7 @@ The documentation (in-code and guides) are under construction. In the meanwhile,
 
 <br>
 
-## Example: Interactive Hellow World
+### Example: Interactive Hellow World
 
 Says `"Hellow"` to anyone mentioned in the input, except if their name is `"Donald"`:
 
@@ -138,7 +138,7 @@ renderer.render(
 
 <br>
 
-## Example: Not a TodoList
+### Example: Not a TodoList
 
 A simple (not) a todo list, also with the feature of removing any item by clicking on it:
 
@@ -174,7 +174,7 @@ renderer.render(<NotATodoList/>).on(document.body);
 
 <br>
 
-## Example: Not a TodoList Using `Component` Class
+### Example: Not a TodoList Using `Component` Class
 
 Same as before, but this time with class based components instead of function based, if thats more your style:
 
@@ -225,7 +225,7 @@ renderer.render(<NotATodoList/>).on(document.body);
 
 <br>
 
-## Example: GitHub Repos
+### Example: GitHub Repos
 
 Lists all of the repositories of a given GitHub user by their username:
 
@@ -301,7 +301,7 @@ renderer.render(<fragment>
 
 <br>
 
-## Example: Styling, Styled Components, JSS
+### Example: Styling, Styled Components, JSS
 
 We have a boolean state and a button which toggles the value of the state and changes color based on its value.
 We have another button that doesn't do anything, but changes background color based on changes in the state, with 1000ms delay.
@@ -381,7 +381,7 @@ renderer.render(<StyledComp/>).on(document.body);
 
 <br>
 
-# How to Contribute
+## How to Contribute
 
 Checkout [the contribution guide](CONTRIBUTING.md). Also checkout [the code of conduct](CODE_OF_CONDUCT.md) beforehand. Note that the project is still pretty young, so many standard contribution processes are not applicable yet. As the project progresses to more stable stages, these processes, alongside these documents, will be updated accordingly.
 
