@@ -84,7 +84,7 @@ the instructions in its readme file.
 
 The documentation (in-code and guides) are under construction. In the meanwhile, all I can offer are the following examples:
 
-## Interactive Hellow World
+## Example: Interactive Hellow World
 
 Says `"Hellow"` to anyone mentioned in the input, except if their name is `"Donald"`:
 
@@ -107,7 +107,7 @@ renderer.render(
 
 [► TRY IT!](https://stackblitz.com/edit/connective-html-helloworld-interactive)
 
-## Not A TodoList
+## Example: Not A TodoList
 
 A simple (not) a todo list, also with the feature of removing any item by clicking on it:
 
@@ -141,7 +141,7 @@ renderer.render(<NotATodoList/>).on(document.body);
 
 [► TRY IT!](https://stackblitz.com/edit/connective-html-todos)
 
-## GitHub Repos
+## Example: GitHub Repos
 
 Lists all of the repositories of a given GitHub user by their username:
 
