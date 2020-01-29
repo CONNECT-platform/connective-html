@@ -72,7 +72,7 @@ the instructions in its readme file.
 To add to an existing project (or any frontend typescript project with your own custom setup):
 
 ```
-npm i @connectv/html
+$ npm i @connectv/html
 ```
 
 And add the following to your `tsconfig.json` file:
