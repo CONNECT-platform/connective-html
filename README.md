@@ -264,6 +264,84 @@ renderer.render(<fragment>
 
 [► TRY IT!](https://stackblitz.com/edit/connective-html-github-repos)
 
+## Example: Styling, Styled Components, JSS
+
+We have a boolean state and a button which toggles the value of the state and changes color based on its value.
+We have another button that doesn't do anything, but changes background color based on changes in the state, with 1000ms delay.
+And we have a styled custom component with a button inside a div. This button also toggles the value of the state.
+
+```tsx
+import { state, map, pipe } from '@connectv/core';
+import { Renderer, styled, toggleList, rl } from '@connectv/html';
+import { delay } from 'rxjs/operators';
+
+import jss from 'jss';
+import preset from 'jss-preset-default';
+jss.setup(preset())
+
+const { classes } = jss.createStyleSheet({
+  '@global': {
+    body: { background: '#424242', },
+    '*': { 'font-size': '18px' }
+  },
+  button: {
+    'border-radius': '3px',
+    color: 'white',
+    padding: '8px',
+    background: 'blue',
+    border: 'none',
+    cursor: 'pointer',
+    transition: 'background .3s'
+  },
+  red: { background: 'red', },
+  div: {
+    padding: '8px',
+    margin: '8px 0px',
+    'border-radius': '3px',
+    'box-shadow': '0 2px 6px rgba(0, 0, 0, 75)'
+  }
+}).attach();
+
+const isRed = state(false);
+const renderer = new Renderer();
+
+renderer.render(<fragment>
+  <button 
+    onclick={() => isRed.value = !isRed.value} // --> change the state on click
+    class={rl`
+      ${classes.button                         /* --> add `classes.button` class */} 
+      ${toggleList({ [classes.red]: isRed })   /* --> toggle `classes.red` based on `isRed` */}
+    `}>
+    Switch Color
+  </button>
+  <button class={classes.button}              // --> add `classes.button` class 
+        style={rl`
+          background: ${
+            isRed                             // --> change `background` based on `isRed`
+            .to(map(_ => _?'yellow':'lime'))  // --> change to 'yellow' if `isRed` is true, 'lime' otherwise
+            .to(pipe(delay(1000)))            // --> but delay a second before changing
+          };
+          color: black;
+        `}>
+    This Does Nothing
+  </button>
+</fragment>).on(document.body);
+
+
+export function StyledComp(_, renderer) {
+  renderer = renderer.plug(styled(classes));  // --> make a new renderer which uses `classes` by default for styling
+  return <div>                               {/* --> so this div is styled automatically with `classes.div` class. */}
+    <button style="background: magenta"       /* --> also this button is tyled automatically with `classes.button` class. */
+            onclick={() => isRed.value = !isRed.value}>
+      Switch Color of Above Buttons
+    </button>
+  </div>
+}
+
+renderer.render(<StyledComp/>).on(document.body);
+```
+[► TRY IT!](https://stackblitz.com/edit/connective-html-styling)
+
 # How to Contribute
 
 Checkout [the contribution guide](CONTRIBUTING.md). Also checkout [the code of conduct](CODE_OF_CONDUCT.md) beforehand. Note that the project is still pretty young, so many standard contribution processes are not applicable yet. As the project progresses to more stable stages, these processes, alongside these documents, will be updated accordingly.
