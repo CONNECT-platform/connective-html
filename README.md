@@ -33,7 +33,7 @@ renderer.render(
     You have been here for {
       interval(1000)
       .pipe(map(x => x + 1))
-      .pipe(startWith('0'))
+      .pipe(startWith(0))
     } second(s).
   </div>)
 .on(document.body);
