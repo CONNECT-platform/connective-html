@@ -195,6 +195,8 @@ renderer.render(<NotATodoList/>).on(document.body);
 Lists all of the repositories of a given GitHub user by their username:
 
 ```tsx
+/** @jsx renderer.create */
+
 import { state, map, group, pin, filter, pipe, value } from '@connectv/core';
 import { Renderer, List } from '@connectv/html';
 
@@ -223,7 +225,11 @@ function ReposGrid(_, renderer: Renderer) {
   this.expose({ inputs: { id }});
 
   const repos = id.to(map((id, done) => fetchRepos(id).then(done)));
-  const loading = group(value(false), id.to(map(() => true)), repos.to(map(() => false)));
+  const loading = group(
+    value(false),              // --> start with `false`.
+    id.to(map(() => true)),    // --> emit `true` after `id` emits.
+    repos.to(map(() => false)) // --> emit `false` after `repos` emits.
+  );
 
   return <fragment>
     <Loading show={loading}/>
