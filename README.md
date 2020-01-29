@@ -69,8 +69,14 @@ the instructions in its readme file.
 
 ## Custom Typescript Setup
 
-1. `npm i @connectv/html`
-2. add the following to your `tsconfig.json` file:
+To add to an existing project (or any frontend typescript project with your own custom setup):
+
+```
+npm i @connectv/html
+```
+
+And add the following to your `tsconfig.json` file:
+
 ```json
 "compilerOptions": {
     "jsx": "react",
