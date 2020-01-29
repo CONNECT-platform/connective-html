@@ -4,6 +4,25 @@
 
 <br>
 
+# Table of Contents
+
+- [What is this?](#what-is-this)
+- [How to Setup](#how-to-setup)
+  - [Online Playground](#online-playground)
+  - [New Typescript Project](#new-typescript-project)
+  - [Custom Typescript Setup](#custom-typescript-setup)
+- [How to Use](#how-to-use)
+  - [Example: Interactive Hellow World](#example-interactive-hellow-world)
+  - [Example: Not a TodoList](#example-not-a-todolist)
+  - [Example: Not a TodoList Using Component Class](#example-not-a-todolist-using-component-class)
+  - [Example: GitHub Repos](#example-github-repos)
+  - [Example: Styling, Styled Components, JSS](#example-styling-styled-components-jss)
+- [How to Contribute](#how-to-contribute)
+
+<br>
+
+# What is this?
+
 **CONNECTIVE HTML** is a frontend library for creating modern reactive web applications in a simple and explicit manner.
 
 It is _simple_ as it enables working directly with DOM APIs with JSX syntax:
@@ -42,7 +61,7 @@ renderer.render(
 
 <br>
 
-# How To Setup
+# How to Setup
 
 ## Online Playground
 
@@ -86,7 +105,7 @@ And add the following to your `tsconfig.json` file:
 
 <br>
 
-# How To Use
+# How to Use
 
 > **WARNING**: DO NOT USE THIS ON PRODUCTION. This project is at an early stage and requires further testing/benchmarking to ensure its security/efficiency for use on production. Additionally, at this stage all APIs are subject to change/removal without any prior notice.
 
@@ -119,7 +138,7 @@ renderer.render(
 
 <br>
 
-## Example: Not A TodoList
+## Example: Not a TodoList
 
 A simple (not) a todo list, also with the feature of removing any item by clicking on it:
 
@@ -155,7 +174,7 @@ renderer.render(<NotATodoList/>).on(document.body);
 
 <br>
 
-## Example: Not A TodoList Using `Component` Class
+## Example: Not a TodoList Using `Component` Class
 
 Same as before, but this time with class based components instead of function based, if thats more your style:
 
