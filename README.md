@@ -59,17 +59,14 @@ Fork [this](https://stackblitz.com/edit/connective-html-hellowworld) project on 
 
 ## New Typescript Project
 
-1. make a project folder and `cd` to it.
-2. `npx @connectv/create-html`
-
-_----- OR -----_
+Run the following:
 
 1. `npx @connectv/create-html <project-name>`
 2. `cd <project-name>`
 
-_----- OR -----_
+Running `npx @connectv/create-html` without any parameters will create the new project inside the current directory, using its name as the project's name.
 
-clone [this starter project](https://github.com/loreanvictor/connective-html-sample.git) and follow
+Alternatively, you can clone [this starter project](https://github.com/loreanvictor/connective-html-sample.git) and follow
 the instructions in its readme file.
 
 <br>
