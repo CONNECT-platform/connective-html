@@ -147,12 +147,12 @@ Same as before, but this time with class based components instead of function ba
 
 ```tsx
 import { state, map } from '@connectv/core';
-import { Component, List, ref, autoId, Renderer } from '@connectv/html';
+import { Component, List, autoId, Renderer } from '@connectv/html';
 
 
 export class NotATodoList extends Component {
   items = state([]);
-  input = ref<HTMLInputElement>();
+  next = state('');
 
   remove(item) {
     this.items.value = this.items.value.filter(i => i !== item);
@@ -160,11 +160,11 @@ export class NotATodoList extends Component {
 
   add() {
     this.items.value = this.items.value.concat({
-      title: this.input.$.value,
+      title: this.next.value,
       id: autoId()
     });
 
-    this.input.$.value = '';
+    this.next.value = '';
   }
 
   render(renderer) {
@@ -176,7 +176,7 @@ export class NotATodoList extends Component {
             </li>
         } key={i => i.id}/>
       </ul>
-      <input placeholder='Add an item ...' type='text' _ref={this.input}/>
+      <input placeholder='Add an item ...' type='text' _state={this.next}/>
       <button onclick={() => this.add()}>
         Add #{this.items.to(map(l => l.length + 1))}
       </button>
