@@ -2,13 +2,6 @@
 <img src="https://raw.githubusercontent.com/CONNECT-platform/connective-html/master/logo.svg?sanitize=true" width="320px"/>
 </p>
 
-```
-npm i @connectv/html
-```
-or even easier:
-```
-npx @connectv/create-html <project-name>
-```
 <br>
 
 **CONNECTIVE HTML** is a frontend library for creating modern reactive web applications in a simple and explicit manner.
@@ -61,8 +54,11 @@ Fork [this](https://stackblitz.com/edit/connective-html-hellowworld) project on 
 
 Run the following:
 
-1. `npx @connectv/create-html <project-name>`
-2. `cd <project-name>`
+```
+> npx @connectv/create-html <project-name>
+> cd <project-name>
+> npm start
+```
 
 Running `npx @connectv/create-html` without any parameters will create the new project inside the current directory, using its name as the project's name.
 
