@@ -12,8 +12,8 @@ npx @connectv/create-html <project-name>
 <br>
 
 **CONNECTIVE HTML** is a frontend library for creating modern reactive web applications in a simple and explicit manner.
-It is _simple_ as it enables working directly with DOM APIs with JSX syntax:
 
+It is _simple_ as it enables working directly with DOM APIs with JSX syntax:
 ```tsx
 import Renderer from '@connectv/html';
 
@@ -22,6 +22,8 @@ let renderer = new Renderer();
 renderer.render(<div>Hellow World!</div>).on(document.body);
 ```
 [► TRY IT!](https://stackblitz.com/edit/connective-html-hellowworld?file=index.tsx)
+
+<br>
 
 It is _explicit_ as it throws out any magical layer underneath the API (layers such as Virtual DOM, automatic change detection, domain-specific compilations, etc.) in favor of directly working with reactive values using reactive libraries
 such as [**RxJS**](https://github.com/ReactiveX/rxjs) or [**CONNECTIVE**](https://github.com/CONNECT-platform/connective):
@@ -45,29 +47,31 @@ renderer.render(
 ```
 [► TRY IT!](https://stackblitz.com/edit/connective-html-timer?file=index.tsx)
 
+<br>
+
 # How To Setup
 
-## Online Playground
+### Online Playground
 
 Fork [this](https://stackblitz.com/edit/connective-html-hellowworld) project on [StackBlitz](https://stackblitz.com).
 
-## New Typescript Project
+### New Typescript Project
 
 1. make a project folder and `cd` to it.
 2. `npx @connectv/create-html`
 
-_OR_
+_----- OR -----_
 
 1. `npx @connectv/create-html <project-name>`
 2. `cd <project-name>`
 
-_OR_
+_----- OR -----_
 
 clone [this starter project](https://github.com/loreanvictor/connective-html-sample.git) and follow
 the instructions in its readme file.
 
 
-## Custom Typescript Setup
+### Custom Typescript Setup
 
 1. `npm i @connectv/html`
 2. add the following to your `tsconfig.json` file:
@@ -78,11 +82,15 @@ the instructions in its readme file.
 }
 ```
 
+<br>
+
 # How To Use
 
 > **WARNING**: DO NOT USE THIS ON PRODUCTION. This project is at an early stage and requires further testing/benchmarking to ensure its security/efficiency for use on production. Additionally, at this stage all APIs are subject to change/removal without any prior notice.
 
 The documentation (in-code and guides) are under construction. In the meanwhile, all I can offer are the following examples:
+
+<br>
 
 ## Example: Interactive Hellow World
 
@@ -106,6 +114,8 @@ renderer.render(
 ```
 
 [► TRY IT!](https://stackblitz.com/edit/connective-html-helloworld-interactive)
+
+<br>
 
 ## Example: Not A TodoList
 
@@ -140,6 +150,8 @@ renderer.render(<NotATodoList/>).on(document.body);
 ```
 
 [► TRY IT!](https://stackblitz.com/edit/connective-html-todos)
+
+<br>
 
 ## Example: Not A TodoList Using `Component` Class
 
@@ -189,6 +201,8 @@ renderer.render(<NotATodoList/>).on(document.body);
 ```
 
 [► TRY IT!](https://stackblitz.com/edit/connective-html-todos-class)
+
+<br>
 
 ## Example: GitHub Repos
 
@@ -263,6 +277,8 @@ renderer.render(<fragment>
 ```
 
 [► TRY IT!](https://stackblitz.com/edit/connective-html-github-repos)
+
+<br>
 
 ## Example: Styling, Styled Components, JSS
 
@@ -342,6 +358,11 @@ renderer.render(<StyledComp/>).on(document.body);
 ```
 [► TRY IT!](https://stackblitz.com/edit/connective-html-styling)
 
+<br>
+
 # How to Contribute
 
 Checkout [the contribution guide](CONTRIBUTING.md). Also checkout [the code of conduct](CODE_OF_CONDUCT.md) beforehand. Note that the project is still pretty young, so many standard contribution processes are not applicable yet. As the project progresses to more stable stages, these processes, alongside these documents, will be updated accordingly.
+
+<br>
+<br>
