@@ -76,12 +76,16 @@ export class Renderer<Renderable=RawValue, Tag=string> implements RendererLike<R
   }
 
   /**
-   * 
-   * Does stuff
-   * 
-   * @param prop 
-   * @param target 
-   * @param host 
+   *
+   * Sets properties (attributes) of created node based on given properties.
+   * The base-renderer is able to handle raw values (`number | boolean | string`),
+   * and will throw an `UnsupportedPropError` if other unhandled property types
+   * are given.
+   *
+   * @param prop   the name of the property (attribute) to be set
+   * @param target the to be set for the property (attribute)
+   * @param host   the element on which the property (attribute) is to be set.
+   *
    */
   public setprop(prop: string, target: RawValue | Renderable, host: HTMLElement) {
     if (isRawValue(target)) {
@@ -95,6 +99,16 @@ export class Renderer<Renderable=RawValue, Tag=string> implements RendererLike<R
     }
   }
 
+  /**
+   *
+   * Appends given child on given host `Node`. If passed an array, will append every element of it (recursively).
+   * If a raw value (`number | boolean | string`) is passed, a `TextNode` containing the string format will be appended.
+   * In case of an unsupported type, an `UnsupportedChildError` will be thrown.
+   *
+   * @param target the target to be appended.
+   * @param host   the host to which the target should be appended to.
+   *
+   */
   public append(target: ChildType<Renderable>, host: Node) {
     if (target instanceof Node)
       host.appendChild(target);
@@ -107,6 +121,25 @@ export class Renderer<Renderable=RawValue, Tag=string> implements RendererLike<R
     }
   }
 
+  /**
+   *
+   * Renders given `Node` on, before or after another `Node`. Usage example:
+   *
+   * ```tsx
+   * renderer.render(<Whatever/>)
+   *         .on(document.body);
+   *
+   * renderer.render(<input/>)
+   *         .before(X);
+   *
+   * renderer.render(Y)
+   *         .after(someRef.$);
+   * ```
+   *
+   * @param node the `Node` to be rendered.
+   * @returns a `TobeRendered` object that can be used to render the given node on, before or after another `Node`.
+   *
+   */
   public render<T extends Node>(node: T): ToBeRendered<T> {
     return {
       target: node,
