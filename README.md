@@ -54,10 +54,10 @@ Fork [this](https://stackblitz.com/edit/connective-html-hellowworld) project on 
 
 Run the following:
 
-```
-> npx @connectv/create-html <project-name>
-> cd <project-name>
-> npm start
+```bash
+$ npx @connectv/create-html <project-name>
+$ cd <project-name>
+$ npm start
 ```
 
 Running `npx @connectv/create-html` without any parameters will create the new project inside the current directory, using its name as the project's name.
