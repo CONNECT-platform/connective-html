@@ -17,6 +17,7 @@
   - [Example: Not a TodoList Using Component Class](#example-not-a-todolist-using-component-class)
   - [Example: GitHub Repos](#example-github-repos)
   - [Example: Styling, Styled Components, JSS](#example-styling-styled-components-jss)
+  - [Example: Theme Changer](#example-theme-changer)
 - [How to Contribute](#how-to-contribute)
 
 <br>
@@ -378,6 +379,66 @@ export function StyledComp(_, renderer) {
 renderer.render(<StyledComp/>).on(document.body);
 ```
 [► TRY IT!](https://stackblitz.com/edit/connective-html-styling)
+
+<br>
+
+### Example: Theme Changer
+
+In this example the `Context` is used to set a "theme" for the app, which is picked up by custom components:
+
+```tsx
+import { state, pin, map } from '@connectv/core';
+import { Renderer, Context, rl } from '@connectv/html';
+
+const themes = {
+  black: { bg: 'black', fg: 'white', main: 'yellow', mainInv: 'black' },
+  white: { bg: 'white', fg: 'black', main: 'blue', mainInv: 'white' },
+  red: { bg: 'red', fg: 'white', main: 'black', mainInv: 'white' }
+}
+
+export function StyledButton(_, renderer) {
+  const label = pin();
+  const action = pin();
+
+  this.expose({
+    inputs: { label },
+    outputs: { action }
+  });
+
+  return <button style={rl`
+        border-radius: 3px; border: none; cursor: pointer;
+        background: ${this.context('theme').to(map(_ => _.main))};
+        color: ${this.context('theme').to(map(_ => _.mainInv))}
+      `} onclick={action}>
+    {label}
+  </button>
+}
+
+export function StyledHolder(_, renderer, children) {
+  return <div style={rl`
+      margin: -8px; padding: 16px; height: calc(100vh - 32px);
+      background: ${this.context('theme').to(map(_ => _.bg))};
+      color: ${this.context('theme').to(map(_ => _.fg))}
+    `}>
+    Hellow There! <br/>
+    {children}
+  </div>
+}
+
+const renderer = new Renderer();
+const theme = state(themes.black);
+renderer.render(
+  <Context theme={theme}>
+    <StyledHolder hint={'Use these buttons to switch the theme.'}>
+      <span style='font-size: 12px'>Use these buttons to change theme:</span> <br/>
+      <StyledButton label='White Theme' action={() => theme.value = themes.white}/>
+      <StyledButton label='Black Theme' action={() => theme.value = themes.black}/>
+      <StyledButton label='Red Theme' action={() => theme.value = themes.red}/>
+    </StyledHolder>
+  </Context>
+).on(document.body);
+```
+[► TRY IT!](https://stackblitz.com/edit/connective-html-context)
 
 <br>
 
