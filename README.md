@@ -396,7 +396,7 @@ const themes = {
   red: { bg: 'red', fg: 'white', main: 'black', mainInv: 'white' }
 }
 
-export function StyledButton(_, renderer) {
+export function ThemedButton(_, renderer) {
   const label = pin();
   const action = pin();
 
@@ -414,7 +414,7 @@ export function StyledButton(_, renderer) {
   </button>
 }
 
-export function StyledHolder(_, renderer, children) {
+export function ThemedHolder(_, renderer, children) {
   return <div style={rl`
       margin: -8px; padding: 16px; height: calc(100vh - 32px);
       background: ${this.context('theme').to(map(_ => _.bg))};
@@ -429,12 +429,12 @@ const renderer = new Renderer();
 const theme = state(themes.black);
 renderer.render(
   <Context theme={theme}>
-    <StyledHolder hint={'Use these buttons to switch the theme.'}>
+    <ThemedHolder hint={'Use these buttons to switch the theme.'}>
       <span style='font-size: 12px'>Use these buttons to change theme:</span> <br/>
-      <StyledButton label='White Theme' action={() => theme.value = themes.white}/>
-      <StyledButton label='Black Theme' action={() => theme.value = themes.black}/>
-      <StyledButton label='Red Theme' action={() => theme.value = themes.red}/>
-    </StyledHolder>
+      <ThemedButton label='White Theme' action={() => theme.value = themes.white}/>
+      <ThemedButton label='Black Theme' action={() => theme.value = themes.black}/>
+      <ThemedButton label='Red Theme' action={() => theme.value = themes.red}/>
+    </ThemedHolder>
   </Context>
 ).on(document.body);
 ```
