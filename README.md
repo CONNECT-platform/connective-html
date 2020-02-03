@@ -442,6 +442,61 @@ renderer.render(
 
 <br>
 
+### StackBlitz Code Loader
+
+Loads a given file from a given project from stackblitz. This example uses **RxJS** instead of **CONNECTIVE** for handling reactive flows.
+
+```tsx
+import { from, BehaviorSubject, combineLatest, merge } from 'rxjs';
+import { debounceTime, mergeMap, filter, mapTo } from 'rxjs/operators';
+import stackblitz from '@stackblitz/sdk';
+import { Renderer } from '@connectv/html';
+
+const renderer = new Renderer();
+
+const load = async (projectName, filename) => {
+  const X = <div></div>;
+  const Y = <div hidden>{X}</div>
+  renderer.render(Y).on(document.body);
+
+  try {
+    const VM = await stackblitz.embedProjectId(X, projectName);
+    const FS = await VM.getFsSnapshot();
+    Y.remove();
+
+    if (!(filename in FS)) return 'NO SUCH FILE';
+    return FS[filename];
+  } catch (err) {
+    return 'COULD NOT LOAD';
+  }
+};
+
+const project = new BehaviorSubject<string>('');
+const filename = new BehaviorSubject<string>('');
+const input = combineLatest(
+  project.pipe(filter(_ => !!_), debounceTime(1000)),
+  filename.pipe(filter(_ => !!_), debounceTime(1000))
+);
+
+renderer.render(<fragment>
+  <input _state={project} type='text' placeholder='stackblitz project id ...'/>
+  <input _state={filename} type='text' placeholder='file to open ...'/>
+  <div>
+    <pre>
+    {
+      merge(
+        input.pipe(mapTo('LOADING ...')),
+        input.pipe(mergeMap(([project, filename]) => from(load(project, filename))))
+      )
+    }
+    </pre>
+  </div>
+</fragment>).on(document.body);
+```
+[► TRY IT!](https://stackblitz.com/edit/connective-html-stackblitz)
+
+<br>
+
 ## How to Contribute
 
 Checkout [the contribution guide](CONTRIBUTING.md). Also checkout [the code of conduct](CODE_OF_CONDUCT.md) beforehand. Note that the project is still pretty young, so many standard contribution processes are not applicable yet. As the project progresses to more stable stages, these processes, alongside these documents, will be updated accordingly.
