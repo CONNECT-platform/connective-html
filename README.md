@@ -18,6 +18,7 @@
   - [Example: GitHub Repos](#example-github-repos)
   - [Example: Styling, Styled Components, JSS](#example-styling-styled-components-jss)
   - [Example: Theme Changer](#example-theme-changer)
+  - [Example: Stackblitz Code Loader](#stackblitz-code-loader)
 - [How to Contribute](#how-to-contribute)
 
 <br>
@@ -442,7 +443,7 @@ renderer.render(
 
 <br>
 
-### StackBlitz Code Loader
+### Stackblitz Code Loader
 
 Loads a given file from a given project from stackblitz. This example uses **RxJS** instead of **CONNECTIVE** for handling reactive flows.
 
