@@ -1,5 +1,4 @@
-import { Bindable } from "@connectv/core";
-import { Clearable } from "@connectv/core/dist/es5";
+import { Bindable, Clearable } from "@connectv/core";
 import { Observable, Subscription } from "rxjs";
 
 

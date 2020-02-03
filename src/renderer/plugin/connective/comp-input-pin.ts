@@ -1,5 +1,5 @@
 import { isPinLike, PinLike, wrap, value } from "@connectv/core";
-import { Pin } from "@connectv/core/dist/es5";
+import { Pin } from "@connectv/core";
 import { Observable } from "rxjs";
 
 import { PluginPriority } from "../plugin";
