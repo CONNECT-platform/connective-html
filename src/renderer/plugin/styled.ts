@@ -1,6 +1,8 @@
 import { PluginPriority, Plugin } from './plugin';
 import { PostCreatePlugin } from './basic-plugins';
 
+import * as _ClassListFixed from '../../shared/class-list-fixed';
+
 
 export type TagClassMap = {[tagName: string]: string};
 
@@ -17,8 +19,11 @@ export class StyledPlugin<R, T> implements PostCreatePlugin<R, T> {
   postCreate(node: Node) {
     if (node instanceof HTMLElement) {
       const tag = node.tagName.toLocaleLowerCase();
-      if (tag in this.map)
-        node.classList.add(this.map[tag]);
+      if (tag in this.map) {
+        let clazz = this.map[tag];
+        node.classList.add(clazz);
+        _ClassListFixed.add(node, clazz);
+      }
     }
   }
 }

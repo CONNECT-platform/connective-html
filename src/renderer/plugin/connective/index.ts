@@ -1,4 +1,5 @@
 import { PinPlugin } from './pin';
+import { PinClassPlugin } from './pin-class';
 import { PinObjectValuePlugin } from './object-value';
 import { PinEventHandlerPlugin } from './pin-event-handler';
 import { InputStatePlugin } from './input-state';
@@ -15,6 +16,7 @@ import { DefaultPinLikeRecipientPlugin } from './default-recipient';
 export function connectivePlugins<R, T>() {
   return [
     new PinPlugin<R, T>(),
+    new PinClassPlugin<R, T>(),
     new PinObjectValuePlugin<R, T>(),
     new PinInnerHTMLPlugin<R, T>(),
     new PinEventHandlerPlugin<R, T>(),
@@ -30,7 +32,7 @@ export function connectivePlugins<R, T>() {
 }
 
 export {
-  PinPlugin, PinObjectValuePlugin, PinInnerHTMLPlugin,
+  PinPlugin, PinClassPlugin, PinObjectValuePlugin, PinInnerHTMLPlugin,
   PinEventHandlerPlugin, InputStatePlugin,
   CompInputPinPlugin, CompContextPinPlugin,
   CompStateBindPlugin, CompStateTrackPlugin,

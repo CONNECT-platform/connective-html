@@ -1,22 +1,20 @@
 import Renderer from '../src/renderer';
-import { Context } from '../src/components/context';
 import { ComponentThis } from '../src/renderer/plugin/component/types';
-import { interval } from 'rxjs';
 
+import jss from 'jss';
+import { state } from '@connectv/core';
+import { styled, toggleList } from '../src/';
 
-function MyComp(this: ComponentThis, _: {}, renderer: Renderer) {
-  return <div>hellow {this.context('dude')} -- {this.context('content')}</div>
+const { classes } = jss.createStyleSheet({ div: { color: 'red' }, blue: { background: 'blue' } }).attach();
+
+function MyComp(_: any, renderer: Renderer) {
+  renderer = renderer.plug(styled(classes));
+  let s = state(false);
+
+  return <div class={toggleList({ [classes.blue]: s })} onclick={() => s.value = !s.value}>
+    Hellow!
+  </div>;
 }
 
 let renderer = new Renderer();
-renderer.render(<fragment>
-  <Context dude={'world'}>
-    <Context content={interval(1000)}>
-      <MyComp/>
-    </Context>
-    <Context dude={'jack'}>
-      <MyComp/>
-    </Context>
-  </Context>
-</fragment>).on(document.body);
-
+renderer.render(<MyComp/>).on(document.body);

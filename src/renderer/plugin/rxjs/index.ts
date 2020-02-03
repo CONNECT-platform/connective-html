@@ -1,4 +1,5 @@
 import { ObservablePlugin } from './observable';
+import { ObservableClassPlugin } from './observable-class';
 import { ObservableObjectValuePlugin } from './object-value';
 import { SubjectEventHandlerPlugin } from './subject-event-handler';
 import { InputSubjectPlugin } from './input-subject';
@@ -13,6 +14,7 @@ import { DefaultSubjectRecipientPlugin } from './default-recipient';
 export function rxjsPlugins<R, T>() {
   return [
     new ObservablePlugin<R, T>(),
+    new ObservableClassPlugin<R, T>(),
     new ObservableObjectValuePlugin<R, T>(),
     new ObservableInnerHTMLPlugin<R, T>(),
     new SubjectEventHandlerPlugin<R, T>(),
@@ -27,7 +29,7 @@ export function rxjsPlugins<R, T>() {
 
 
 export {
-  ObservablePlugin, ObservableObjectValuePlugin, ObservableInnerHTMLPlugin,
+  ObservablePlugin, ObservableClassPlugin, ObservableObjectValuePlugin, ObservableInnerHTMLPlugin,
   SubjectEventHandlerPlugin, InputSubjectPlugin,
   CompInputSubjectPlugin, CompContextSubjectPlugin,
   CompOutputObservablePlugin, CompOutputObservableEventsPlugin,
