@@ -4,6 +4,27 @@
 
 <br>
 
+## Table of Contents
+
+- [What is this?](#what-is-this)
+- [How to Setup](#how-to-setup)
+  - [Online Playground](#online-playground)
+  - [New Typescript Project](#new-typescript-project)
+  - [Custom Typescript Setup](#custom-typescript-setup)
+- [How to Use](#how-to-use)
+  - [Example: Interactive Hellow World](#example-interactive-hellow-world)
+  - [Example: Not a TodoList](#example-not-a-todolist)
+  - [Example: Not a TodoList Using Component Class](#example-not-a-todolist-using-component-class)
+  - [Example: GitHub Repos](#example-github-repos)
+  - [Example: Styling, Styled Components, JSS](#example-styling-styled-components-jss)
+  - [Example: Theme Changer](#example-theme-changer)
+  - [Example: Stackblitz Code Loader](#stackblitz-code-loader)
+- [How to Contribute](#how-to-contribute)
+
+<br>
+
+## What is this?
+
 **CONNECTIVE HTML** is a frontend library for creating modern reactive web applications in a simple and explicit manner.
 
 It is _simple_ as it enables working directly with DOM APIs with JSX syntax:
@@ -33,7 +54,7 @@ renderer.render(
     You have been here for {
       interval(1000)
       .pipe(map(x => x + 1))
-      .pipe(startWith('0'))
+      .pipe(startWith(0))
     } second(s).
   </div>)
 .on(document.body);
@@ -42,15 +63,15 @@ renderer.render(
 
 <br>
 
-# How To Setup
+## How to Setup
 
-## Online Playground
+### Online Playground
 
 Fork [this](https://stackblitz.com/edit/connective-html-hellowworld) project on [StackBlitz](https://stackblitz.com).
 
 <br>
 
-## New Typescript Project
+### New Typescript Project
 
 Run the following:
 
@@ -67,7 +88,7 @@ the instructions in its readme file.
 
 <br>
 
-## Custom Typescript Setup
+### Custom Typescript Setup
 
 To add to an existing project (or any frontend typescript project with your own custom setup):
 
@@ -86,7 +107,7 @@ And add the following to your `tsconfig.json` file:
 
 <br>
 
-# How To Use
+## How to Use
 
 > **WARNING**: DO NOT USE THIS ON PRODUCTION. This project is at an early stage and requires further testing/benchmarking to ensure its security/efficiency for use on production. Additionally, at this stage all APIs are subject to change/removal without any prior notice.
 
@@ -94,7 +115,7 @@ The documentation (in-code and guides) are under construction. In the meanwhile,
 
 <br>
 
-## Example: Interactive Hellow World
+### Example: Interactive Hellow World
 
 Says `"Hellow"` to anyone mentioned in the input, except if their name is `"Donald"`:
 
@@ -119,7 +140,7 @@ renderer.render(
 
 <br>
 
-## Example: Not A TodoList
+### Example: Not a TodoList
 
 A simple (not) a todo list, also with the feature of removing any item by clicking on it:
 
@@ -155,7 +176,7 @@ renderer.render(<NotATodoList/>).on(document.body);
 
 <br>
 
-## Example: Not A TodoList Using `Component` Class
+### Example: Not a TodoList Using `Component` Class
 
 Same as before, but this time with class based components instead of function based, if thats more your style:
 
@@ -206,7 +227,7 @@ renderer.render(<NotATodoList/>).on(document.body);
 
 <br>
 
-## Example: GitHub Repos
+### Example: GitHub Repos
 
 Lists all of the repositories of a given GitHub user by their username:
 
@@ -282,7 +303,7 @@ renderer.render(<fragment>
 
 <br>
 
-## Example: Styling, Styled Components, JSS
+### Example: Styling, Styled Components, JSS
 
 We have a boolean state and a button which toggles the value of the state and changes color based on its value.
 We have another button that doesn't do anything, but changes background color based on changes in the state, with 1000ms delay.
@@ -362,7 +383,122 @@ renderer.render(<StyledComp/>).on(document.body);
 
 <br>
 
-# How to Contribute
+### Example: Theme Changer
+
+In this example the `Context` is used to set a "theme" for the app, which is picked up by custom components:
+
+```tsx
+import { state, pin, map } from '@connectv/core';
+import { Renderer, Context, rl } from '@connectv/html';
+
+const themes = {
+  black: { bg: 'black', fg: 'white', main: 'yellow', mainInv: 'black' },
+  white: { bg: 'white', fg: 'black', main: 'blue', mainInv: 'white' },
+  red: { bg: 'red', fg: 'white', main: 'black', mainInv: 'white' }
+}
+
+export function ThemedButton(_, renderer) {
+  const label = pin();
+  const action = pin();
+
+  this.expose({
+    inputs: { label },
+    outputs: { action }
+  });
+
+  return <button style={rl`
+        border-radius: 3px; border: none; cursor: pointer;
+        background: ${this.context('theme').to(map(_ => _.main))};
+        color: ${this.context('theme').to(map(_ => _.mainInv))}
+      `} onclick={action}>
+    {label}
+  </button>
+}
+
+export function ThemedHolder(_, renderer, children) {
+  return <div style={rl`
+      margin: -8px; padding: 16px; height: calc(100vh - 32px);
+      background: ${this.context('theme').to(map(_ => _.bg))};
+      color: ${this.context('theme').to(map(_ => _.fg))}
+    `}>
+    Hellow There! <br/>
+    {children}
+  </div>
+}
+
+const renderer = new Renderer();
+const theme = state(themes.black);
+renderer.render(
+  <Context theme={theme}>
+    <ThemedHolder hint={'Use these buttons to switch the theme.'}>
+      <span style='font-size: 12px'>Use these buttons to change theme:</span> <br/>
+      <ThemedButton label='White Theme' action={() => theme.value = themes.white}/>
+      <ThemedButton label='Black Theme' action={() => theme.value = themes.black}/>
+      <ThemedButton label='Red Theme' action={() => theme.value = themes.red}/>
+    </ThemedHolder>
+  </Context>
+).on(document.body);
+```
+[► TRY IT!](https://stackblitz.com/edit/connective-html-context)
+
+<br>
+
+### Stackblitz Code Loader
+
+Loads a given file from a given project from stackblitz. This example uses **RxJS** instead of **CONNECTIVE** for handling reactive flows.
+
+```tsx
+import { from, BehaviorSubject, combineLatest, merge } from 'rxjs';
+import { debounceTime, mergeMap, filter, mapTo } from 'rxjs/operators';
+import stackblitz from '@stackblitz/sdk';
+import { Renderer } from '@connectv/html';
+
+const renderer = new Renderer();
+
+const load = async (projectName, filename) => {
+  const X = <div></div>;
+  const Y = <div hidden>{X}</div>
+  renderer.render(Y).on(document.body);
+
+  try {
+    const VM = await stackblitz.embedProjectId(X, projectName);
+    const FS = await VM.getFsSnapshot();
+    Y.remove();
+
+    if (!(filename in FS)) return 'NO SUCH FILE';
+    return FS[filename];
+  } catch (err) {
+    return 'COULD NOT LOAD';
+  }
+};
+
+const project = new BehaviorSubject<string>('');
+const filename = new BehaviorSubject<string>('');
+const input = combineLatest(
+  project.pipe(filter(_ => !!_), debounceTime(1000)),
+  filename.pipe(filter(_ => !!_), debounceTime(1000))
+);
+
+renderer.render(<fragment>
+  <input _state={project} type='text' placeholder='stackblitz project id ...'/>
+  <input _state={filename} type='text' placeholder='file to open ...'/>
+  <div>
+    <pre>
+    {
+      merge(
+        input.pipe(mapTo('LOADING ...')),
+        input.pipe(mergeMap(([project, filename]) => from(load(project, filename))))
+      )
+    }
+    </pre>
+  </div>
+</fragment>).on(document.body);
+```
+[► TRY IT!](https://stackblitz.com/edit/connective-html-stackblitz)
+
+<br>
+
+## How to Contribute
 
 Checkout [the contribution guide](CONTRIBUTING.md). Also checkout [the code of conduct](CODE_OF_CONDUCT.md) beforehand. Note that the project is still pretty young, so many standard contribution processes are not applicable yet. As the project progresses to more stable stages, these processes, alongside these documents, will be updated accordingly.
 
