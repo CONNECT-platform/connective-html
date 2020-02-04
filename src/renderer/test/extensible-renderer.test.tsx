@@ -5,7 +5,8 @@ import { ExtensibleRenderer } from '../extensible-renderer';
 
 import { testRendererSpec } from './renderer.spec';
 import { Plugin, PluginPriority, PluginHost } from '../plugin/plugin';
-import { CreatePlugin, PostCreatePlugin, PropertyPlugin, AppendPlugin, PostRenderPlugin } from '../plugin/basic-plugins';
+import { CreatePlugin, PostCreatePlugin, PropertyPlugin, 
+          AppendPlugin, PostRenderPlugin } from '../plugin/basic-plugins';
 import { PropsType } from '../../shared/types';
 import { ChildType } from '../renderer';
 
@@ -220,20 +221,147 @@ describe.only('ExtensibleRenderer', () => {
     });
 
     describe('Appending process', () => {
-      it('should use the first plugin that can support given node and host combination.');
-      it('should test plugins by order of priority.');
-      it('should invoke parent\'s node appending process when no plugin accepts the combination.');
+      it('should use the first plugin that can support given node and host combination.', () => {
+        let a = new MockAppendPlugin((_, host) => {
+          if (host instanceof HTMLSpanElement) {
+            host.appendChild(document.createTextNode('Halo'));
+            return true;
+          }
+
+          return false;
+        });
+
+        let b = new MockAppendPlugin((target, host) => {
+          if (target instanceof HTMLAnchorElement) {
+            host.appendChild(document.createTextNode('Vola'));
+            return true;
+          }
+
+          return false;
+        });
+
+        let renderer = new ExtensibleRenderer(a, b);
+        expect((<span><b>Yakuza</b></span>).textContent).to.equal('Halo');
+        expect((<div><a>Yakuza</a></div>).textContent).to.equal('Vola');
+      });
+
+      it('should test plugins by order of priority.', () => {
+        let a = new MockAppendPlugin((_, host) => {
+          if (host instanceof HTMLSpanElement) {
+            host.appendChild(document.createTextNode('Halo'));
+            return true;
+          }
+
+          return false;
+        }, PluginPriority.Fallback);
+
+        let b = new MockAppendPlugin((target, host) => {
+          if (target instanceof HTMLAnchorElement) {
+            host.appendChild(document.createTextNode('Vola'));
+            return true;
+          }
+
+          return false;
+        }, PluginPriority.High);
+
+        let renderer = new ExtensibleRenderer(a, b);
+        expect((<span><a>No Cats Allowed</a></span>).textContent).to.equal('Vola');
+      });
+
+      it('should invoke parent\'s node appending process when no plugin accepts the combination.', () => {
+        let a = new MockAppendPlugin((_, host) => {
+          if (host instanceof HTMLSpanElement) {
+            host.appendChild(document.createTextNode('Halo'));
+            return true;
+          }
+
+          return false;
+        });
+
+        let renderer = new ExtensibleRenderer(a);
+        (<span><b>Matie</b></span>).childElementCount.should.equal(0);
+        (<div><b>Matie</b></div>).childElementCount.should.equal(1);
+        expect((<div><b>Matie</b></div>).textContent).to.equal('Matie');
+      });
     });
 
     describe('Post creation process', () => {
-      it('should invoke all post create plugins on created nodes.');
-      it('should invoke post create plugins by order of priority.');
+      it('should invoke all post create plugins on created nodes.', () => {
+        let res: string[] = [];
+        let a = new MockPostCreatePlugin((node) => {
+          if (node instanceof HTMLSpanElement) res.push('A:: span');
+          else res.push('A:: ow');
+        });
+
+        let b = new MockPostCreatePlugin(() => {
+          res.push('B');
+        });
+
+        let renderer = new ExtensibleRenderer(a, b);
+        <span>Halo</span>;
+        res.should.eql(['A:: span', 'B']);
+        res = [];
+        <div>World</div>;
+        res.should.eql(['A:: ow', 'B']);
+      });
+
+      it('should invoke post create plugins by order of priority.', () => {
+        let res: string[] = [];
+        let a = new MockPostCreatePlugin(() => { res.push('A'); }, PluginPriority.Fallback);
+        let b = new MockPostCreatePlugin(() => { res.push('B'); }, PluginPriority.High);
+
+        let renderer = new ExtensibleRenderer(a, b);
+        <span>Halo</span>;
+        res.should.eql(['B', 'A']);
+      });
     });
   });
 
-  describe('.render()', () => {
-    it('should invoke all post render plugins on rendered nodes.');
-    it('should invoke post render plugins by order of priority.');
-    it('should invoke post render plugins correctly on children of a document fragment.');
+  describe.only('.render()', () => {
+    it('should invoke all post render plugins on rendered nodes.', () => {
+      let res: string[] = [];
+      let a = new MockPostRenderPlugin((node) => {
+        if (node instanceof HTMLSpanElement) res.push('A:: span');
+        else res.push('A:: ow');
+      });
+
+      let b = new MockPostRenderPlugin(() => {
+        res.push('B');
+      });
+
+      let renderer = new ExtensibleRenderer(a, b);
+      let X = <div>Halo</div>;
+      res.should.eql([]);
+      
+      renderer.render(<span>Halo</span>).on(X);
+      res.should.eql(['A:: span', 'B']);
+
+      res = [];
+      renderer.render(<div>Halo</div>).on(X);
+      res.should.eql(['A:: ow', 'B']);
+    });
+
+    it('should invoke post render plugins by order of priority.', () => {
+      let res: string[] = [];
+      let a = new MockPostRenderPlugin(() => { res.push('A'); }, PluginPriority.Fallback);
+      let b = new MockPostRenderPlugin(() => { res.push('B'); }, PluginPriority.High);
+
+      let renderer = new ExtensibleRenderer(a, b);
+      renderer.render(<i>Halo</i>).on(document.body);
+      res.should.eql(['B', 'A']);
+    });
+
+    it('should invoke post render plugins correctly on children of a document fragment.', () => {
+      let res: string[] = [];
+      let a = new MockPostRenderPlugin((node: Node) => { res.push(node.nodeName); });
+
+      let renderer = new ExtensibleRenderer(a);
+      renderer.render(<fragment>
+        <a>Halo</a>
+        <b>World</b>
+      </fragment>).on(document.head);
+
+      res.should.eql(['A', 'B']);
+    });
   });
 });
