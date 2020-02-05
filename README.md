@@ -6,7 +6,7 @@
 [![Minzipped Size](https://badgen.net/bundlephobia/minzip/@connectv/html@latest?icon=npm&color=green)](https://bundlephobia.com/result?p=@connectv/html@latest)
 [![Chat on Gitter](https://badgen.net/badge/chat%20on/gitter?icon=gitter&color=purple)](https://gitter.im/connectv/community)
 
-**CONNECTIVE HTML** is a _simple_ Typescript library for creating reactive component-based HTML user interfaces. It is _simple_ as it enables using JSX syntax to work directly with browser's DOM API:
+**CONNECTIVE HTML** is a simple Typescript library for creating reactive component-based HTML user interfaces. It is _simple_ as it enables using JSX syntax to work directly with browser's DOM API:
 ```tsx
 import { Renderer } from '@connectv/html';
 
@@ -31,7 +31,52 @@ renderer.render(<div>You have been here for {timer(0, 1000)} second(s).</div>)
 
 <br>
 
-## How to Setup
+It is _component based_ as it supports functional and class-based components:
+
+```tsx
+import { Renderer } from '@connectv/html';
+
+const MyComp = ({ name }, renderer) => <div>Hellow {name}!</div>
+
+const renderer = new Renderer();
+renderer.render(
+  <fragment>
+    <MyComp name='World'/>
+    <MyComp name='Fellas'/>
+  </fragment>
+)
+.on(document.body);
+```
+[► TRY IT!](https://stackblitz.com/edit/connective-html-basic-component?file=index.tsx)
+
+```tsx
+import { Renderer, Component } from '@connectv/html';
+import { state } from '@connectv/core';
+
+class MyComp extends Component {
+  count = state(0);
+
+  render(renderer) {
+    return <div onclick={() => this.count.value += 1}>
+            Hellow { this.props.name } ({this.count})
+          </div>
+  }
+}
+
+const renderer = new Renderer();
+renderer.render(
+  <fragment>
+    <MyComp name='World'/>
+    <MyComp name='Fellas'/>
+  </fragment>
+)
+.on(document.body);
+```
+[► TRY IT!](https://stackblitz.com/edit/connective-html-basic-component-class?file=index.tsx)
+
+<br>
+
+## How to Install
 
 ### Online Playground
 
