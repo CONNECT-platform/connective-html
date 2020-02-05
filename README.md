@@ -101,7 +101,7 @@ Add this to your `tsconfig.json` file:
 }
 ```
 
-#### For Babel ([plugin-transform-react-jsx](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx))
+#### For Babel ([plugin-transform-react-jsx](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx)):
 Add this to your Babel config:
 ```json
 {
