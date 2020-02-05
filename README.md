@@ -2,9 +2,9 @@
 
 <br>
 
-[![Minzipped size](https://badgen.net/bundlephobia/minzip/@connectv/html@latest)](https://bundlephobia.com/result?p=@connectv/html@latest)
-[![CodeFactor](https://www.codefactor.io/repository/github/connect-platform/connective-html/badge)](https://www.codefactor.io/repository/github/connect-platform/connective-html)
-[![Chat on Gitter](https://img.shields.io/gitter/room/connectv/community)](https://gitter.im/connectv/community)
+[![License](https://badgen.net/github/license/CONNECT-platform/connective-html?icon=github)](LICENSE)
+[![Minzipped Size](https://badgen.net/bundlephobia/minzip/@connectv/html@latest?icon=npm&color=green)](https://bundlephobia.com/result?p=@connectv/html@latest)
+[![Chat on Gitter](https://badgen.net/badge/chat%20on/gitter?icon=gitter&color=purple)](https://gitter.im/connectv/community)
 
 
 ## Table of Contents
