@@ -4,7 +4,9 @@
 [![Minzipped Size](https://badgen.net/bundlephobia/minzip/@connectv/html@latest?icon=npm&color=green)](https://bundlephobia.com/result?p=@connectv/html@latest)
 [![Chat on Gitter](https://badgen.net/badge/chat%20on/gitter?icon=gitter&color=purple)](https://gitter.im/connectv/community)
 
-**CONNECTIVE HTML** is a simple Typescript library for creating reactive component-based HTML user interfaces. It is _simple_ as it enables using JSX syntax to work directly with browser's DOM API:
+**CONNECTIVE HTML** is a simple Typescript library for creating reactive component-based HTML user interfaces. 
+
+**It is _simple_** as it enables using JSX syntax to work directly with browser's DOM API:
 ```tsx
 import { Renderer } from '@connectv/html';
 
@@ -13,8 +15,7 @@ renderer.render(<div>Hellow World!</div>).on(document.body);
 ```
 [► TRY IT!](https://stackblitz.com/edit/connective-html-hellowworld?file=index.tsx)
 
-It is _reactive_ as it integrates well with reactive libraries such as [**RxJS**](https://github.com/ReactiveX/rxjs) or [**CONNECTIVE**](https://github.com/CONNECT-platform/connective):
-
+**It is _reactive_** as it integrates well with reactive libraries such as [**RxJS**](https://github.com/ReactiveX/rxjs) or [**CONNECTIVE**](https://github.com/CONNECT-platform/connective):
 ```tsx
 import { Renderer } from '@connectv/html';
 import { timer } from 'rxjs';
@@ -25,8 +26,7 @@ renderer.render(<div>You have been here for {timer(0, 1000)} second(s).</div>)
 ```
 [► TRY IT!](https://stackblitz.com/edit/connective-html-timer?file=index.tsx)
 
-It is _component based_ as it supports functional and class-based components:
-
+**It is _component based_** as it supports functional and class-based components:
 ```tsx
 import { Renderer } from '@connectv/html';
 
@@ -71,11 +71,9 @@ renderer.render(
 <br>
 
 ## How to Install
+> For givint **CONNECTIVE HTML** a quick try, you can simply
+> fork [this](https://stackblitz.com/edit/connective-html-hellowworld) project on [StackBlitz](https://stackblitz.com).
 
-### Online Playground
-Fork [this](https://stackblitz.com/edit/connective-html-hellowworld) project on [StackBlitz](https://stackblitz.com).
-
-<br>
 
 ### New Typescript Project
 Run the following:
