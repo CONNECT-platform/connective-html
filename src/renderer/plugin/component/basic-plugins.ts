@@ -43,8 +43,8 @@ export function isCompIOPlugin<Renderable, Tag>(whatever: Plugin<Renderable, Tag
 export interface CompPropPlugin<Renderable=RawValue, Tag=string>
   extends Plugin<Renderable | RawValue, Tag | string | CompType<Renderable, Tag>> {
   wireProp(
-    name: string, 
-    prop: any, 
+    name: string,
+    prop: any,
     node: Node,
     signature: ComponentSignature,
     pluginHost: PluginHost<Renderable, Tag>,

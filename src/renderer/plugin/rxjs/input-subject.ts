@@ -19,7 +19,7 @@ export class InputSubjectPlugin<R, T> implements PropertyPlugin<BehaviorSubject<
       let sub = new Subscription();
 
       L.attach(<Bindable & Clearable>{
-        bind() { 
+        bind() {
           sub.add(fromEvent(host, 'input')
             .pipe(map(() => getInputValue(host))).subscribe(target));
           sub.add(target.subscribe(v => setInputValue(host, v)));

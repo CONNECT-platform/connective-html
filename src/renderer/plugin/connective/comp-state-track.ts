@@ -13,7 +13,7 @@ implements CompIOPlugin<Renderable, Tag> {
   wire(node: Node, signature: ComponentSignature) {
     if (signature.states) {
       Object.values(signature.states).forEach(state => {
-        if (state instanceof State) 
+        if (state instanceof State)
           L.attach(state, node);
       });
     }

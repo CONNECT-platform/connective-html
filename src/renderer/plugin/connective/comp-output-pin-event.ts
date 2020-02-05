@@ -19,7 +19,7 @@ implements CompIOPlugin<Renderable, Tag> {
       Object.entries(signature.outputs).forEach(([name, output]) => {
         if (isPinLike(output))
           L.attach(output.to(
-              sink(value => 
+              sink(value =>
                 node.dispatchEvent(new CustomEvent(name, {detail: {value}}))
               )
           ), node);

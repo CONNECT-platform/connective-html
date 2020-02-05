@@ -20,7 +20,7 @@ import { CompStateIOPlugin } from './plugin/component/state-io';
 import { ContextPlugin } from './plugin/component/context';
 
 
-export class ConnectiveRenderer<R = RawValue, T = string> 
+export class ConnectiveRenderer<R = RawValue, T = string>
   extends ExtensibleRenderer<R | PinLike | Observable<RawValue>, T | CompType<R, string>> {
   constructor() {
     super(

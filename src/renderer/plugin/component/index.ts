@@ -6,7 +6,7 @@ export { ComponentPlugin } from './component';
 export { ExposePlugin } from './expose';
 export { CompStateIOPlugin } from './state-io';
 export { TrackPlugin } from './track';
-export { 
+export {
   CompClass, CompFunc, CompType,
   isCompClass, Component as RawComponent,
   ComponentSignature, CompInputOptions, isCompInputWithOptions,

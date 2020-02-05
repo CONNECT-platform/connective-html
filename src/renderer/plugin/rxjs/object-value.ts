@@ -11,7 +11,7 @@ export class ObservableObjectValuePlugin<R, T> implements PropertyPlugin<Observa
   priority = PluginPriority.High;
 
   setprop(prop: string, target: Observable<any> | R | RawValue, host: HTMLElement): boolean {
-    if (prop === '_value' 
+    if (prop === '_value'
         && (host instanceof HTMLOptionElement || host instanceof HTMLInputElement)
         && target instanceof Observable) {
       let sub: Subscription;

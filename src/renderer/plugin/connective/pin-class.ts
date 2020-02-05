@@ -7,7 +7,7 @@ import { PluginPriority } from '../plugin';
 import { PropertyPlugin } from '../basic-plugins';
 
 
-export class PinClassPlugin<R=never, T=string> 
+export class PinClassPlugin<R=never, T=string>
   implements PropertyPlugin<R | PinLike, T> {
 
   priority = PluginPriority.High;

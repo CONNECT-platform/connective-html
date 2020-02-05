@@ -10,14 +10,14 @@ import { CompType } from './types';
 export class TrackPlugin<Renderable=RawValue, Tag=CompType<Renderable | string> | string>
   implements CompProcessPlugin<Renderable, Tag> {
   prepare(
-    _: CompType<Renderable | RawValue, Tag>, 
+    _: CompType<Renderable | RawValue, Tag>,
     __: unknown,
-    ___: unknown, 
+    ___: unknown,
     extras: { [name: string]: any; }
   ): (node: Node) => void {
 
     let tracked = <(Bindable | Clearable)[]>[];
-    let marker: undefined | Node = undefined;
+    let marker: undefined | Node;
     extras.track = ((whatever: Bindable | Clearable) => tracked.push(whatever)) as any;
     extras.track.mark = (node: Node) => marker = node;
 

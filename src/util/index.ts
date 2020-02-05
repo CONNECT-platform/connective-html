@@ -2,7 +2,7 @@ export { autoId } from './auto-id';
 
 export {
   toggleList, rxToggleList,
-  ReactiveNameMap, RxNameMap, NamesAggregatorFunc 
+  ReactiveNameMap, RxNameMap, NamesAggregatorFunc
 } from './toggle-list';
 
 export {

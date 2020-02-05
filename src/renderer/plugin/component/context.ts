@@ -14,9 +14,9 @@ export class ContextPlugin<Renderable=RawValue, Tag=CompType<Renderable | string
   implements CompProcessPlugin<Renderable, Tag> {
 
     prepare(
-      _: CompType<RawValue | Renderable, Tag>, 
+      _: CompType<RawValue | Renderable, Tag>,
       __: PropsType<Renderable | RawValue>,
-      ___: (RawValue | Renderable | Node)[], 
+      ___: (RawValue | Renderable | Node)[],
       extras: { [name: string]: any; },
       pluginHost: PluginHost<Renderable, Tag>,
     ): (node: Node) => void {

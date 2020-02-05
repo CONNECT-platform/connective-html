@@ -2,12 +2,12 @@ import { PropsType } from '../shared/types';
 
 import { Renderer, ChildType } from './renderer';
 import { Plugin, PluginHost } from './plugin/plugin';
-import { isCreatePlugin, isPostCreatePlugin, isPropertyPlugin, isAppendPlugin, isPostRenderPlugin } 
+import { isCreatePlugin, isPostCreatePlugin, isPropertyPlugin, isAppendPlugin, isPostRenderPlugin }
   from './plugin/basic-plugins';
 import { ToBeRendered } from './renderer-like';
 
 
-export class ExtensibleRenderer<Renderable=RawValue, Tag=string> 
+export class ExtensibleRenderer<Renderable=RawValue, Tag=string>
   extends Renderer<Renderable, Tag>
   implements PluginHost<Renderable, Tag> {
   readonly plugins: Plugin<Renderable, Tag>[];
@@ -37,11 +37,11 @@ export class ExtensibleRenderer<Renderable=RawValue, Tag=string>
   }
 
   public create(
-      tag: Tag | string, 
-      props: PropsType<RawValue | Renderable> | undefined, 
+      tag: Tag | string,
+      props: PropsType<RawValue | Renderable> | undefined,
       ...children: ChildType<Renderable>[]
   ): Node {
-    let _node: Node | undefined = undefined;
+    let _node: Node | undefined;
     this.plugins.some(plugin => isCreatePlugin(plugin) && !!(_node = plugin.create(tag, props, children, this)));
 
     if (!_node) _node = super.create(tag, props, ...children);

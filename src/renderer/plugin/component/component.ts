@@ -14,8 +14,8 @@ export class ComponentPlugin<Renderable=RawValue, Tag=CompType<Renderable, strin
   priority = PluginPriority.High;
 
   create(
-    tag: string | CompType<Renderable, Tag> | Tag, 
-    props: PropsType<RawValue | Renderable> | undefined, 
+    tag: string | CompType<Renderable, Tag> | Tag,
+    props: PropsType<RawValue | Renderable> | undefined,
     children: ChildType<Renderable>[],
     host: PluginHost<Renderable | RawValue, Tag | CompType<Renderable, Tag> | string>
   ): Node | undefined {

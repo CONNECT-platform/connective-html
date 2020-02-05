@@ -8,7 +8,7 @@ import { PluginPriority } from '../plugin';
 import { PropertyPlugin } from '../basic-plugins';
 
 
-export class ObservableClassPlugin<R=never, T=string> 
+export class ObservableClassPlugin<R=never, T=string>
   implements PropertyPlugin<R | Observable<RawValue>, T> {
 
   priority = PluginPriority.High;
@@ -26,7 +26,7 @@ export class ObservableClassPlugin<R=never, T=string>
               classes += ' ' + fixed.join(' ');
     
             host.setAttribute('class', classes);
-          }); 
+          });
         },
         clear() { sub.unsubscribe(); },
       }, host);
