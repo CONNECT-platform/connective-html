@@ -15,7 +15,7 @@ renderer.render(<div>Hellow World!</div>).on(document.body);
 ```
 [► TRY IT!](https://stackblitz.com/edit/connective-html-hellowworld?file=index.tsx)
 
-**It is _reactive_** as it integrates well with reactive libraries such as [**RxJS**](https://github.com/ReactiveX/rxjs) or [**CONNECTIVE**](https://github.com/CONNECT-platform/connective):
+**It is _reactive_** as it is by default integrated with reactive libraries [**RxJS**](https://github.com/ReactiveX/rxjs) or [**CONNECTIVE**](https://github.com/CONNECT-platform/connective), and integrates easily with similar libraries:
 ```tsx
 import { Renderer } from '@connectv/html';
 import { timer } from 'rxjs';
