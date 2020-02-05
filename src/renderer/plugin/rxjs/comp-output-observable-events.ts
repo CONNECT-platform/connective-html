@@ -23,7 +23,7 @@ implements CompIOPlugin<Renderable, Tag> {
         if (output instanceof Observable)
           L.attach(trackable(
             output.pipe(
-              tap(value => 
+              tap(value =>
                 node.dispatchEvent(new CustomEvent(name, {detail: {value}}))
               )
             )

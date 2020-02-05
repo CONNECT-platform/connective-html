@@ -23,7 +23,7 @@ export function getInputValue(el: HTMLInputElement | HTMLTextAreaElement | HTMLS
 export function setInputValue(el: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement, value: any) {
   if (el instanceof HTMLInputElement) {
     if (el.type === 'checkbox') el.checked = !!value;
-    else if (el.type === 'radio') 
+    else if (el.type === 'radio')
       el.checked = ((el as any)._value && (el as any)._value === value) || value === el.value;
     else el.value = value;
   }

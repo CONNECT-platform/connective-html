@@ -63,8 +63,8 @@ export interface ToBeRendered<T extends Node> {
  */
 export interface RendererLike<Renderable, Tag> {
   create(
-    tag: string | Tag, 
-    props: PropsType<Renderable | RawValue> | undefined, 
+    tag: string | Tag,
+    props: PropsType<Renderable | RawValue> | undefined,
     ...children: (Renderable | RawValue | Node)[]
   ): Node;
 

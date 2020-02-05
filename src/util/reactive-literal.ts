@@ -10,7 +10,7 @@ export function reactiveLiteral(strings: TemplateStringsArray, ...values: (PinLi
     else return value(v);
   }))
   .to(pack())
-  .to(map((values: any[]) => 
+  .to(map((values: any[]) =>
     strings.reduce((total, piece, index) => total + piece + (values[index] || '').toString(), '')
   ));
 }

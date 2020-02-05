@@ -20,7 +20,7 @@ export function Conditional(this: ComponentThis, props: ConditionalProps, render
   this.track.mark(start);
 
   let cond = (props.if instanceof Observable)? wrap(props.if) : props.if;
-  let latest: boolean | any = undefined;
+  let latest: boolean | any;
 
   this.track(cond.to(sink((value: boolean) => {
     if (value !== latest) {

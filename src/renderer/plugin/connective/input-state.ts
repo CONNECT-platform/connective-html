@@ -20,7 +20,7 @@ export class InputStatePlugin<R, T> implements PropertyPlugin<State | R, T> {
         wrap(fromEvent(host, 'input'))
         .to(map(() => getInputValue(host)))
         .to(target)
-        .to(sink(v => setInputValue(host, v))), 
+        .to(sink(v => setInputValue(host, v))),
       host);
 
       return true;

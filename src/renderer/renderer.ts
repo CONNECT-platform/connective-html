@@ -54,8 +54,8 @@ export class Renderer<Renderable=RawValue, Tag=string> implements RendererLike<R
    *
    */
   public create(
-    tag: string | Tag, 
-    props: PropsType<Renderable | RawValue> | undefined, 
+    tag: string | Tag,
+    props: PropsType<Renderable | RawValue> | undefined,
     ...children: ChildType<Renderable>[]
   ): Node {
     if (typeof tag == 'string') {

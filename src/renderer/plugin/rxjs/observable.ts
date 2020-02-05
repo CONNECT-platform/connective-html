@@ -7,8 +7,8 @@ import { PluginPriority } from '../plugin';
 import { PropertyPlugin, AppendPlugin } from '../basic-plugins';
 
 
-export class ObservablePlugin<R=never, T=string> 
-  implements PropertyPlugin<R | Observable<RawValue>, T>, 
+export class ObservablePlugin<R=never, T=string>
+  implements PropertyPlugin<R | Observable<RawValue>, T>,
             AppendPlugin<R | Observable<RawValue>, T> {
 
   priority = PluginPriority.Fallback;
@@ -18,7 +18,7 @@ export class ObservablePlugin<R=never, T=string>
       let sub: Subscription;
 
       L.attach(<Bindable & Clearable>{
-        bind() { 
+        bind() {
           sub = target.subscribe(v => {
             if (typeof v === 'boolean') {
               if (v) host.setAttribute(prop, '');
@@ -26,7 +26,7 @@ export class ObservablePlugin<R=never, T=string>
             }
             else
               host.setAttribute(prop, (v !== undefined) ? v.toString() : '')
-          }); 
+          });
         },
         clear() { sub.unsubscribe(); },
       }, host);
@@ -37,7 +37,7 @@ export class ObservablePlugin<R=never, T=string>
       return false
   }
 
-  append(target: RawValue | R | Observable<RawValue> | Node | (RawValue | R | Observable<RawValue> | Node)[], 
+  append(target: RawValue | R | Observable<RawValue> | Node | (RawValue | R | Observable<RawValue> | Node)[],
         host: Node): boolean {
     if (target instanceof Observable) {
       let node = document.createTextNode('');

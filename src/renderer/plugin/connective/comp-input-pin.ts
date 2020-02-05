@@ -8,7 +8,7 @@ import { CompPropPlugin } from "../component/basic-plugins";
 
 
 export class CompInputPin extends Pin implements CompInputWithOptions<any> {
-  constructor(readonly inputOptions: CompInputOptions<any> = {}) { 
+  constructor(readonly inputOptions: CompInputOptions<any> = {}) {
     super();
   }
 }

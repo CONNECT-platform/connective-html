@@ -25,7 +25,7 @@ export function toggleList<T>(
       )
     )
     .to(pack())
-    .to(map((l: [string, boolean][]) => 
+    .to(map((l: [string, boolean][]) =>
       _aggregator(
         l.filter(([_, v]) => v).map(([n, _]) => n)
       )
@@ -36,7 +36,7 @@ export function toggleList<T>(
 
 export function rxToggleList(names: RxNameMap): Observable<string>;
 export function rxToggleList<T>(
-  names: RxNameMap, 
+  names: RxNameMap,
   aggregator?: NamesAggregatorFunc<T>
 ): Observable<T> {
   const _aggregator = aggregator || _DefaultAggregator as any;

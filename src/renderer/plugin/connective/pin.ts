@@ -6,8 +6,8 @@ import { PluginPriority } from '../plugin';
 import { PropertyPlugin, AppendPlugin } from '../basic-plugins';
 
 
-export class PinPlugin<R=never, T=string> 
-  implements PropertyPlugin<R | PinLike, T>, 
+export class PinPlugin<R=never, T=string>
+  implements PropertyPlugin<R | PinLike, T>,
               AppendPlugin<R | PinLike, T> {
 
   priority = PluginPriority.Fallback;

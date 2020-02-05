@@ -10,9 +10,9 @@ export class ExposePlugin<Renderable=RawValue, Tag=CompType<Renderable | string>
   implements CompProcessPlugin<Renderable, Tag> {
 
   prepare(
-    comp: CompType<RawValue | Renderable, Tag>, 
+    comp: CompType<RawValue | Renderable, Tag>,
     props: PropsType<Renderable | RawValue>,
-    children: (RawValue | Renderable | Node)[], 
+    children: (RawValue | Renderable | Node)[],
     extras: { [name: string]: any; },
     pluginHost: PluginHost<RawValue | Renderable, Tag>,
   ): (node: Node) => void {
@@ -43,7 +43,7 @@ export class ExposePlugin<Renderable=RawValue, Tag=CompType<Renderable | string>
     return (node: Node) => {
       pluginHost.plugins
         .filter(isCompIOPlugin)
-        .forEach(plugin => 
+        .forEach(plugin =>
           plugin.wire(node, _signature, props, comp, children, pluginHost)
         );
 
