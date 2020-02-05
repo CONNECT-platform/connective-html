@@ -23,8 +23,7 @@ It allows for _reactive_ interfaces via integration with libraries such as [**Rx
 import { Renderer } from '@connectv/html';
 import { timer } from 'rxjs';
 
-let renderer = new Renderer();
-
+const renderer = new Renderer();
 renderer.render(<div>You have been here for {timer(0, 1000)} second(s).</div>)
         .on(document.body);
 ```
