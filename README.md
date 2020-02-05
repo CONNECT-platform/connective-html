@@ -6,61 +6,27 @@
 [![Minzipped Size](https://badgen.net/bundlephobia/minzip/@connectv/html@latest?icon=npm&color=green)](https://bundlephobia.com/result?p=@connectv/html@latest)
 [![Chat on Gitter](https://badgen.net/badge/chat%20on/gitter?icon=gitter&color=purple)](https://gitter.im/connectv/community)
 
-
-## Table of Contents
-
-- [What is this?](#what-is-this)
-- [How to Setup](#how-to-setup)
-  - [Online Playground](#online-playground)
-  - [New Typescript Project](#new-typescript-project)
-  - [Custom Typescript Setup](#custom-typescript-setup)
-- [How to Use](#how-to-use)
-  - [Example: Interactive Hellow World](#example-interactive-hellow-world)
-  - [Example: Not a TodoList](#example-not-a-todolist)
-  - [Example: Not a TodoList Using Component Class](#example-not-a-todolist-using-component-class)
-  - [Example: GitHub Repos](#example-github-repos)
-  - [Example: Styling, Styled Components, JSS](#example-styling-styled-components-jss)
-  - [Example: Theme Changer](#example-theme-changer)
-  - [Example: Stackblitz Code Loader](#stackblitz-code-loader)
-- [How to Contribute](#how-to-contribute)
-
-<br>
-
-## What is this?
-
-**CONNECTIVE HTML** is a frontend library for creating modern reactive web applications in a simple and explicit manner.
-
-It is _simple_ as it enables working directly with DOM APIs with JSX syntax:
+**CONNECTIVE HTML** is a _simple_ Typescript library for creating reactive component-based HTML user interfaces. It is _simple_ as it enables using JSX syntax to work directly with browser's DOM API:
 ```tsx
-import Renderer from '@connectv/html';
+import { Renderer } from '@connectv/html';
 
-let renderer = new Renderer();
-
+const renderer = new Renderer();
 renderer.render(<div>Hellow World!</div>).on(document.body);
 ```
 [► TRY IT!](https://stackblitz.com/edit/connective-html-hellowworld?file=index.tsx)
 
 <br>
 
-It is _explicit_ as it throws out any magical layer underneath the API (layers such as Virtual DOM, automatic change detection, domain-specific compilations, etc.) in favor of directly working with reactive values using reactive libraries
-such as [**RxJS**](https://github.com/ReactiveX/rxjs) or [**CONNECTIVE**](https://github.com/CONNECT-platform/connective):
+It allows for _reactive_ interfaces via integration with libraries such as [**RxJS**](https://github.com/ReactiveX/rxjs) or [**CONNECTIVE**](https://github.com/CONNECT-platform/connective):
 
 ```tsx
 import { Renderer } from '@connectv/html';
-import { interval } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { timer } from 'rxjs';
 
 let renderer = new Renderer();
 
-renderer.render(
-  <div>
-    You have been here for {
-      interval(1000)
-      .pipe(map(x => x + 1))
-      .pipe(startWith(0))
-    } second(s).
-  </div>)
-.on(document.body);
+renderer.render(<div>You have been here for {timer(0, 1000)} second(s).</div>)
+        .on(document.body);
 ```
 [► TRY IT!](https://stackblitz.com/edit/connective-html-timer?file=index.tsx)
 
