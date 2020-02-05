@@ -75,9 +75,8 @@ renderer.render(
 > fork [this](https://stackblitz.com/edit/connective-html-hellowworld) project on [StackBlitz](https://stackblitz.com).
 
 
-### New Typescript Project
+### New Project
 Run the following:
-
 ```bash
 $ npx @connectv/create-html <project-name>
 $ cd <project-name>
@@ -86,23 +85,32 @@ $ npm start
 
 Running `npx @connectv/create-html` without any parameters will create the new project inside the current directory, using its name as the project's name.
 
-Alternatively, you can clone [this starter project](https://github.com/loreanvictor/connective-html-sample.git) and follow
-the instructions in its readme file.
-
 <br>
 
-### Custom Typescript Setup
-To add to an existing project (or any frontend typescript project with your own custom setup):
-
+### Add to Existing Project
 ```
 $ npm i @connectv/html
 ```
+Configure your transpiler to use `renderer.create` as its JSX factory. For example:
 
-And add the following to your `tsconfig.json` file:
+#### Typescript:
+Add this to your `tsconfig.json` file:
 ```json
 "compilerOptions": {
     "jsx": "react",
     "jsxFactory": "renderer.create"
+}
+```
+
+#### Babel ([plugin-transform-react-jsx](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx))
+Add this to your Babel config:
+```json
+{
+  "plugins": [
+    ["@babel/plugin-transform-react-jsx", {
+      "pragma": "renderer.create"
+    }]
+  ]
 }
 ```
 
