@@ -76,7 +76,6 @@ renderer.render(
 
 
 ### New Project
-Run the following:
 ```bash
 $ npx @connectv/create-html <project-name>
 $ cd <project-name>
