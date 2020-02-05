@@ -5,7 +5,7 @@ import { ExtensibleRenderer } from '../extensible-renderer';
 
 import { testRendererSpec } from './renderer.spec';
 import { Plugin, PluginPriority, PluginHost } from '../plugin/plugin';
-import { CreatePlugin, PostCreatePlugin, PropertyPlugin, 
+import { CreatePlugin, PostCreatePlugin, PropertyPlugin,
           AppendPlugin, PostRenderPlugin } from '../plugin/basic-plugins';
 import { PropsType } from '../../shared/types';
 import { ChildType } from '../renderer';
@@ -22,7 +22,7 @@ class MockUniquePlugin extends MockPlugin {
 
 class MockCreatePlugin extends MockPlugin implements CreatePlugin<any, any> {
   constructor(private callback: (a: any, b: any, c: any, d: any) => any,
-    readonly priority: PluginPriority = PluginPriority.Fallback) 
+    readonly priority: PluginPriority = PluginPriority.Fallback)
     { super(priority); }
     create(tag: any, props: PropsType<any> | undefined, children: ChildType<any>[], pluginHost: PluginHost<any, any>) {
       return this.callback(tag, props, children, pluginHost);
@@ -31,7 +31,7 @@ class MockCreatePlugin extends MockPlugin implements CreatePlugin<any, any> {
 
 class MockPostCreatePlugin extends MockPlugin implements PostCreatePlugin<any, any> {
   constructor(private callback: (a: any, b: any) => any,
-  readonly priority: PluginPriority = PluginPriority.Fallback) 
+  readonly priority: PluginPriority = PluginPriority.Fallback)
   { super(priority); }
   postCreate(node: Node, pluginHost: PluginHost<any, any>) {
     return this.callback(node, pluginHost);
@@ -40,7 +40,7 @@ class MockPostCreatePlugin extends MockPlugin implements PostCreatePlugin<any, a
 
 class MockPropertyPlugin extends MockPlugin implements PropertyPlugin<any, any> {
   constructor(private callback: (a: any, b: any, c: any, d: any) => any,
-  readonly priority: PluginPriority = PluginPriority.Fallback) 
+  readonly priority: PluginPriority = PluginPriority.Fallback)
   { super(priority); }
   setprop(prop: any, target: any, host: HTMLElement, pluginHost: PluginHost<any, any>): boolean {
     return this.callback(prop, target, host, pluginHost);
@@ -49,7 +49,7 @@ class MockPropertyPlugin extends MockPlugin implements PropertyPlugin<any, any> 
 
 class MockAppendPlugin extends MockPlugin implements AppendPlugin<any, any> {
   constructor(private callback: (a: any, b: any, c: any) => any,
-  readonly priority: PluginPriority = PluginPriority.Fallback) 
+  readonly priority: PluginPriority = PluginPriority.Fallback)
   { super(priority); }
   append(target: any, host: Node, pluginHost: PluginHost<any, any>): boolean {
     return this.callback(target, host, pluginHost);
@@ -58,7 +58,7 @@ class MockAppendPlugin extends MockPlugin implements AppendPlugin<any, any> {
 
 class MockPostRenderPlugin extends MockPlugin implements PostRenderPlugin<any, any> {
   constructor(private callback: (a: any, b: any) => any,
-  readonly priority: PluginPriority = PluginPriority.Fallback) 
+  readonly priority: PluginPriority = PluginPriority.Fallback)
   { super(priority); }
   postRender(node: Node, pluginHost: PluginHost<any, any>) {
     return this.callback(node, pluginHost);
@@ -164,17 +164,17 @@ describe.only('ExtensibleRenderer', () => {
 
     describe('Property setting process', () => {
       it('should use the first plugin that supports the given property for setting the property.', () => {
-        let a = new MockPropertyPlugin((prop, _, host) => { 
-          if (prop == 'a') { 
+        let a = new MockPropertyPlugin((prop, _, host) => {
+          if (prop == 'a') {
             host.setAttribute('aprop', '42');
-            return true; 
+            return true;
           }
         });
 
-        let b = new MockPropertyPlugin((_, target, host) => { 
-          if (target == 'b') { 
+        let b = new MockPropertyPlugin((_, target, host) => {
+          if (target == 'b') {
             host.setAttribute('bprop', '43');
-            return true; 
+            return true;
           }
         });
 
@@ -185,17 +185,17 @@ describe.only('ExtensibleRenderer', () => {
       });
 
       it('should test plugins by order of priority.', () => {
-        let a = new MockPropertyPlugin((prop, _, host) => { 
-          if (prop == 'a') { 
+        let a = new MockPropertyPlugin((prop, _, host) => {
+          if (prop == 'a') {
             host.setAttribute('aprop', '42');
-            return true; 
+            return true;
           }
         }, PluginPriority.Fallback);
 
-        let b = new MockPropertyPlugin((_, target, host) => { 
-          if (target == 'b') { 
+        let b = new MockPropertyPlugin((_, target, host) => {
+          if (target == 'b') {
             host.setAttribute('bprop', '43');
-            return true; 
+            return true;
           }
         }, PluginPriority.High);
 
@@ -206,10 +206,10 @@ describe.only('ExtensibleRenderer', () => {
       });
 
       it('should invoke parent\'s property setting mechanism when no plugin supports given property', () => {
-        let a = new MockPropertyPlugin((prop, _, host) => { 
-          if (prop == 'a') { 
+        let a = new MockPropertyPlugin((prop, _, host) => {
+          if (prop == 'a') {
             host.setAttribute('aprop', '42');
-            return true; 
+            return true;
           }
         });
 
