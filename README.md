@@ -92,7 +92,7 @@ $ npm i @connectv/html
 ```
 Configure your transpiler to use `renderer.create` as its JSX factory. For example:
 
-#### Typescript:
+#### For Typescript:
 Add this to your `tsconfig.json` file:
 ```json
 "compilerOptions": {
@@ -101,7 +101,7 @@ Add this to your `tsconfig.json` file:
 }
 ```
 
-#### Babel ([plugin-transform-react-jsx](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx))
+#### For Babel ([plugin-transform-react-jsx](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx))
 Add this to your Babel config:
 ```json
 {
