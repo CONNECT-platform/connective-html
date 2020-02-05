@@ -71,7 +71,7 @@ renderer.render(
 <br>
 
 ## How to Install
-> For givint **CONNECTIVE HTML** a quick try, you can simply
+> For giving **CONNECTIVE HTML** a quick try, you can simply
 > fork [this](https://stackblitz.com/edit/connective-html-hellowworld) project on [StackBlitz](https://stackblitz.com).
 
 
