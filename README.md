@@ -1,4 +1,4 @@
-![CONNECTIVE HTML](https://raw.githubusercontent.com/CONNECT-platform/connective-html/master/repo-banner.svg?sanitize=true)
+![CONNECTIVE HTML](repo-banner.svg)
 
 [![License](https://badgen.net/github/license/CONNECT-platform/connective-html?icon=github)](LICENSE)
 [![Minzipped Size](https://badgen.net/bundlephobia/minzip/@connectv/html@latest?icon=npm&color=green)](https://bundlephobia.com/result?p=@connectv/html@latest)
