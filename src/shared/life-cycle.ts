@@ -96,3 +96,14 @@ export function detach(thing: Bindable | Clearable, node: Node) {
     if (lifecycle.clearables) lifecycle.clearables = lifecycle.clearables.filter(b => b !== thing);
   }
 }
+
+
+export const LifeCycle = {
+  info: lifeCycleInfo,
+  getMarker: getLifeCycleMarker,
+  setMarker: setLifeCycleMarker,
+  bind,
+  clear,
+  attach,
+  detach
+}

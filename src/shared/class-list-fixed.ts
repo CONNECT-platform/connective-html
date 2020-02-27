@@ -13,3 +13,6 @@ export function remove(node: HTMLElement, clazz: string) {
     (node as any).classListFixed = (node as any).classListFixed.filter((c: string) => c !== clazz);
   }
 }
+
+
+export const ClassListFixed = { get, add, remove };
