@@ -9,7 +9,8 @@ export { TrackPlugin } from './track';
 export {
   CompClass, CompFunc, CompType,
   isCompClass, Component as RawComponent,
-  ComponentSignature, CompInputOptions, isCompInputWithOptions,
+  ComponentSignature, CompInputOptions, 
+  CompInputWithOptions, isCompInputWithOptions,
   ExposeFunction, TrackFunction, ContextFunction,
   ComponentThis, SafeComponentThis,
 } from './types';
