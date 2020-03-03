@@ -48,3 +48,6 @@ function _resolve(node: Node, keys: string[]): _InternalContext {
 export function resolve(node: Node, keys: string[]): ContextType {
   return _resolve(node, keys).values;
 }
+
+
+export const CTX = { set, resolve }

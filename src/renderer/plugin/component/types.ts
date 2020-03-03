@@ -111,9 +111,9 @@ export function isCompInputWithOptions<T>(whatever: any):
 
 export type ExposeFunction = {
   (signature: ComponentSignature): void;
-  in: (name: string, input?: any) => void;
-  out: (name: string, output?: any) => void;
-  state: (name: string, state?: any) => void;
+  in: <T=any>(name: string, input?: T) => T;
+  out: <T=any>(name: string, output?: T) => T;
+  state: <T=any>(name: string, state?: T) => T;
 };
 
 
