@@ -145,5 +145,22 @@ export function testRendererSpec(rendererFactory: <R=any, T=any>(...args: any[])
         parent.childNodes.item(1).should.equal(child);
       });
     });
+
+    it('should also work with renderable functions.', () => {
+      let funcA = (renderer: any) => <div id="a"></div>;
+      let funcB = (renderer: any) => <div id="b"></div>;
+
+      let renderer = rendererFactory();
+      let ref = <div></div>;
+      let parent = <div>{ref}</div>;
+
+      parent.childNodes.length.should.equal(1);
+      renderer.render(funcA).on(ref);
+      renderer.render(funcB).after(ref);
+
+      parent.childNodes.length.should.equal(2);
+      expect((parent.childNodes.item(0).childNodes.item(0) as HTMLElement).getAttribute('id')).to.equal('a');
+      expect((parent.childNodes.item(1) as HTMLElement).getAttribute('id')).to.equal('b');
+    });
   });
 }

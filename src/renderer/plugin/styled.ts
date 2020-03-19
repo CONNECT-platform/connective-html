@@ -29,8 +29,8 @@ export class StyledPlugin<R, T> implements PostCreatePlugin<R, T> {
 }
 
 
-export function styled(map: TagClassMap) {
-  return new StyledPlugin<any, any>(map);
+export function styled<R, T>(map: TagClassMap) {
+  return new StyledPlugin<R, T>(map);
 }
 
 

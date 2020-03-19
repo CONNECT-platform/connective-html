@@ -66,7 +66,7 @@ class MockPostRenderPlugin extends MockPlugin implements PostRenderPlugin<any, a
 }
 
 
-describe.only('ExtensibleRenderer', () => {
+describe('ExtensibleRenderer', () => {
   beforeEach(function() {
     this.jsdom = jsdom();
   });
@@ -317,7 +317,7 @@ describe.only('ExtensibleRenderer', () => {
     });
   });
 
-  describe.only('.render()', () => {
+  describe('.render()', () => {
     it('should invoke all post render plugins on rendered nodes.', () => {
       let res: string[] = [];
       let a = new MockPostRenderPlugin((node) => {

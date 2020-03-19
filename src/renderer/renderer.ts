@@ -1,6 +1,6 @@
 import { PropsType, isRawValue } from '../shared/types';
 
-import { ToBeRendered, RendererLike } from './renderer-like';
+import { ToBeRendered, RendererLike, RenderableFunction } from './renderer-like';
 
 import { UnsupportedTagTypeError } from './error/unsupported-tag.error';
 import { UnsupportedPropError } from './error/unsupported-prop.error';
@@ -136,11 +136,15 @@ export class Renderer<Renderable=RawValue, Tag=string> implements RendererLike<R
    *         .after(someRef.$);
    * ```
    *
-   * @param node the `Node` to be rendered.
+   * @param node the `Node` or `RenderableFunction` to be rendered
    * @returns a `TobeRendered` object that can be used to render the given node on, before or after another `Node`.
    *
    */
-  public render<T extends Node>(node: T): ToBeRendered<T> {
+  public render<T extends Node>(nodeOrFactory: T | RenderableFunction<Renderable, Tag, T>): ToBeRendered<T> {
+    let node: T;
+    if (typeof nodeOrFactory === 'function') node = nodeOrFactory(this as any);
+    else node = nodeOrFactory;
+
     return {
       target: node,
       on(host: Node) {

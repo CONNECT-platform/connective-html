@@ -4,7 +4,7 @@ import { Renderer, ChildType } from './renderer';
 import { Plugin, PluginHost } from './plugin/plugin';
 import { isCreatePlugin, isPostCreatePlugin, isPropertyPlugin, isAppendPlugin, isPostRenderPlugin }
   from './plugin/basic-plugins';
-import { ToBeRendered } from './renderer-like';
+import { ToBeRendered, RenderableFunction } from './renderer-like';
 
 
 export class ExtensibleRenderer<Renderable=RawValue, Tag=string>
@@ -64,20 +64,20 @@ export class ExtensibleRenderer<Renderable=RawValue, Tag=string>
     }
   }
 
-  public render<T extends Node>(node: T): ToBeRendered<T> {
+  public render<T extends Node>(node: T | RenderableFunction<Renderable, Tag, T>): ToBeRendered<T> {
     let _res = super.render(node);
     let _postRender = this.plugins.filter(isPostRenderPlugin);
 
     let _do = (_fn: () => T) => {
       let children;
-      if (node instanceof DocumentFragment) children = Array.from(node.childNodes);
+      if (_res.target instanceof DocumentFragment) children = Array.from(_res.target.childNodes);
 
       let _R = _fn();
 
       if (children)
         children.forEach(child => _postRender.forEach(plugin => plugin.postRender(child, this)));
       else
-        _postRender.forEach(plugin => plugin.postRender(node, this));
+        _postRender.forEach(plugin => plugin.postRender(_res.target, this));
       return _R;
     };
 

@@ -3,6 +3,18 @@ import { PropsType } from '../shared/types';
 
 /**
  *
+ * Denotes a function that requires a renderer to be able to render a `Node`,
+ * hence can be rendered by any renderer like
+ *
+ */
+export type RenderableFunction<Renderable, Tag, 
+      NodeType extends Node=Node, 
+      Renderer extends RendererLike<Renderable, Tag> = RendererLike<Renderable, Tag>> 
+      = (renderer: Renderer) => NodeType;
+
+
+/**
+ *
  * Wraps a `Node` that is to be rendered on, before or after on another,
  * yet undetermined `Node`. Usage example:
  *
@@ -70,5 +82,5 @@ export interface RendererLike<Renderable, Tag> {
 
   setprop(prop: string, target: RawValue | Renderable, host: HTMLElement): void;
   append(target: RawValue | Renderable | Node | (RawValue | Renderable | Node)[], host: Node): void;
-  render<T extends Node>(node: T): ToBeRendered<T>;
+  render<T extends Node>(node: T | RenderableFunction<Renderable, Tag, T>): ToBeRendered<T>;
 }
