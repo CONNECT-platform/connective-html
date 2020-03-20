@@ -99,6 +99,17 @@ declare module HTML {
     onwheel?: EventHandler;
   }
 
+  interface MetaAttributes extends Attributes {
+    /**Specifies the character encoding for the HTML document */
+    charset?: Renderable;
+    /**Gives the value associated with the http-equiv or name attribute */
+    content?: Renderable;
+    /**Provides an HTTP header for the information/value of the content attribute */
+    'http-equiv'?: Renderable;
+    /**Specifies a name for the metadata */
+    name?: Renderable;
+  }
+
   interface ImgAttributes extends Attributes {
     /**Specifies an alternate text when the original element fails to display */
     alt?: Renderable;

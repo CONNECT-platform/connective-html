@@ -134,7 +134,7 @@ declare module JSX {
     menu: HTML.MenuAttributes;
     menuitem: HTML.Attributes;
     /**Defines metadata about an HTML document */
-    meta: HTML.Attributes;
+    meta: HTML.MetaAttributes;
     /**Defines a scalar measurement within a known range (a gauge) */
     meter: HTML.MeterAttributes;
     /**Defines navigation links */
