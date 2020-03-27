@@ -48,7 +48,7 @@ export type CompClass<Renderable=RawValue, Tag=string> = {
 };
 
 export type CompFunc<Renderable=RawValue, Tag=string> = (
-  props: PropsType<RawValue | Renderable> | undefined,
+  props: PropsType<RawValue | Renderable>,
   renderer: RendererLike<Renderable | RawValue, Tag | string | CompType<Renderable, Tag>>,
   children?: ChildType<Renderable>[]) => Node;
 
