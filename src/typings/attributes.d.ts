@@ -83,6 +83,10 @@ declare module HTML {
     onmousemove?: EventHandler;
     /**Script to be run when a mouse pointer moves out of an element */
     onmouseout?: EventHandler;
+    /**Script to be run when a mouse pointer moves onto an element */
+    onmouseenter?: EventHandler;
+    /**Script to be run when a mouse pointer is moved out of an element */
+    onmouseleave?: EventHandler;
     /**Script to be run when a mouse pointer moves over an element */
     onmouseover?: EventHandler;
     /**Script to be run when a mouse button is released over an element */
