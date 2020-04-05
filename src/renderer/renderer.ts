@@ -62,7 +62,9 @@ export class Renderer<Renderable=RawValue, Tag=string> implements RendererLike<R
       let el: Node;
       if (tag === 'fragment') el = document.createDocumentFragment();
       else {
-        el = document.createElement(tag);
+        if (props && props.xmlns) el = document.createElementNS(`${props.xmlns}`, tag);
+        else el = document.createElement(tag);
+
         if (props)
           Object.entries(props).forEach(([prop, target]) => this.setprop(prop, target, el as HTMLElement));
       }

@@ -18,6 +18,14 @@ export function testRendererSpec(rendererFactory: <R=any, T=any>(...args: any[])
     expect(<div>hellow</div>).to.be.instanceOf(HTMLElement);
   });
 
+  it('should properly create SVG elements when namespace is passed.', () => {
+    let renderer = rendererFactory();
+    expect(<circle/>).to.be.instanceOf(HTMLUnknownElement);
+
+    // TODO: JSDOM currently does not support SVGCircleElement. Fix this when they do.
+    expect(<circle xmlns="http://www.w3.org/2000/svg"/>).to.be.instanceOf(window.SVGElement);
+  });
+
   it('should render the created html elements on the DOM (not another object).', () => {
     let renderer = rendererFactory();
     let x = <div id='hellow'>Hellow</div>;
