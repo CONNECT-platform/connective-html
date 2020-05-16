@@ -112,6 +112,8 @@ declare module HTML {
     'http-equiv'?: Renderable;
     /**Specifies a name for the metadata */
     name?: Renderable;
+    /**Specifies a special property */
+    property?: Renderable;
   }
 
   interface ImgAttributes extends Attributes {

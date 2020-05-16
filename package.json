@@ -1,6 +1,6 @@
 {
   "name": "@connectv/html",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "fast and explicit reactive frontends",
   "main": "dist/es5/index.js",
   "module": "dist/es6/index.js",
